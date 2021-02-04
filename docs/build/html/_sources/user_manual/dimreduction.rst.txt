@@ -12,7 +12,7 @@ dataset [4]_ and the BACE (β-secretase inhibitors) dataset [5]_.
 .. code:: python3
 
     import pandas as pd
-    import chemplot.chemplot as cp
+    import chemplot as cp
     
     data_BBBP = pd.read_csv("BBBP.csv")
     data_BACE = pd.read_csv("BACE.csv")

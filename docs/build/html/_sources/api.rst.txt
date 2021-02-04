@@ -7,6 +7,8 @@ passed as a parameter in order to then use different functions for plotting.
 Plotter
 -------
 
+.. module:: chemplot
+
 .. automodule:: chemplot.chemplot
  
 .. autoclass:: chemplot.chemplot.Plotter

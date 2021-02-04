@@ -1,0 +1,7 @@
+chemplot
+========
+
+.. toctree::
+   :maxdepth: 4
+
+   chemplot
