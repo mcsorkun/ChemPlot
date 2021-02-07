@@ -10,7 +10,7 @@ setup(
     long_description_content_type="",
     url="https://github.com/mcsorkun/ChemPlot",
     license="MIT"
-    packages=find_packages(),
+    packages=find_packages(exclude=['docs']),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
