@@ -8,12 +8,12 @@ datasets. Chemplot contains smart algorithms behind which uses both structural a
 similarity. Moreover, it is easy to use even for non-experts.
 
 Installation
-============
+------------
 
 There two different options you can follow to install ChemPlot.
 
 Option 1: Use conda (recommended)
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The easiest and recommended way to install is using conda. 
 To install ChemPlot, at the command line, run::
@@ -22,7 +22,7 @@ To install ChemPlot, at the command line, run::
 
 
 Option 2: Use pip
------------------
+~~~~~~~~~~~~~~~~~
 ChemPlot requires RDKit, which cannot be installed using pip. The official RDKit installation documentation can be found `here`_.
 
 After having installed RDKit, ChemPlot can be installed using pip by running::
@@ -32,7 +32,7 @@ After having installed RDKit, ChemPlot can be installed using pip by running::
 .. _`here`: http://www.rdkit.org/docs/Install.html
 
 How to use ChemPlot
-===================
+-------------------
 
 ChemPlot is a cheminformatics tool whose purpose is to visualize subsets of the 
 chemical space in two dimensions. It uses the `RDKit chemistry framework`_, the
@@ -40,7 +40,7 @@ chemical space in two dimensions. It uses the `RDKit chemistry framework`_, the
 
 
 Getting started
----------------
+~~~~~~~~~~~~~~~
 To demonstrate how to use the functions the library offers we will use a BBBP 
 (blood-brain barrier penetration) [1]_ molecular dataset. This is a set of 
 molecules encoded as SMILES, which have been assigned a binary label according 
@@ -70,7 +70,7 @@ the BBBP dataset, their target values (the binary labels) and the target type
     plotter = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
 
 Plotting the results
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 When the ``Plotter`` object was constructed descriptors for each SMILES were 
 calculated, using the library `mordred <http://mordred-descriptor.github.io/documentation/v0.1.0/introduction.html>`__, 
