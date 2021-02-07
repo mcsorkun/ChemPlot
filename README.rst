@@ -1,3 +1,12 @@
+ChemPlot: A python library for chemical space visualization
+===========================================================
+
+In the last decades, Machine Learning (ML) applications have had a great impact on molecular
+and material science. However, every ML model requires a definition of its applicability domain. 
+We developed a python package, Chemplot, that allows users to plot the chemical space of their
+datasets. Chemplot contains smart algorithms behind which uses both structural and tailored
+similarity. Moreover, it is easy to use even for non-experts.
+
 Installation
 ============
 
