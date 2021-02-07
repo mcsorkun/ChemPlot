@@ -17,7 +17,7 @@ previous section:
 .. code:: python3
 
     import pandas as pd
-    import chemplot.chemplot as cp
+    import chemplot as cp
     
     data_BBBP = pd.read_csv("BBBP.csv")
     cp_BBBP = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
