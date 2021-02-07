@@ -250,15 +250,6 @@ class Plotter(object):
         return umap_plot
     
     
-    def tmap():
-        """
-        Calculates and plots the TMAP based on ECFP fingerprints.
-        
-        :returns: plot object
-        """
-        pass
-
-    
     def construct_plot(self, x, y, size, kind, title, remove_outliers, is_colored, colorbar):
         """
         Generates a plot for the given molecules embedded in two dimensions.
