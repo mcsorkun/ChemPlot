@@ -50,9 +50,6 @@ previously saved locally as a CSV file and is imported with `pandas <https://pan
 .. code:: python3
 
     import pandas as pd
-    
-
-.. code:: python3
 
     data_BBBP = pd.read_csv("BBBP.csv")
 
