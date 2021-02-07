@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name="ChemPlot", 
@@ -10,7 +10,7 @@ setup(
     long_description_content_type="",
     url="https://github.com/mcsorkun/ChemPlot",
     license="BSD 3-Clause License"
-    packages=find_packages(exclude=['docs']),
+    packages=["chemplot"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
