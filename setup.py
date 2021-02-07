@@ -1,8 +1,7 @@
-from setuptools import setup
-import setuptools 
+from setuptools import setup, find_packages
 
 setup(
-    name="", 
+    name="ChemPlot", 
     version="",
     author="",
     author_email="",
@@ -10,7 +9,7 @@ setup(
     long_description=long_description,
     long_description_content_type="",
     url="",
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
