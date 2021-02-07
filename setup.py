@@ -5,7 +5,7 @@ setup(
     version="",
     author="",
     author_email="",
-    description="",
+    description="A python library for chemical space visualization.",
     long_description=long_description,
     long_description_content_type="",
     url="",
