@@ -16,11 +16,11 @@ from sklearn.preprocessing import StandardScaler
 
 def get_mordred_descriptors(smiles_list):
     """
-    Calculates the Mordred descriptors for given smiles list
+    Calculates the Mordred descriptors for given SMILES list
     
-    :param smiles_list: List of smiles
+    :param smiles_list: List of SMILES
     :type smiles_list: list
-    :returns: The calculated descriptors list for the given smiles
+    :returns: The calculated descriptors list for the given SMILES
     :rtype: Dataframe
     """     
     
@@ -33,7 +33,7 @@ def get_mordred_descriptors_from_inchi(inchi_list):
     
     :param inchi_list: List of InChi
     :type inchi_list: list
-    :returns: The calculated descriptors list for the given smiles
+    :returns: The calculated descriptors list for the given InChi
     :rtype: Dataframe
     """     
     
@@ -44,8 +44,12 @@ def generate_mordred_descriptors(encoding_list, encoding_function, encoding_name
     """
     Calculates the Mordred descriptors for list of molecules encodings
     
-    :param smiles_list: List of molecules encodings
-    :type smiles_list: list
+    :param encoding_list: List of molecules encodings
+    :type encoding_list: list
+    :param encoding_function: Function from rdkit.Chem used to translate the encodings into mol objects
+    :type encoding_function: fun
+    :param encoding_name: Name of the encoding
+    :type encoding_name: string
     :returns: The calculated descriptors list for the given molecules encodings
     :rtype: Dataframe
     """      
@@ -108,7 +112,7 @@ def select_descriptors_lasso(df_descriptors,target_list, R_select=0.05, C_select
     :type R_select: float
     :param C_select: C value for LogisticRegression 
     :type C_select: float
-    :param kind: kind of target R->Regression C->Classification 
+    :param kind: kind of target "R"->Regression "C"->Classification 
     :type kind: string
     :returns: The selected descriptors
     :rtype: Dataframe
@@ -145,6 +149,8 @@ def get_ecfp(smiles_list, target_list, radius=2, nBits=2048):
     
     :param smiles_list: List of SMILES
     :type smiles_list: list
+    :param target_list: List of target values
+    :type target_list: list
     :param radius: The ECPF fingerprints radius.
     :type radius: int
     :param nBits: The number of bits of the fingerprint vector.
@@ -162,6 +168,8 @@ def get_ecfp_from_inchi(inchi_list, target_list, radius=2, nBits=2048):
     
     :param inchi_list: List of InChi
     :type inchi_list: list
+    :param target_list: List of target values
+    :type target_list: list
     :param radius: The ECPF fingerprints radius.
     :type radius: int
     :param nBits: The number of bits of the fingerprint vector.
@@ -179,8 +187,12 @@ def generate_ecfp(encoding_list, encoding_function, encoding_name, target_list, 
     
     :param encoding_list: List of molecules encodings
     :type encoding_list: list
-    :param encoding_function: Function used to extract the molecules from the encodings
+    :param encoding_function: Function from rdkit.Chem used to translate the encodings into mol objects
     :type encoding_function: fun
+    :param encoding_name: Name of the encoding
+    :type encoding_name: string
+    :param target_list: List of target values
+    :type target_list: list
     :param radius: The ECPF fingerprints radius.
     :type radius: int
     :param nBits: The number of bits of the fingerprint vector.
