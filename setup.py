@@ -8,7 +8,7 @@ setup(
     description="A python library for chemical space visualization.",
     long_description=long_description,
     long_description_content_type="",
-    url="",
+    url="https://github.com/mcsorkun/ChemPlot",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
