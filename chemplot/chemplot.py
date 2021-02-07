@@ -1,5 +1,5 @@
   
-# Authors:  Dajt Mullaj <d.mullaj@differ.nl>
+# Authors: Murat Cihan Sorkun, Dajt Mullaj <d.mullaj@differ.nl>
 #
 # License: BSD 3 clause
 from __future__ import print_function
