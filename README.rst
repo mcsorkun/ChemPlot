@@ -92,7 +92,7 @@ features by Principal Component Analysis (PCA) [2]_.
     plt.show()
 
 .. image:: images/gs_pca.png
-   :width: 600
+   :width: 400
 
 The second figure shows the results obtained by reducing the dimensions of features by t-SNE [3]_.
 
@@ -102,7 +102,7 @@ The second figure shows the results obtained by reducing the dimensions of featu
     plt.show()
 
 .. image:: images/gs_tsne.png
-   :width: 600
+   :width: 400
 
 The third figure shows the results obtained by reducing the dimensions of features by UMAP [4]_.
 
@@ -112,7 +112,7 @@ The third figure shows the results obtained by reducing the dimensions of featur
     plt.show()
 
 .. image:: images/gs_umap.png
-   :width: 600
+   :width: 400
 
 In each figure the molecules are coloured by class value. 
 
