@@ -80,7 +80,7 @@ class Plotter(object):
         :type smile_list: dict
         :param target: target values
         :type target: dict
-        :param target_type: target type R (regression) or C (classificatino)
+        :param target_type: target type "R" (regression) or "C" (classificatino)
         :type target_type: string
         :param sim_type: similarity type structural or tailored
         :type sim_type: string
@@ -100,7 +100,7 @@ class Plotter(object):
         :type inchi_list: dict
         :param target: target values
         :type target: dict
-        :param target_type: target type R (regression) or C (classificatino)
+        :param target_type: target type "R" (regression) or "C" (classificatino)
         :type target_type: string
         :param sim_type: similarity type structural or tailored
         :type sim_type: string
@@ -122,6 +122,10 @@ class Plotter(object):
         :type size: int
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed (default False)
         :type remove_outliers: boolean
+        :param is_colored: Indicates if the points must be colored according to target 
+        :type is_colored: boolean
+        :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is "R".
+        :type colorbar: boolean
         :returns: The matplotlib axes containing the plot.
         :rtype: Axes
         """
@@ -156,14 +160,20 @@ class Plotter(object):
         
         :param perplexity: perplexity value for the t-SNE model
         :type perplexity: int
-        :param pca_preprocessing_components: Number of components the PCA preprocessing will identify. By default the preprocessing is not used.
-        :type pca_preprocessing_components: int
+        :param random_state: random seed that can be passed as a parameter for reproducing the same results
+        :type random_state: int
+        :param pca: Indicates that the data dimensionality must be first reduceded with PCA, before being reduced with t-SNE.
+        :type pca: boolean
         :param kind: Type of plot (default is scatter plot)
         :type kind: string
         :param size: Size of the plot (default size)
         :type size: int
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed (default False)
         :type remove_outliers: boolean
+        :param is_colored: Indicates if the points must be colored according to target 
+        :type is_colored: boolean
+        :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is "R".
+        :type colorbar: boolean
         :returns: The matplotlib axes containing the plot.
         :rtype: Axes
         """
@@ -207,14 +217,22 @@ class Plotter(object):
         Calculates the first 2 UMAP components of ECFP fingerprints and plots
         the data based on the result.
         
-        :param num_neighbors: Number of neighbours used in the UMAP madel.
-        :type num_neighbors: int
+        :param n_neighbors: Number of neighbours used in the UMAP madel.
+        :type n_neighbors: int
+        :param min_dist: Value between 0.0 and 0.99, indicates how close to each other the points can be displayed.
+        :type min_dist: float
+        :param random_state: random seed that can be passed as a parameter for reproducing the same results
+        :type random_state: int
         :param kind: Type of plot (default is scatter plot)
         :type kind: string
         :param size: Size of the plot (default size)
         :type size: int
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed (default False)
         :type remove_outliers: boolean
+        :param is_colored: Indicates if the points must be colored according to target 
+        :type is_colored: boolean
+        :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is "R".
+        :type colorbar: boolean
         :returns: The matplotlib axes containing the plot.
         :rtype: Axes
         """
@@ -259,8 +277,6 @@ class Plotter(object):
         """
         Generates a plot for the given molecules embedded in two dimensions.
         
-        :param df_2_components: The molecules to plot
-        :type df_2_components: Dataframe
         :param x: The first column of the dataframe containing the molecules
         :type x: string
         :param y: The second column of the dataframe containing the molecules
@@ -275,6 +291,8 @@ class Plotter(object):
         :type remove_outliers: boolean
         :param is_colored: Indicates if the points must be colored according to target 
         :type is_colored: boolean
+        :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is "R".
+        :type colorbar: boolean
         :returns: The matplotlib axes containing the plot.
         :rtype: Axes
         """
