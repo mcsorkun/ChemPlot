@@ -1,5 +1,6 @@
+BSD 3-Clause License
 
-Copyright (c) 2017, Murat Cihan Sorkun
+Copyright (c) 2021, Murat Cihan Sorkun
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
