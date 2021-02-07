@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Oct  3 21:21:19 2020
-
-Project: chemplot (Chemical Space Visualization)
-Content: Descriptor operation methods
-
-@author: murat cihan sorkun
-"""
+# Authors: Murat Cihan Sorkun <m.c.sorkun@differ.nl>, Dajt Mullaj <d.mullaj@differ.nl>
+# Descriptor operation methods
+# 
+# License: BSD 3 clause
 
 from rdkit import Chem
 from rdkit.Chem import AllChem
