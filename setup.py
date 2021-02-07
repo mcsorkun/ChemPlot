@@ -12,8 +12,10 @@ setup(
     license="BSD 3-Clause License"
     packages=["chemplot"],
     classifiers=[
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved",
         "Operating System :: OS Independent",
     ],
     install_requires=[
