@@ -9,7 +9,7 @@ setup(
     long_description=long_description,
     long_description_content_type="",
     url="https://github.com/mcsorkun/ChemPlot",
-    license="BSD 3-Clause License"
+    license="BSD",
     packages=["chemplot"],
     classifiers=[
         "Intended Audience :: Science/Research",
@@ -18,6 +18,7 @@ setup(
         "License :: OSI Approved",
         "Operating System :: OS Independent",
     ],
+    keywords="chemoinformatics dimension reduction",
     install_requires=[
         "numpy >= 1.17",
         "mordred >= 1.2.0",
