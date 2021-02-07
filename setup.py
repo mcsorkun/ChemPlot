@@ -1,5 +1,7 @@
 from setuptools import setup
 
+long_description = ""
+
 setup(
     name="ChemPlot", 
     version="",
