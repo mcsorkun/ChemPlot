@@ -23,7 +23,7 @@ To install ChemPlot, at the command line, run::
 
 Option 2: Use pip
 -----------------
-ChemPlot requires RDKit, which cannot be installed using pip. The official RDKit documentation can be found `here`_.
+ChemPlot requires RDKit, which cannot be installed using pip. The official RDKit installation documentation can be found `here`_.
 
 After having installed RDKit, ChemPlot can be installed using pip by running::
 
