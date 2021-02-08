@@ -4,7 +4,7 @@ setup(
     name="chemplot", 
     version="0.1.0",
     author="Murat Cihan Sorkun",
-    author_email="m.c.sorkun@differ.nl",
+    author_email="mcsorkun@gmail.com",
     description="A python library for chemical space visualization.",
     url="https://github.com/mcsorkun/ChemPlot",
     license="BSD",
