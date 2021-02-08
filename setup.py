@@ -4,7 +4,7 @@ with open("README.rst", "r") as readme_file:
     long_description = readme_file.read()
 
 setup(
-    name="ChemPlot", 
+    name="chemplot", 
     version="",
     author="Murat Cihan Sorkun",
     author_email="m.c.sorkun@differ.nl",
