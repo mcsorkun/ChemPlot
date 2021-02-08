@@ -1,0 +1,578 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>chemplot.chemplot &mdash; ChemPlot 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ChemPlot
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Manual:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user_manual/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_manual/getting_started.html">How to use ChemPlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_manual/similarity.html">Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_manual/dimreduction.html">Dimensionality Reduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_manual/add_features.html">Additional Features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ChemPlot</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>chemplot.chemplot</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for chemplot.chemplot</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Authors: Murat Cihan Sorkun &lt;m.c.sorkun@differ.nl&gt;, Dajt Mullaj &lt;d.mullaj@differ.nl&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># License: BSD 3 clause</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">chemplot.descriptors</span> <span class="k">as</span> <span class="nn">desc</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">import</span> <span class="nn">umap</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<div class="viewcode-block" id="Plotter"><a class="viewcode-back" href="../../api.html#chemplot.chemplot.Plotter">[docs]</a><span class="k">class</span> <span class="nc">Plotter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class used to plot the ECFP fingerprints of the molecules used to </span>
+<span class="sd">    instantiate it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+       
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoding_list</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">target_type</span><span class="p">,</span> <span class="n">sim_type</span><span class="p">,</span> <span class="n">get_desc</span><span class="p">,</span> <span class="n">get_fingerprints</span><span class="p">):</span>
+           
+        <span class="c1"># Error handeling sym_type</span>
+        <span class="k">if</span> <span class="n">sim_type</span> <span class="o">!=</span> <span class="s1">&#39;structural&#39;</span> <span class="ow">and</span> <span class="n">sim_type</span> <span class="o">!=</span> <span class="s1">&#39;tailored&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sim_type</span> <span class="o">=</span> <span class="s1">&#39;tailored&#39;</span> 
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sim_type indicates the similarity type by which the plots are constructed.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+                      <span class="s1">&#39;The supported similarity types are structural and tailored.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+                      <span class="s1">&#39;Because a target list has been provided </span><span class="se">\&#39;</span><span class="s1">tailored</span><span class="se">\&#39;</span><span class="s1"> as been selected as sym_type.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="n">sim_type</span> <span class="o">=</span> <span class="s1">&#39;structural&#39;</span> 
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sim_type indicates the similarity type by which the plots are constructed.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+                      <span class="s1">&#39;The supported similarity types are structural and tailored.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+                      <span class="s1">&#39;Because no target list has been provided </span><span class="se">\&#39;</span><span class="s1">structural</span><span class="se">\&#39;</span><span class="s1"> as been selected as sym_type.&#39;</span><span class="p">)</span>
+         
+        <span class="k">if</span> <span class="n">sim_type</span> <span class="o">==</span> <span class="s2">&quot;tailored&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Target values missing&quot;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_type</span> <span class="o">=</span> <span class="n">sim_type</span>
+        
+        <span class="c1"># Error handeling target_type</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">df_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+            <span class="n">unique_targets_ratio</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">*</span><span class="n">df_target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="o">/</span><span class="n">df_target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+            <span class="k">if</span> <span class="n">target_type</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span> <span class="ow">and</span> <span class="n">unique_targets_ratio</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Input received is </span><span class="se">\&#39;</span><span class="s1">R</span><span class="se">\&#39;</span><span class="s1"> for target values that seem not continuous.&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">target_type</span> <span class="o">!=</span> <span class="s1">&#39;R&#39;</span> <span class="ow">and</span> <span class="n">target_type</span> <span class="o">!=</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">unique_targets_ratio</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">target_type</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;target_type indicates if the target is a continuous variable or a class label.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                          <span class="s1">&#39;R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                          <span class="s1">&#39;From analysis of the target, C has been selected for target_type.&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">target_type</span> <span class="o">=</span> <span class="s1">&#39;R&#39;</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;target_type indicates if the target is a continuous variable or a class label.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                          <span class="s1">&#39;R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                          <span class="s1">&#39;From analysis of the target, R has been selected for target_type.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">target_type</span> <span class="o">=</span> <span class="n">target_type</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target_type</span> <span class="o">=</span> <span class="kc">None</span>
+          
+        <span class="c1"># Instantiate Plotter class</span>
+        <span class="k">if</span> <span class="n">sim_type</span> <span class="o">==</span> <span class="s2">&quot;tailored&quot;</span><span class="p">:</span>
+            <span class="n">df_descriptors</span> <span class="o">=</span> <span class="n">get_desc</span><span class="p">(</span><span class="n">encoding_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df_descriptors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">select_descriptors_lasso</span><span class="p">(</span><span class="n">df_descriptors</span><span class="p">,</span><span class="n">target</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="n">target_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df_descriptors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">get_fingerprints</span><span class="p">(</span><span class="n">encoding_list</span><span class="p">,</span><span class="n">target</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2048</span><span class="p">)</span>
+            
+    
+<div class="viewcode-block" id="Plotter.from_smiles"><a class="viewcode-back" href="../../api.html#chemplot.chemplot.Plotter.from_smiles">[docs]</a>    <span class="nd">@classmethod</span>        
+    <span class="k">def</span> <span class="nf">from_smiles</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">smiles_list</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="p">[],</span> <span class="n">target_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sim_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class method to construct a Plotter object from a list of SMILES.</span>
+<span class="sd">        </span>
+<span class="sd">        :param smile_list: List of the SMILES representation of the molecules to plot.</span>
+<span class="sd">        :type smile_list: dict</span>
+<span class="sd">        :param target: target values</span>
+<span class="sd">        :type target: dict</span>
+<span class="sd">        :param target_type: target type &quot;R&quot; (regression) or &quot;C&quot; (classificatino)</span>
+<span class="sd">        :type target_type: string</span>
+<span class="sd">        :param sim_type: similarity type structural or tailored</span>
+<span class="sd">        :type sim_type: string</span>
+<span class="sd">        :returns: A Plotter object for the molecules given as input.</span>
+<span class="sd">        :rtype: Plotter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+            
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">smiles_list</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">target_type</span><span class="p">,</span> <span class="n">sim_type</span><span class="p">,</span> <span class="n">desc</span><span class="o">.</span><span class="n">get_mordred_descriptors</span><span class="p">,</span> <span class="n">desc</span><span class="o">.</span><span class="n">get_ecfp</span><span class="p">)</span></div>
+            
+
+<div class="viewcode-block" id="Plotter.from_inchi"><a class="viewcode-back" href="../../api.html#chemplot.chemplot.Plotter.from_inchi">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_inchi</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">inchi_list</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="p">[],</span> <span class="n">target_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sim_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class method to construct a Plotter object from a list of InChi.</span>
+<span class="sd">        </span>
+<span class="sd">        :param inchi_list: List of the InChi representation of the molecules to plot.</span>
+<span class="sd">        :type inchi_list: dict</span>
+<span class="sd">        :param target: target values</span>
+<span class="sd">        :type target: dict</span>
+<span class="sd">        :param target_type: target type &quot;R&quot; (regression) or &quot;C&quot; (classificatino)</span>
+<span class="sd">        :type target_type: string</span>
+<span class="sd">        :param sim_type: similarity type structural or tailored</span>
+<span class="sd">        :type sim_type: string</span>
+<span class="sd">        :returns: A Plotter object for the molecules given as input.</span>
+<span class="sd">        :rtype: Plotter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+                
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">inchi_list</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">target_type</span><span class="p">,</span> <span class="n">sim_type</span><span class="p">,</span> <span class="n">desc</span><span class="o">.</span><span class="n">get_mordred_descriptors_from_inchi</span><span class="p">,</span> <span class="n">desc</span><span class="o">.</span><span class="n">get_ecfp_from_inchi</span><span class="p">)</span></div>
+        
+    
+<div class="viewcode-block" id="Plotter.pca"><a class="viewcode-back" href="../../api.html#chemplot.chemplot.Plotter.pca">[docs]</a>    <span class="k">def</span> <span class="nf">pca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">remove_outliers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_colored</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the first 2 PCA components of ECFP fingerprints and plots</span>
+<span class="sd">        the data based on the result.</span>
+<span class="sd">        </span>
+<span class="sd">        :param kind: Type of plot (default is scatter plot)</span>
+<span class="sd">        :type kind: string</span>
+<span class="sd">        :param size: Size of the plot (default size)</span>
+<span class="sd">        :type size: int</span>
+<span class="sd">        :param remove_outliers: Boolean value indicating if the outliers must be identified and removed (default False)</span>
+<span class="sd">        :type remove_outliers: boolean</span>
+<span class="sd">        :param is_colored: Indicates if the points must be colored according to target </span>
+<span class="sd">        :type is_colored: boolean</span>
+<span class="sd">        :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is &quot;R&quot;.</span>
+<span class="sd">        :type colorbar: boolean</span>
+<span class="sd">        :returns: The matplotlib axes containing the plot.</span>
+<span class="sd">        :rtype: Axes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># Scale the data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_type</span> <span class="o">==</span> <span class="s2">&quot;tailored&quot;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df_descriptors</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_descriptors</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="c1"># Linear dimensionality reduction to 2 components by PCA</span>
+        <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">first2ecpf_components</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">coverage_components</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span>
+        
+        <span class="c1"># Create labels for the plot</span>
+        <span class="n">first_component</span> <span class="o">=</span> <span class="s2">&quot;PC-1 (&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:.0%}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coverage_components</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+        <span class="n">second_component</span> <span class="o">=</span> <span class="s2">&quot;PC-2 (&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:.0%}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coverage_components</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+        <span class="c1"># Create a dataframe containinting the first 2 PCA components of ECFP </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df_2_components</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">first2ecpf_components</span>
+             <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_component</span><span class="p">,</span> <span class="n">second_component</span><span class="p">])</span>
+        
+        <span class="c1"># Create a plot based on the PCA model </span>
+        <span class="n">pca_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_plot</span><span class="p">(</span><span class="n">first_component</span><span class="p">,</span> <span class="n">second_component</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="s2">&quot;PCA plot&quot;</span><span class="p">,</span> <span class="n">remove_outliers</span><span class="p">,</span> <span class="n">is_colored</span><span class="p">,</span> <span class="n">colorbar</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pca_plot</span></div>
+    
+    
+<div class="viewcode-block" id="Plotter.tsne"><a class="viewcode-back" href="../../api.html#chemplot.chemplot.Plotter.tsne">[docs]</a>    <span class="k">def</span> <span class="nf">tsne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pca</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">remove_outliers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_colored</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the first 2 t-SNE components of ECFP fingerprints and plots</span>
+<span class="sd">        the data based on the result.</span>
+<span class="sd">        </span>
+<span class="sd">        :param perplexity: perplexity value for the t-SNE model</span>
+<span class="sd">        :type perplexity: int</span>
+<span class="sd">        :param random_state: random seed that can be passed as a parameter for reproducing the same results</span>
+<span class="sd">        :type random_state: int</span>
+<span class="sd">        :param pca: Indicates that the data dimensionality must be first reduceded with PCA, before being reduced with t-SNE.</span>
+<span class="sd">        :type pca: boolean</span>
+<span class="sd">        :param kind: Type of plot (default is scatter plot)</span>
+<span class="sd">        :type kind: string</span>
+<span class="sd">        :param size: Size of the plot (default size)</span>
+<span class="sd">        :type size: int</span>
+<span class="sd">        :param remove_outliers: Boolean value indicating if the outliers must be identified and removed (default False)</span>
+<span class="sd">        :type remove_outliers: boolean</span>
+<span class="sd">        :param is_colored: Indicates if the points must be colored according to target </span>
+<span class="sd">        :type is_colored: boolean</span>
+<span class="sd">        :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is &quot;R&quot;.</span>
+<span class="sd">        :type colorbar: boolean</span>
+<span class="sd">        :returns: The matplotlib axes containing the plot.</span>
+<span class="sd">        :rtype: Axes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># Scale the data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_type</span> <span class="o">==</span> <span class="s2">&quot;tailored&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df_descriptors</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_descriptors</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        
+        <span class="n">plot_title</span> <span class="o">=</span> <span class="s2">&quot;t-SNE plot&quot;</span>
+        <span class="c1"># Preprocess the data with PCA</span>
+        <span class="k">if</span> <span class="n">pca</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_type</span> <span class="o">==</span> <span class="s2">&quot;structural&quot;</span><span class="p">:</span>
+            <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">plot_title</span> <span class="o">=</span> <span class="s2">&quot;t-SNE plot from components with cumulative variance explained &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:.0%}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">))</span>
+        
+        <span class="c1"># Define the perplexity of the model</span>
+        <span class="k">if</span> <span class="n">perplexity</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">perplexity_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)),</span> <span class="mi">50</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">perplexity</span><span class="o">&lt;</span><span class="mi">5</span> <span class="ow">or</span> <span class="n">perplexity</span><span class="o">&gt;</span><span class="mi">50</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The perplexity is related to the number of nearest neighbors that is used in other manifold learning algorithms./n&#39;</span><span class="o">+</span>
+                      <span class="s1">&#39;Robust results are obtained for values of perplexity between 5 and 50. The inputed value is outside that range.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                      <span class="s1">&#39;Therefore the closest value between 5 and 50 to the parameter inputed has been used in the method.&#39;</span><span class="p">)</span>
+            <span class="n">perplexity_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">perplexity</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+        <span class="c1"># Embed the data in two dimensions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tsne_fit</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="n">perplexity_value</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="n">ecfp_tsne_embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tsne_fit</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># Create a dataframe containinting the first 2 TSNE components of ECFP </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df_2_components</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">ecfp_tsne_embedding</span>
+             <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t-SNE-1&#39;</span><span class="p">,</span> <span class="s1">&#39;t-SNE-2&#39;</span><span class="p">])</span>
+            
+        <span class="c1"># Create a plot based on the TSNE model </span>
+        <span class="n">tsne_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_plot</span><span class="p">(</span><span class="s1">&#39;t-SNE-1&#39;</span><span class="p">,</span> <span class="s1">&#39;t-SNE-2&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">plot_title</span><span class="p">,</span> <span class="n">remove_outliers</span><span class="p">,</span> <span class="n">is_colored</span><span class="p">,</span> <span class="n">colorbar</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tsne_plot</span></div>
+        
+        
+<div class="viewcode-block" id="Plotter.umap"><a class="viewcode-back" href="../../api.html#chemplot.chemplot.Plotter.umap">[docs]</a>    <span class="k">def</span> <span class="nf">umap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_dist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">remove_outliers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_colored</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the first 2 UMAP components of ECFP fingerprints and plots</span>
+<span class="sd">        the data based on the result.</span>
+<span class="sd">        </span>
+<span class="sd">        :param n_neighbors: Number of neighbours used in the UMAP madel.</span>
+<span class="sd">        :type n_neighbors: int</span>
+<span class="sd">        :param min_dist: Value between 0.0 and 0.99, indicates how close to each other the points can be displayed.</span>
+<span class="sd">        :type min_dist: float</span>
+<span class="sd">        :param random_state: random seed that can be passed as a parameter for reproducing the same results</span>
+<span class="sd">        :type random_state: int</span>
+<span class="sd">        :param kind: Type of plot (default is scatter plot)</span>
+<span class="sd">        :type kind: string</span>
+<span class="sd">        :param size: Size of the plot (default size)</span>
+<span class="sd">        :type size: int</span>
+<span class="sd">        :param remove_outliers: Boolean value indicating if the outliers must be identified and removed (default False)</span>
+<span class="sd">        :type remove_outliers: boolean</span>
+<span class="sd">        :param is_colored: Indicates if the points must be colored according to target </span>
+<span class="sd">        :type is_colored: boolean</span>
+<span class="sd">        :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is &quot;R&quot;.</span>
+<span class="sd">        :type colorbar: boolean</span>
+<span class="sd">        :returns: The matplotlib axes containing the plot.</span>
+<span class="sd">        :rtype: Axes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+            
+        <span class="c1"># Scale the data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_type</span> <span class="o">==</span> <span class="s2">&quot;tailored&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df_descriptors</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_descriptors</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="n">n_neighbors</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">//</span><span class="mi">4</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n_neighbors</span><span class="o">&lt;</span><span class="mi">2</span> <span class="ow">or</span> <span class="n">n_neighbors</span><span class="o">&gt;</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">//</span><span class="mi">4</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;n_neighbors represents the size of the local neighborhood UMAP will look at when attempting to learn the manifold structure of the data./n&#39;</span><span class="o">+</span>
+                      <span class="s1">&#39;Robust results are obtained for values of n_neighbors between 2 up to a quarter of the data. The inputed value is outside that range.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                      <span class="s1">&#39;Therefore the closest value, between 2 and a quarter of the data, to the parameter inputed has been used in the method.&#39;</span><span class="p">)</span>
+            <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">//</span><span class="mi">4</span><span class="p">))</span>
+            
+        <span class="k">if</span> <span class="n">min_dist</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">min_dist</span> <span class="o">=</span> <span class="mf">0.9</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">min_dist</span><span class="o">&lt;</span><span class="mf">0.0</span> <span class="ow">or</span> <span class="n">min_dist</span><span class="o">&gt;</span><span class="mf">0.99</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;min_dist controls how tightly UMAP is allowed to pack points together../n&#39;</span><span class="o">+</span>
+                      <span class="s1">&#39;The value of min_dist can range from 0.0 up to 0.99. The inputed value is outside that range.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                      <span class="s1">&#39;Therefore the closest value between 0.0 and 0.99 to the parameter inputed has been used in the method.&#39;</span><span class="p">)</span>
+            <span class="n">min_dist</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_dist</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">))</span>
+            
+        <span class="c1"># Embed the data in two dimensions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">umap_fit</span> <span class="o">=</span> <span class="n">umap</span><span class="o">.</span><span class="n">UMAP</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="n">min_dist</span><span class="o">=</span><span class="n">min_dist</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ecfp_umap_embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">umap_fit</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># Create a dataframe containinting the first 2 UMAP components of ECFP </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df_2_components</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">ecfp_umap_embedding</span>
+             <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UMAP-1&#39;</span><span class="p">,</span> <span class="s1">&#39;UMAP-2&#39;</span><span class="p">])</span>
+        
+        <span class="c1"># Create a plot based on the TSNE model </span>
+        <span class="n">umap_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_plot</span><span class="p">(</span><span class="s1">&#39;UMAP-1&#39;</span><span class="p">,</span> <span class="s1">&#39;UMAP-2&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="s2">&quot;UMAP plot&quot;</span><span class="p">,</span> <span class="n">remove_outliers</span><span class="p">,</span> <span class="n">is_colored</span><span class="p">,</span> <span class="n">colorbar</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">umap_plot</span></div>
+    
+    
+<div class="viewcode-block" id="Plotter.construct_plot"><a class="viewcode-back" href="../../api.html#chemplot.chemplot.Plotter.construct_plot">[docs]</a>    <span class="k">def</span> <span class="nf">construct_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">remove_outliers</span><span class="p">,</span> <span class="n">is_colored</span><span class="p">,</span> <span class="n">colorbar</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a plot for the given molecules embedded in two dimensions.</span>
+<span class="sd">        </span>
+<span class="sd">        :param x: The first column of the dataframe containing the molecules</span>
+<span class="sd">        :type x: string</span>
+<span class="sd">        :param y: The second column of the dataframe containing the molecules</span>
+<span class="sd">        :type y: string</span>
+<span class="sd">        :param size: Size of the plot</span>
+<span class="sd">        :type size: int</span>
+<span class="sd">        :param kind: Type of plot </span>
+<span class="sd">        :type kind: string</span>
+<span class="sd">        :param title: Title of the plot</span>
+<span class="sd">        :type title: string</span>
+<span class="sd">        :param remove_outliers: Boolean value indicating if the outliers must be identified and removed </span>
+<span class="sd">        :type remove_outliers: boolean</span>
+<span class="sd">        :param is_colored: Indicates if the points must be colored according to target </span>
+<span class="sd">        :type is_colored: boolean</span>
+<span class="sd">        :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is &quot;R&quot;.</span>
+<span class="sd">        :type colorbar: boolean</span>
+<span class="sd">        :returns: The matplotlib axes containing the plot.</span>
+<span class="sd">        :rtype: Axes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">kind</span> <span class="o">!=</span> <span class="s1">&#39;scatter&#39;</span> <span class="ow">and</span> <span class="n">kind</span> <span class="o">!=</span> <span class="s1">&#39;hex&#39;</span> <span class="ow">and</span> <span class="n">kind</span> <span class="o">!=</span> <span class="s1">&#39;kde&#39;</span><span class="p">:</span>
+            <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;scatter&#39;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;kind indicates which type of plot must be visualized. Currently supported visualization are:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                             <span class="s1">&#39;-scatter plot (scatter)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                             <span class="s1">&#39;-hexagon plot (hex)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                             <span class="s1">&#39;-kernel density estimation plot (kde)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                             <span class="s1">&#39;Please input one between scatter, hex or kde for parameter kind.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>
+                             <span class="s1">&#39;As default scatter has been taken.&#39;</span><span class="p">)</span>
+            
+        <span class="n">df_2_components</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_2_components</span>
+        
+        <span class="c1"># Define colors </span>
+        <span class="n">hue</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">is_colored</span> <span class="o">=</span> <span class="kc">False</span><span class="p">;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_colored</span><span class="p">:</span>
+                <span class="n">df_2_components</span> <span class="o">=</span> <span class="n">df_2_components</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+                <span class="n">hue</span> <span class="o">=</span> <span class="s1">&#39;target&#39;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_type</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span>
+                    <span class="n">palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;inferno&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="c1"># Remove outliers (using Z-score)</span>
+        <span class="k">if</span> <span class="n">remove_outliers</span><span class="p">:</span>
+            <span class="n">z_scores</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">zscore</span><span class="p">(</span><span class="n">df_2_components</span><span class="p">[[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]])</span>
+            <span class="n">abs_z_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z_scores</span><span class="p">)</span>
+            <span class="n">filtered_entries</span> <span class="o">=</span> <span class="p">(</span><span class="n">abs_z_scores</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">df_2_components</span> <span class="o">=</span> <span class="n">df_2_components</span><span class="p">[</span><span class="n">filtered_entries</span><span class="p">]</span>
+            
+        <span class="c1"># Define plot looks parameters</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;dark&quot;</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;notebook&quot;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="n">size</span><span class="o">*</span><span class="mf">0.15</span><span class="p">)</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">,</span><span class="n">size</span><span class="p">))</span>
+        
+        <span class="c1"># Create a plot based on the PCA components </span>
+        <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;scatter&quot;</span><span class="p">:</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_2_components</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;scatter&quot;</span><span class="p">)</span>
+            <span class="n">axis</span> <span class="o">=</span> <span class="n">plot</span>
+            <span class="c1"># Add colorbar</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_type</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span> <span class="ow">and</span> <span class="n">colorbar</span><span class="p">:</span>
+                <span class="n">plot</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+                <span class="n">norm</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">df_2_components</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df_2_components</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+                <span class="n">cm</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;inferno&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+                <span class="n">cm</span><span class="o">.</span><span class="n">set_array</span><span class="p">([])</span>
+                <span class="n">plot</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;hex&quot;</span><span class="p">:</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">hexbin</span><span class="p">(</span><span class="n">df_2_components</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">df_2_components</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">gridsize</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;hex&quot;</span><span class="p">)</span>
+            <span class="n">axis</span> <span class="o">=</span> <span class="n">ax</span>
+        <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;kde&quot;</span><span class="p">:</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">shade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_2_components</span><span class="p">)</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;kde&quot;</span><span class="p">)</span>
+            <span class="n">axis</span> <span class="o">=</span> <span class="n">plot</span>
+             
+        <span class="c1"># Remove units from axis</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">yticks</span><span class="o">=</span><span class="p">[])</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="p">[])</span>
+        <span class="c1"># Add labels</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="n">size</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="n">size</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="n">size</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="c1">#Do not stretch image</span>
+        <span class="c1">#plot.axis(&#39;square&#39;)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">df_plot_xy</span> <span class="o">=</span> <span class="n">df_2_components</span><span class="p">[[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]]</span>
+        
+        <span class="k">return</span> <span class="n">axis</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Dajt Mullaj, Murat Cihan Sorkun.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

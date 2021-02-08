@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Dimensionality Reduction &mdash; ChemPlot 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Additional Features" href="add_features.html" />
+    <link rel="prev" title="Similarity Analysis" href="similarity.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ChemPlot
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Manual:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">How to use ChemPlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="similarity.html">Similarity Analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dimensionality Reduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pca">PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#t-sne">t-SNE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umap">UMAP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="add_features.html">Additional Features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ChemPlot</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Dimensionality Reduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user_manual/dimreduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dimensionality-reduction">
+<h1>Dimensionality Reduction<a class="headerlink" href="#dimensionality-reduction" title="Permalink to this headline">¶</a></h1>
+<p>ChemPlot uses different machine learning techniques to reduce the number of
+dimensions, or features, of each molecule to only two in order to then create
+2D graphs. These algorithms are: PCA <a class="footnote-reference brackets" href="#id6" id="id1">1</a>, t-SNE <a class="footnote-reference brackets" href="#id7" id="id2">2</a> and UMAP <a class="footnote-reference brackets" href="#id8" id="id3">3</a>.</p>
+<p>For the following examples we will use two molecular datasets, already
+mentioned in the previous section: the BBBP (blood-brain barrier penetration)
+dataset <a class="footnote-reference brackets" href="#id9" id="id4">4</a> and the BACE (β-secretase inhibitors) dataset <a class="footnote-reference brackets" href="#id10" id="id5">5</a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">chemplot</span> <span class="k">as</span> <span class="nn">cp</span>
+
+<span class="n">data_BBBP</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;BBBP.csv&quot;</span><span class="p">)</span>
+<span class="n">data_BACE</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;BACE.csv&quot;</span><span class="p">)</span>
+<span class="n">cp_BBBP</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Plotter</span><span class="o">.</span><span class="n">from_smiles</span><span class="p">(</span><span class="n">data_BBBP</span><span class="p">[</span><span class="s2">&quot;smiles&quot;</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">data_BBBP</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> <span class="n">target_type</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+<span class="n">cp_BACE</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Plotter</span><span class="o">.</span><span class="n">from_smiles</span><span class="p">(</span><span class="n">data_BACE</span><span class="p">[</span><span class="s2">&quot;smiles&quot;</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">data_BACE</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> <span class="n">target_type</span><span class="o">=</span><span class="s2">&quot;R&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="pca">
+<h2>PCA<a class="headerlink" href="#pca" title="Permalink to this headline">¶</a></h2>
+<p>ChemPlot uses PCA from the <a class="reference external" href="http://scikit-learn.org/stable/index.html">scikit-learn</a>
+package to compute the two principal components of the molecular dataset. PCA
+allows for time efficient results and for a visualization which gives a global
+view of the data.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp_BBBP</span><span class="o">.</span><span class="n">pca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/gs_pca.png"><img alt="../_images/gs_pca.png" src="../_images/gs_pca.png" style="width: 600px;" /></a>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp_BACE</span><span class="o">.</span><span class="n">pca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/bace_pca.png"><img alt="../_images/bace_pca.png" src="../_images/bace_pca.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="t-sne">
+<h2>t-SNE<a class="headerlink" href="#t-sne" title="Permalink to this headline">¶</a></h2>
+<p>ChemPlot uses t-SNE from the <a class="reference external" href="http://scikit-learn.org/stable/index.html">scikit-learn</a>
+package to reduce to only 2 the number of features of the molecular dataset.
+t-SNE looks at local neighbourhoods of molecules when it is reducing their
+dimensions. In this way the local structure of the dataset is better preserved,
+while the global structure is mostly lost when plotting the results in a 2D
+graph. However because of the locality preservation that t-SNE offers it is
+possible to visualize well-defined clusters of similar molecules that exhibit
+similar properties.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp_BBBP</span><span class="o">.</span><span class="n">tsne</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/gs_tsne.png"><img alt="../_images/gs_tsne.png" src="../_images/gs_tsne.png" style="width: 600px;" /></a>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp_BACE</span><span class="o">.</span><span class="n">tsne</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/bace_tsne.png"><img alt="../_images/bace_tsne.png" src="../_images/bace_tsne.png" style="width: 600px;" /></a>
+<p>Two important parameters of the <code class="docutils literal notranslate"><span class="pre">tsne()</span></code> method are <code class="docutils literal notranslate"><span class="pre">perplexity</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pca</span></code>. The former is a positive integer parameter which defines the size of
+the neighbourhoods the algorithm will look for when analyzing the dataset. The
+higher the value of <code class="docutils literal notranslate"><span class="pre">perplexity</span></code> the wider the analyzed neighbourhoods. The
+recommended values for <code class="docutils literal notranslate"><span class="pre">perplexity</span></code> range from 5 to 50. The <code class="docutils literal notranslate"><span class="pre">pca</span></code> parameter
+is a Boolean value which indicates if the data has to be preprocessed with PCA.
+Its value is taken into account when plotting according to structural
+similarities when each molecule is encoded with a long number of features.
+Since t-SNE is computationally expensive, preprocessing the data can save
+substantial amounts of time when generating plots, at the cost of losing some
+of the molecular structural information.</p>
+</div>
+<div class="section" id="umap">
+<h2>UMAP<a class="headerlink" href="#umap" title="Permalink to this headline">¶</a></h2>
+<p>ChemPlot uses UMAP from the <a class="reference external" href="https://github.com/lmcinnes/umap">umap-learn</a>
+package to reduce to only 2 the number of features of the molecular dataset. As
+t-SNE, UMAP looks at local neighbourhoods of molecules when it is reducing
+their dimensions. While this also results in 2D clusters of locally similar
+molecules, compared to t-SNE, UMAP retains more of the global structure of the
+dataset. Compared to t-SNE, furthermore, UMAP is much more computationally
+efficient and faster.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp_BBBP</span><span class="o">.</span><span class="n">umap</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/gs_umap.png"><img alt="../_images/gs_umap.png" src="../_images/gs_umap.png" style="width: 600px;" /></a>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp_BACE</span><span class="o">.</span><span class="n">umap</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/bace_umap.png"><img alt="../_images/bace_umap.png" src="../_images/bace_umap.png" style="width: 600px;" /></a>
+<p>Two important parameters of the <code class="docutils literal notranslate"><span class="pre">umap()</span></code> method are <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> and
+<code class="docutils literal notranslate"><span class="pre">min_dist</span></code>. The former is a positive integer parameter which constrains the
+size of the local neighbourhood the algorithm will look for when analyzing the
+dataset. Low values of <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> will make ChemPlot visualize very local
+structures. The <code class="docutils literal notranslate"><span class="pre">min_dist</span></code> parameter is a value which ranges from 0.0 to
+0.99. It provides the minimum distance apart that points are allowed to be in
+the 2D graph.</p>
+<hr class="docutils" />
+<h3><p>References:</p>
+</h3><dl class="footnote brackets">
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><strong>Wold, S., Esbensen, K., Geladi, P.</strong> (1987). <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/0169743987800849">Principal component analysis.</a> Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><strong>van der Maaten, Laurens, Hinton, Geoffrey.</strong> (2008). <a class="reference external" href="https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbclid=IwAR0Bgg1eA5TFmqOZeCQXsIoL6PKrVXUFaskUKtg6yBhVXAFFvZA6yQiYx-M">Viualizingdata using t-SNE.</a> Journal of Machine Learning Research. 9. 2579-2605.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p><strong>McInnes, L., Healy, J., Melville, J.</strong> (2018). <a class="reference external" href="https://arxiv.org/abs/1802.03426">Umap: Uniform manifold approximation and projection for dimension reduction.</a> arXivpreprint arXiv:1802.03426.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p><strong>Martins, Ines Filipa, et al.</strong> (2012). <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/22612593/">A Bayesian approach to in silico blood-brain barrier penetration modeling.</a> Journal of chemical information and modeling 52.6, 1686-1697</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd><p><strong>Subramanian, Govindan, et al.</strong> (2016). <a class="reference external" href="https://pubs.acs.org/doi/10.1021/acs.jcim.6b00290">Computational modeling of β-secretase 1 (BACE-1) inhibitors using ligand based approaches.</a> Journal of chemical information and modeling 56.10, 1936-1949.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="add_features.html" class="btn btn-neutral float-right" title="Additional Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="similarity.html" class="btn btn-neutral float-left" title="Similarity Analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Dajt Mullaj, Murat Cihan Sorkun.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

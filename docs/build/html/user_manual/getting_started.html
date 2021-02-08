@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>How to use ChemPlot &mdash; ChemPlot 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Similarity Analysis" href="similarity.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ChemPlot
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Manual:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to use ChemPlot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-the-results">Plotting the results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="similarity.html">Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimreduction.html">Dimensionality Reduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add_features.html">Additional Features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ChemPlot</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>How to use ChemPlot</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user_manual/getting_started.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-use-chemplot">
+<h1>How to use ChemPlot<a class="headerlink" href="#how-to-use-chemplot" title="Permalink to this headline">¶</a></h1>
+<p>ChemPlot is a cheminformatics tool whose purpose is to visualize subsets of the
+chemical space in two dimensions. It uses the <a class="reference external" href="http://www.rdkit.org">RDKit chemistry framework</a>, the
+<a class="reference external" href="http://scikit-learn.org/stable/index.html">scikit-learn</a> API and the <a class="reference external" href="https://github.com/lmcinnes/umap">umap-learn</a> API.</p>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>To demonstrate how to use the functions the library offers we will use a BBBP
+(blood-brain barrier penetration) <a class="footnote-reference brackets" href="#id5" id="id1">1</a> molecular dataset. This is a set of
+molecules encoded as SMILES, which have been assigned a binary label according
+to their permeability properties. In this example the dataset has been
+previously saved locally as a CSV file and is imported with <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/index.html">pandas</a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">data_BBBP</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;BBBP.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To visualize the molecules in 2D according to their similarity it is first
+needed to construct a <code class="docutils literal notranslate"><span class="pre">Plotter</span></code> object. This is the class containing
+all the functions ChemPlot uses to produce the desired visualizations. A
+<code class="docutils literal notranslate"><span class="pre">Plotter</span></code> object can be constructed using classmethods, which differentiate
+between the type of input that is feed to the object. In our example we need to
+use the method from_smiles. We pass three parameters: the list of SMILES from
+the BBBP dataset, their target values (the binary labels) and the target type
+(in this case “C”, which stands for “Classification”).</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">chemplot</span> <span class="k">as</span> <span class="nn">cp</span>
+
+<span class="n">plotter</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Plotter</span><span class="o">.</span><span class="n">from_smiles</span><span class="p">(</span><span class="n">data_BBBP</span><span class="p">[</span><span class="s2">&quot;smiles&quot;</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">data_BBBP</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> <span class="n">target_type</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plotting-the-results">
+<h2>Plotting the results<a class="headerlink" href="#plotting-the-results" title="Permalink to this headline">¶</a></h2>
+<p>When the <code class="docutils literal notranslate"><span class="pre">Plotter</span></code> object was constructed descriptors for each SMILES were
+calculated, using the library <a class="reference external" href="http://mordred-descriptor.github.io/documentation/v0.1.0/introduction.html">mordred</a>,
+and then selected based on the target values. We can now plot the BBBP dataset
+in 2D to visually analyze the data. This is done by reducing the number of
+dimensions for each molecule from the number of descriptors selected to only 2.
+ChemPlot uses three different algorithms in order to achieve this.
+The first figure shows the results obtained by reducing the dimensions of
+features by Principal Component Analysis (PCA) <a class="footnote-reference brackets" href="#id6" id="id2">2</a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">cp</span><span class="o">.</span><span class="n">pca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/gs_pca.png"><img alt="../_images/gs_pca.png" src="../_images/gs_pca.png" style="width: 600px;" /></a>
+<p>The second figure shows the results obtained by reducing the dimensions of features by t-SNE <a class="footnote-reference brackets" href="#id7" id="id3">3</a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">pca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/gs_tsne.png"><img alt="../_images/gs_tsne.png" src="../_images/gs_tsne.png" style="width: 600px;" /></a>
+<p>The third figure shows the results obtained by reducing the dimensions of features by UMAP <a class="footnote-reference brackets" href="#id8" id="id4">4</a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">pca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/gs_umap.png"><img alt="../_images/gs_umap.png" src="../_images/gs_umap.png" style="width: 600px;" /></a>
+<p>In each figure the molecules are coloured by class value.</p>
+<hr class="docutils" />
+<h3><p>References:</p>
+</h3><dl class="footnote brackets">
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><strong>Martins, Ines Filipa, et al.</strong> (2012). <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/22612593/">A Bayesian approach to in silico blood-brain barrier penetration modeling.</a> Journal of chemical information and modeling 52.6, 1686-1697</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><strong>Wold, S., Esbensen, K., Geladi, P.</strong> (1987). <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/0169743987800849">Principal component analysis.</a> Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p><strong>van der Maaten, Laurens, Hinton, Geoffrey.</strong> (2008). <a class="reference external" href="https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbclid=IwAR0Bgg1eA5TFmqOZeCQXsIoL6PKrVXUFaskUKtg6yBhVXAFFvZA6yQiYx-M">Viualizingdata using t-SNE.</a> Journal of Machine Learning Research. 9. 2579-2605.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p><strong>McInnes, L., Healy, J., Melville, J.</strong> (2018). <a class="reference external" href="https://arxiv.org/abs/1802.03426">Umap: Uniform manifold approximation and projection for dimension reduction.</a> arXivpreprint arXiv:1802.03426.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="similarity.html" class="btn btn-neutral float-right" title="Similarity Analysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Dajt Mullaj, Murat Cihan Sorkun.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
