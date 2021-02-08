@@ -98,7 +98,7 @@ The second figure shows the results obtained by reducing the dimensions of featu
     cp.pca()
     plt.show()
 
-.. image:: images/gs_tsne.png
+.. image:: https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_tsne.png
    :width: 400
 
 The third figure shows the results obtained by reducing the dimensions of features by UMAP [4]_.
@@ -108,7 +108,7 @@ The third figure shows the results obtained by reducing the dimensions of featur
     cp.pca()
     plt.show()
 
-.. image:: images/gs_umap.png
+.. image:: https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_umap.png
    :width: 400
 
 In each figure the molecules are coloured by class value. 
