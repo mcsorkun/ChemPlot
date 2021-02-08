@@ -3,7 +3,7 @@
 # License: BSD 3 clause
 from __future__ import print_function
 
-import chemplot.descriptors as desc
+import .descriptors as desc
 import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
