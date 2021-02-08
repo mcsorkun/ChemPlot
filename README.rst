@@ -88,7 +88,8 @@ features by Principal Component Analysis (PCA) [2]_.
     cp.pca()
     plt.show()
 
-
+.. image:: images/gs_pca.png
+   :width: 400
 
 The second figure shows the results obtained by reducing the dimensions of features by t-SNE [3]_.
 
