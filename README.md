@@ -44,7 +44,7 @@ framework](http://www.rdkit.org), the
 ### Getting started
 
 To demonstrate how to use the functions the library offers we will use a
-BBBP (blood-brain barrier penetration) [^1] molecular dataset. This is a
+BBBP (blood-brain barrier penetration) [1] molecular dataset. This is a
 set of molecules encoded as SMILES, which have been assigned a binary
 label according to their permeability properties. In this example the
 dataset has been previously saved locally as a CSV file and is imported
@@ -82,7 +82,7 @@ dataset in 2D to visually analyze the data. This is done by reducing the
 number of dimensions for each molecule from the number of descriptors
 selected to only 2. ChemPlot uses three different algorithms in order to
 achieve this. The first figure shows the results obtained by reducing
-the dimensions of features by Principal Component Analysis (PCA) [^2].
+the dimensions of features by Principal Component Analysis (PCA) [2].
 
 ``` {.sourceCode .python3}
 import matplotlib.pyplot as plt
@@ -94,7 +94,7 @@ plt.show()
 ![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_pca.png)
 
 The second figure shows the results obtained by reducing the dimensions
-of features by t-SNE [^3].
+of features by t-SNE [3].
 
 ``` {.sourceCode .python3}
 cp.pca()
@@ -104,7 +104,7 @@ plt.show()
 ![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_tsne.png)
 
 The third figure shows the results obtained by reducing the dimensions
-of features by UMAP [^4].
+of features by UMAP [4].
 
 ``` {.sourceCode .python3}
 cp.pca()
@@ -122,22 +122,22 @@ References:
 
 </h3>
 
-[^1]: **Martins, Ines Filipa, et al.** (2012). [A Bayesian approach to
+[1]: **Martins, Ines Filipa, et al.** (2012). [A Bayesian approach to
     in silico blood-brain barrier penetration
     modeling.](https://pubmed.ncbi.nlm.nih.gov/22612593/) Journal of
     chemical information and modeling 52.6, 1686-1697
 
-[^2]: **Wold, S., Esbensen, K., Geladi, P.** (1987). [Principal
+[2]: **Wold, S., Esbensen, K., Geladi, P.** (1987). [Principal
     component
     analysis.](https://www.sciencedirect.com/science/article/abs/pii/0169743987800849)
     Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.
 
-[^3]: **van der Maaten, Laurens, Hinton, Geoffrey.** (2008).
+[3]: **van der Maaten, Laurens, Hinton, Geoffrey.** (2008).
     [Viualizingdata using
     t-SNE.](https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbclid=IwAR0Bgg1eA5TFmqOZeCQXsIoL6PKrVXUFaskUKtg6yBhVXAFFvZA6yQiYx-M)
     Journal of Machine Learning Research. 9. 2579-2605.
 
-[^4]: **McInnes, L., Healy, J., Melville, J.** (2018). [Umap: Uniform
+[4]: **McInnes, L., Healy, J., Melville, J.** (2018). [Umap: Uniform
     manifold approximation and projection for dimension
     reduction.](https://arxiv.org/abs/1802.03426) arXivpreprint
     arXiv:1802.03426.
