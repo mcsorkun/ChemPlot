@@ -1,5 +1,4 @@
-ChemPlot
-========
+# ChemPlot
 
 In the last decades, Machine Learning (ML) applications have had a great
 impact on molecular and material science. However, every ML model
@@ -9,8 +8,7 @@ chemical space of their datasets. Chemplot contains smart algorithms
 behind which uses both structural and tailored similarity. Moreover, it
 is easy to use even for non-experts.
 
-Installation
-------------
+## Installation
 
 There two different options you can follow to install ChemPlot.
 
@@ -32,8 +30,7 @@ running:
 
     pip install chemplot
 
-How to use ChemPlot
--------------------
+## How to use ChemPlot
 
 ChemPlot is a cheminformatics tool whose purpose is to visualize subsets
 of the chemical space in two dimensions. It uses the [RDKit chemistry
