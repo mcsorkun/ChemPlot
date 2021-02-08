@@ -1,13 +1,10 @@
-import io
-import os
-import sys
-
 from setuptools import setup
 
-README_rst = ""
-fndoc = os.path.join(os.path.dirname(__file__), "README.rst")
-with io.open(fndoc, mode="r", encoding="utf-8") as fd:
-    README_rst = fd.read()
+# read the contents of the README file
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name="chemplot", 
@@ -15,7 +12,8 @@ setup(
     author="Murat Cihan Sorkun",
     author_email="m.c.sorkun@differ.nl",
     description="A python library for chemical space visualization.",
-    long_description=README_rst,
+    long_description=long_description,
+    long_description_content_type='text/markdown'
     url="https://github.com/mcsorkun/ChemPlot",
     license="BSD",
     packages=["chemplot"],
