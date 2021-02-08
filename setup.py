@@ -5,7 +5,7 @@ with open("README.rst", "r") as readme_file:
 
 setup(
     name="chemplot", 
-    version="",
+    version="0.1.0",
     author="Murat Cihan Sorkun",
     author_email="m.c.sorkun@differ.nl",
     description="A python library for chemical space visualization.",
