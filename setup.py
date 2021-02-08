@@ -1,6 +1,6 @@
 from setuptools import setup
 
-with open("README.rst", "r") as readme_file:
+with open("README.rst", encoding="UTF-8") as readme_file:
     long_description = readme_file.read()
 
 setup(
@@ -10,7 +10,7 @@ setup(
     author_email="m.c.sorkun@differ.nl",
     description="A python library for chemical space visualization.",
     long_description=long_description,
-    long_description_content_type="",
+    long_description_content_type: text/x-rst,
     url="https://github.com/mcsorkun/ChemPlot",
     license="BSD",
     packages=["chemplot"],
