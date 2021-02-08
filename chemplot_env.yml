@@ -4,6 +4,5 @@ channels:
 - conda-forge
 - defaults
 dependencies:
-- rdkit=2020.03.2.0=py37h3d1ada6_1
-prefix: C:\Users\20175707\AppData\Local\conda\conda\envs\chem
+- rdkit
 
