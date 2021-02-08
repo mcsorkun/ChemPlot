@@ -17,9 +17,15 @@ setup(
     classifiers=[
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
+        "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
+        "Natural Language :: English",
+        "Topic :: Scientific/Engineering"
     ],
     keywords="chemoinformatics dimension reduction",
     install_requires=[
@@ -31,6 +37,6 @@ setup(
         "seaborn >= 0.11.0",
         "scipy >= 1.3.1",
         "matplotlib >= 3.2.0"
-    ]
-    python_requires='>=3',
+    ],
+    python_requires='>=3.6',
 )
