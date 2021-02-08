@@ -22,7 +22,7 @@ setup(
         "Natural Language :: English",
         "Topic :: Scientific/Engineering"
     ],
-    keywords="chemoinformatics dimension reduction",
+    keywords="chemoinformatics, dimension reduction",
     install_requires=[
         "numpy >= 1.17",
         "mordred >= 1.2.0",
