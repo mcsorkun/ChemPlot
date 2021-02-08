@@ -13,7 +13,7 @@ setup(
     author_email="m.c.sorkun@differ.nl",
     description="A python library for chemical space visualization.",
     long_description=long_description,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
     url="https://github.com/mcsorkun/ChemPlot",
     license="BSD",
     packages=["chemplot"],
