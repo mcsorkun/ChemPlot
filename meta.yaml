@@ -26,7 +26,7 @@ requirements:
     - python >=3.6
     - rdkit
     - numpy >=1.17
-    - mordred >= 1.2.0
+    - mordred >=1.2.0
     - pandas 
     - scikit-learn >=0.22 
     - umap-learn
