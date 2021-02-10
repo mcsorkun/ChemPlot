@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="chemplot", 
-    version="0.1.0",
+    version="0.1.2",
     author="Murat Cihan Sorkun",
     author_email="mcsorkun@gmail.com",
     description="A python library for chemical space visualization.",
@@ -28,7 +28,7 @@ setup(
         "mordred >= 1.2.0",
         "pandas >= 1.0.1",
         "scikit-learn >= 0.22",
-        "umap-learn >= 0.4.5",
+        "umap-learn >= 0.5.0",
         "seaborn >= 0.11.0",
         "scipy >= 1.3.1",
         "matplotlib >= 3.2.0"
