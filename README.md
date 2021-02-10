@@ -17,7 +17,7 @@ There two different options you can follow to install ChemPlot.
 The easiest and recommended way to install is using conda. To install
 ChemPlot, at the command line, run:
 
-    conda install -rdkit -chemplot chemplot
+    conda install -c rdkit -c chemplot chemplot
 
 ### Option 2: Use pip
 
