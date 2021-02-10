@@ -1,0 +1,56 @@
+{% set name = "chemplot" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: 6a36e7185540739c3fd96615f939b96a11932715585ac9bf3a667de3ed414931
+
+build:
+  number: 0
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  host:
+    - pip
+    - setuptools
+    - python >=3.6
+  build:
+    - rdkit 
+  run:
+    - python >=3.6
+    - rdkit
+    - numpy >=1.17
+    - mordred >= 1.2.0
+    - pandas 
+    - scikit-learn >=0.22 
+    - umap-learn
+    - seaborn
+    - scipy 
+    - matplotlib
+
+about:
+  home: https://github.com/mcsorkun/ChemPlot
+  license: BSD-3-Clause License
+  license_family: BSD
+  license_file: LICENSE
+  summary: "A python library for chemical space visualization."
+
+  description: |
+    In the last decades, Machine Learning (ML) applications have had a great impact on molecular and 
+    material science. However, every ML model requires a definition of its applicability domain. Chemplot 
+    is a python library for chemical space visualization that allows users to plot the chemical space of 
+    their datasets. Chemplot contains smart algorithms behind which uses both structural and tailored 
+    similarity. Moreover, it is easy to use even for non-experts.
+  doc_url: 
+  dev_url: https://github.com/mcsorkun/ChemPlot 
+
+extra:
+  recipe-maintainers:
+    - Murat Cihan Sorkun
+    - Dajt Mullaj 
