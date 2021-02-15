@@ -25,10 +25,10 @@ requirements:
   run:
     - python >=3.6
     - rdkit
-    - numpy >=1.17
-    - mordred >=1.2.0
+    - numpy 
+    - mordred 
     - pandas 
-    - scikit-learn >=0.22 
+    - scikit-learn 
     - umap-learn
     - seaborn
     - scipy 
