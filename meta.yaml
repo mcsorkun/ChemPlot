@@ -8,7 +8,7 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
-  sha256: ed25e36d4b34a389f4f0f69f76df4223d1126ede8e833bdbc3951f25c0e28acf
+  sha256: 019baea423d726ab3f2d9e5ca2691339346d2714f749cf1103ff14b4304fa30e
 
 build:
   number: 0
@@ -19,11 +19,11 @@ requirements:
   host:
     - pip
     - setuptools
-    - python >=3.6
+    - python
   build:
     - rdkit 
   run:
-    - python >=3.6
+    - python
     - rdkit
     - numpy 
     - mordred 
