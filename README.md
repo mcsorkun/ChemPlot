@@ -1,21 +1,19 @@
 # ChemPlot
 
-In the last decades, Machine Learning (ML) applications have had a great
-impact on molecular and material science. However, every ML model
-requires a definition of its applicability domain. Chemplot is a python
-library for chemical space visualization that allows users to plot the
-chemical space of their datasets. Chemplot contains smart algorithms
-behind which uses both structural and tailored similarity. Moreover, it
-is easy to use even for non-experts.
+Chemplot is a python library for chemical space visualization that allows users to plot the chemical space of their molecular datasets. Chemplot contains both structural and tailored similarity algorithms to plot similar molecules together based on the needs of users. Moreover, it is easy to use even for non-experts.
+
+## User Manual
+
+You can find the detailed features and examples in the following link: [User Manual](https://chemplot.readthedocs.io/en/latest/)
 
 ## Installation
 
-There two different options you can follow to install ChemPlot.
+There are two different options to install ChemPlot.
 
 ### Option 1: Use conda (recommended)
 
 The easiest and recommended way to install is using conda. To install
-ChemPlot, at the command line, run:
+ChemPlot, run the following from the command line:
 
     conda install -c rdkit -c chemplot chemplot
 
@@ -40,8 +38,8 @@ framework](http://www.rdkit.org), the
 
 ### Getting started
 
-To demonstrate how to use the functions the library offers we will use a
-BBBP (blood-brain barrier penetration) [1] molecular dataset. This is a
+To demonstrate how to use the functions the library offers we use
+BBBP (blood-brain barrier penetration) [1] molecular dataset. BBBP is a
 set of molecules encoded as SMILES, which have been assigned a binary
 label according to their permeability properties. In this example the
 dataset has been previously saved locally as a CSV file and is imported
