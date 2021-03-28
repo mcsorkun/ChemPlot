@@ -133,4 +133,12 @@ References:
     manifold approximation and projection for dimension
     reduction.](https://arxiv.org/abs/1802.03426) arXivpreprint
     arXiv:1802.03426.
+    
+### Contact
+
+For any question you can contact us through email:
+
+- [Murat Cihan Sorkun](mailto:mcsorkun@gmail.com)
+- [Dajt Mullaj](mailto:dajt.mullai@gmail.com)
+
 
