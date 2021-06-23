@@ -77,11 +77,8 @@ In this example we will first use t-SNE [2].
 ``` {.sourceCode .python3}
 cp.tsne()
 ```
-| f | f | f |   |   |
-|---|---|---|---|---|
-| 4 | 4 | 4 | 
-| 4 | 4 | 4 |
-| 4 | 4 | 4 | 
+
+The output will be a dataframe containg the reduced dimensions and the target values.
 
 | t-SNE-1          | t-SNE-2          | target           |
 |------------------|------------------|------------------|
@@ -89,23 +86,33 @@ cp.tsne()
 | -35.535915       | 21.648867        | 1                |
 | 23.771597        | -14.438373       | 1                |
 
-![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_pca.png)
-
-The second figure shows the results obtained by reducing the dimensions
-of features by t-SNE [3].
+To now visualize the chemical space of the dataset we use `visualize_plot()`.
 
 ``` {.sourceCode .python3}
-cp.pca()
+import matplotlib.pyplot as plt
+cp.visualize_plot()
 plt.show()
 ```
 
 ![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_tsne.png)
 
+The second figure shows the results obtained by reducing the dimensions 
+of features Principal Component Analysis (PCA) [3].
+
+``` {.sourceCode .python3}
+cp.pca()
+cp.visualize_plot()
+plt.show()
+```
+
+![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_pca.png)
+
 The third figure shows the results obtained by reducing the dimensions
 of features by UMAP [4].
 
 ``` {.sourceCode .python3}
-cp.pca()
+cp.umap()
+cp.visualize_plot()
 plt.show()
 ```
 
@@ -125,15 +132,15 @@ References:
     modeling.](https://pubmed.ncbi.nlm.nih.gov/22612593/) Journal of
     chemical information and modeling 52.6, 1686-1697
 
-[2]: **Wold, S., Esbensen, K., Geladi, P.** (1987). [Principal
-    component
-    analysis.](https://www.sciencedirect.com/science/article/abs/pii/0169743987800849)
-    Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.
-
-[3]: **van der Maaten, Laurens, Hinton, Geoffrey.** (2008).
+[2]: **van der Maaten, Laurens, Hinton, Geoffrey.** (2008).
     [Viualizingdata using
     t-SNE.](https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbclid=IwAR0Bgg1eA5TFmqOZeCQXsIoL6PKrVXUFaskUKtg6yBhVXAFFvZA6yQiYx-M)
     Journal of Machine Learning Research. 9. 2579-2605.
+    
+[3]: **Wold, S., Esbensen, K., Geladi, P.** (1987). [Principal
+    component
+    analysis.](https://www.sciencedirect.com/science/article/abs/pii/0169743987800849)
+    Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.
 
 [4]: **McInnes, L., Healy, J., Melville, J.** (2018). [Umap: Uniform
     manifold approximation and projection for dimension
