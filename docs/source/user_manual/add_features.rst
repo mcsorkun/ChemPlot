@@ -28,12 +28,14 @@ Hexagonal Bin Plot
 In a hexagonal bin plot points are binned into hexagons, which in turn are 
 coloured depending on the count of observations they cover. To create a 
 hexagonal bin plot we need to pass the keyword “hex” as the ``kind`` 
-parameter when calling one of the dimensionality reduction and plotting 
-functions.  
+parameter when visualizing the plot.
 
 .. code:: python3
     
-    cp_BBBP.tsne(kind="hex", random_state=0)
+    import matplotlib.pyplot as plt
+    
+    cp_BBBP.tsne(random_state=0)
+    cp_BBBP.visualize_plot(kind="hex")
     plt.show()
 
 .. image:: images/tsne_hex.png
@@ -46,12 +48,12 @@ Kernel Density Estimate Plot
 In a kernel density estimate plot, the data distribution is visualized by a 
 continuous probability density curve which in our case is in 2 dimensions. To 
 create a kernel density estimate plot we need to pass the keyword “kde” as the 
-``kind`` parameter when calling one of the dimensionality reduction and 
-plotting functions.  
+``kind`` parameter when visualizing the plot.  
 
 .. code:: python3
     
-    cp_BBBP.tsne(kind="kde", random_state=0)
+    cp_BBBP.tsne(random_state=0)
+    cp_BBBP.visualize_plot(kind="kde")
     plt.show()
 
 .. image:: images/tsne_kde.png

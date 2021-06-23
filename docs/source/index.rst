@@ -22,6 +22,7 @@ This guide provides the user with the explanantion of ChemPlot concepts and func
    user_manual/getting_started
    user_manual/similarity
    user_manual/dimreduction
+   user_manual/visualize_plots
    user_manual/add_features
    
 .. toctree::

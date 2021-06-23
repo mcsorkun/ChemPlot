@@ -39,40 +39,58 @@ the BBBP dataset, their target values (the binary labels) and the target type
 Plotting the results
 --------------------
 
-When the ``Plotter`` object was constructed descriptors for each SMILES were 
+When the ``Plotter`` object was constructed, descriptors for each SMILES were 
 calculated, using the library `mordred <http://mordred-descriptor.github.io/documentation/v0.1.0/introduction.html>`__, 
-and then selected based on the target values. We can now plot the BBBP dataset 
-in 2D to visually analyze the data. This is done by reducing the number of 
+and then selected based on the target values. We reduce the number of 
 dimensions for each molecule from the number of descriptors selected to only 2. 
 ChemPlot uses three different algorithms in order to achieve this. 
-The first figure shows the results obtained by reducing the dimensions of 
-features by Principal Component Analysis (PCA) [2]_.
+In this example we will first use t-SNE [3]_.
+
+.. code:: python3
+    
+    cp.tsne()
+
+The output will be a dataframe containg the reduced dimensions and the target values.
+
++------------------+------------------+------------------+
+| t-SNE-1          | t-SNE-2          | target           |
++==================+==================+==================+
+| -41.056122       | 0.355575         | 1                |
++------------------+------------------+------------------+
+| -35.535915       | 21.648867        | 1                |
++------------------+------------------+------------------+
+| 23.771597        | -14.438373       | 1                |
++------------------+------------------+------------------+
+
+To now visualize the chemical space of the dataset we use :mod:`visualize_plot()`.
 
 .. code:: python3
 
     import matplotlib.pyplot as plt
-    
-    cp.pca()
-    plt.show()
 
-.. image:: images/gs_pca.png
+    cp.visualize_plot()
+    plt.show()
+    
+.. image:: images/gs_tsne.png
    :width: 600
 
-The second figure shows the results obtained by reducing the dimensions of features by t-SNE [3]_.
+The second figure shows the results obtained by reducing the dimensions of features Principal Component Analysis (PCA) [2]_.
 
 .. code:: python3
 
     cp.pca()
+    cp.visualize_plot()
     plt.show()
 
-.. image:: images/gs_tsne.png
+.. image:: images/gs_pca.png
    :width: 600
 
 The third figure shows the results obtained by reducing the dimensions of features by UMAP [4]_.
 
 .. code:: python3
 
-    cp.pca()
+    cp.umap()
+    cp.visualize_plot()
     plt.show()
 
 .. image:: images/gs_umap.png

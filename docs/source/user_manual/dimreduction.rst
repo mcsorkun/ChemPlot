@@ -31,6 +31,7 @@ view of the data.
 .. code:: python3
     
     cp_BBBP.pca()
+    cp_BBBP.visualize_plot()
     plt.show()
 
 .. image:: images/gs_pca.png
@@ -39,6 +40,7 @@ view of the data.
 .. code:: python3
     
     cp_BACE.pca()
+    cp_BACE.visualize_plot()
     plt.show()
 
 .. image:: images/bace_pca.png
@@ -59,6 +61,7 @@ similar properties.
 .. code:: python3
     
     cp_BBBP.tsne()
+    cp_BBBP.visualize_plot()
     plt.show()
 
 .. image:: images/gs_tsne.png
@@ -67,6 +70,7 @@ similar properties.
 .. code:: python3
     
     cp_BACE.tsne()
+    cp_BACE.visualize_plot()
     plt.show()
 
 .. image:: images/bace_tsne.png
@@ -98,6 +102,7 @@ efficient and faster.
 .. code:: python3
     
     cp_BBBP.umap()
+    cp_BBBP.visualize_plot()
     plt.show()
 
 .. image:: images/gs_umap.png
@@ -106,18 +111,20 @@ efficient and faster.
 .. code:: python3
     
     cp_BACE.umap()
+    cp_BACE.visualize_plot()
     plt.show()
 
 .. image:: images/bace_umap.png
    :width: 600
    
-Two important parameters of the ``umap()`` method are ``n_neighbors`` and 
-``min_dist``. The former is a positive integer parameter which constrains the 
+Two important parameters of the ``umap()`` method are ``n_neighbors``, 
+``min_dist`` and ``pca``. The former is a positive integer parameter which constrains the 
 size of the local neighbourhood the algorithm will look for when analyzing the 
 dataset. Low values of ``n_neighbors`` will make ChemPlot visualize very local 
 structures. The ``min_dist`` parameter is a value which ranges from 0.0 to 
 0.99. It provides the minimum distance apart that points are allowed to be in 
-the 2D graph.
+the 2D graph. The ``pca`` parameter is a Boolean value which indicates if the 
+data has to be preprocessed with PCA. 
 
    
 --------------
