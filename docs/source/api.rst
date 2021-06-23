@@ -11,6 +11,7 @@ Plotter
 -------
 
 .. automodule:: chemplot.chemplot
+     :members:
  
 .. autoclass:: chemplot.chemplot.Plotter
     :members:
