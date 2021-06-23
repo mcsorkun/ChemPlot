@@ -10,14 +10,7 @@ You can find the detailed features and examples in the following link: [User Man
 
 There are two different options to install ChemPlot.
 
-### Option 1: Use conda (recommended)
-
-The easiest and recommended way to install is using conda. To install
-ChemPlot, run the following from the command line:
-
-    conda install -c rdkit -c chemplot chemplot
-
-### Option 2: Use pip
+### Option 1: Use pip
 
 ChemPlot requires RDKit, which cannot be installed using pip. The
 official RDKit installation documentation can be found
@@ -28,6 +21,12 @@ running:
 
     pip install chemplot
 
+### Option 2: Use conda
+
+To install ChemPlot using conda, run the following from the command line:
+
+    conda install -c rdkit -c chemplot chemplot
+    
 ## How to use ChemPlot
 
 ChemPlot is a cheminformatics tool whose purpose is to visualize subsets
@@ -70,18 +69,25 @@ plotter = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"]
 When the `Plotter` object was constructed descriptors for each SMILES
 were calculated, using the library
 [mordred](http://mordred-descriptor.github.io/documentation/v0.1.0/introduction.html),
-and then selected based on the target values. We can now plot the BBBP
-dataset in 2D to visually analyze the data. This is done by reducing the
-number of dimensions for each molecule from the number of descriptors
-selected to only 2. ChemPlot uses three different algorithms in order to
-achieve this. The first figure shows the results obtained by reducing
-the dimensions of features by Principal Component Analysis (PCA) [2].
+and then selected based on the target values. We reduce the number of 
+dimensions for each molecule from the number of descriptors selected to only 2. 
+ChemPlot uses three different algorithms in order to achieve this. 
+In this example we will first use t-SNE [2].
 
 ``` {.sourceCode .python3}
-import matplotlib.pyplot as plt
-cp.pca()
-plt.show()
+cp.tsne()
 ```
+| f | f | f |   |   |
+|---|---|---|---|---|
+| 4 | 4 | 4 | 
+| 4 | 4 | 4 |
+| 4 | 4 | 4 | 
+
+| t-SNE-1          | t-SNE-2          | target           |
+|------------------|------------------|------------------|
+| -41.056122       | 0.355575         | 1                |
+| -35.535915       | 21.648867        | 1                |
+| 23.771597        | -14.438373       | 1                |
 
 ![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_pca.png)
 
