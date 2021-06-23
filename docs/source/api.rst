@@ -10,8 +10,7 @@ are used used by the class :class:`Plotter` during construction.
 Plotter
 -------
 
-.. automodule:: chemplot.Plotter
-     :members:
+.. automodule:: chemplot.chemplot
  
 .. autoclass:: chemplot.chemplot.Plotter
     :members:

@@ -13,7 +13,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../../chemplot/'))
+sys.path.insert(0, os.path.abspath('../..'))
 
 
 # -- Project information -----------------------------------------------------
@@ -75,7 +75,7 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 # Add logo
-html_logo = "logo_chemplot.jpg"
+html_logo = "logo_chemplot.png"
 html_theme_options = {
     'logo_only': True,
     'display_version': False,
