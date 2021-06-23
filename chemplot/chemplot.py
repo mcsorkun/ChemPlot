@@ -561,13 +561,13 @@ class Plotter(object):
             
             try:
                 png = Draw.MolToImage(mol,size=(200,130))
+                out = BytesIO()
+                png.save(out, format='jpeg')
+                png = out.getvalue()
+                url = 'data:image/jpeg;base64,' + base64.b64encode(png).decode('utf-8')
             except:
-                png = Image.open("No_image_available.png")
+                url = None
                 
-            out = BytesIO()
-            png.save(out, format='jpeg')
-            png = out.getvalue()
-            url = 'data:image/jpeg;base64,' + base64.b64encode(png).decode('utf-8')
             images_mol.append(url)
             
         return images_mol
