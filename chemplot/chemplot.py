@@ -4,7 +4,7 @@
 from __future__ import print_function
 
 import chemplot.descriptors as desc
-import parameters
+import chemplot.parameters as parameters
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
