@@ -120,15 +120,6 @@ plt.show()
 
 In each figure the molecules are coloured by class value.
 
-### Interactive Plot
-
-You can also generate an interactive plot by calling `interactive_plot()` 
-
-``` {.sourceCode .python3}
-cp.tsne()
-cp.interactive_plot(show_plot=True)
-```
-
 * * * * *
 
 <h3>
