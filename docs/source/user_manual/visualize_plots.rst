@@ -45,8 +45,7 @@ to generate an interactive visualization of the chemical space.
 .. code:: python3
     
     cp.tsne()
-    cp.interactive_plot()
-    plt.show()
+    cp.interactive_plot(show_plot=True)
 
 .. raw:: html
     :file: BBBP.html

@@ -44,7 +44,7 @@ calculated, using the library `mordred <http://mordred-descriptor.github.io/docu
 and then selected based on the target values. We reduce the number of 
 dimensions for each molecule from the number of descriptors selected to only 2. 
 ChemPlot uses three different algorithms in order to achieve this. 
-In this example we will first use t-SNE [3]_.
+In this example we will first use t-SNE [2]_.
 
 .. code:: python3
     
@@ -74,7 +74,7 @@ To now visualize the chemical space of the dataset we use :mod:`visualize_plot()
 .. image:: images/gs_tsne.png
    :width: 600
 
-The second figure shows the results obtained by reducing the dimensions of features Principal Component Analysis (PCA) [2]_.
+The second figure shows the results obtained by reducing the dimensions of features Principal Component Analysis (PCA) [3]_.
 
 .. code:: python3
 
@@ -114,7 +114,7 @@ References:
     </h3>
     
 .. [1] **Martins, Ines Filipa, et al.** (2012). `A Bayesian approach to in silico blood-brain barrier penetration modeling. <https://pubmed.ncbi.nlm.nih.gov/22612593/>`__ Journal of chemical information and modeling 52.6, 1686-1697
-.. [2] **Wold, S., Esbensen, K., Geladi, P.** (1987). `Principal component analysis. <https://www.sciencedirect.com/science/article/abs/pii/0169743987800849>`__ Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.
-.. [3] **van der Maaten, Laurens, Hinton, Geoffrey.** (2008). `Viualizingdata using t-SNE. <https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbclid=IwAR0Bgg1eA5TFmqOZeCQXsIoL6PKrVXUFaskUKtg6yBhVXAFFvZA6yQiYx-M>`__ Journal of Machine Learning Research. 9. 2579-2605.
+.. [2] **van der Maaten, Laurens, Hinton, Geoffrey.** (2008). `Viualizingdata using t-SNE. <https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbclid=IwAR0Bgg1eA5TFmqOZeCQXsIoL6PKrVXUFaskUKtg6yBhVXAFFvZA6yQiYx-M>`__ Journal of Machine Learning Research. 9. 2579-2605.
+.. [3] **Wold, S., Esbensen, K., Geladi, P.** (1987). `Principal component analysis. <https://www.sciencedirect.com/science/article/abs/pii/0169743987800849>`__ Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.
 .. [4] **McInnes, L., Healy, J., Melville, J.** (2018). `Umap: Uniform manifold approximation and projection for dimension reduction. <https://arxiv.org/abs/1802.03426>`__ arXivpreprint arXiv:1802.03426.
 
