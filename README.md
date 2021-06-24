@@ -10,14 +10,7 @@ You can find the detailed features and examples in the following link: [User Man
 
 There are two different options to install ChemPlot.
 
-### Option 1: Use conda (recommended)
-
-The easiest and recommended way to install is using conda. To install
-ChemPlot, run the following from the command line:
-
-    conda install -c rdkit -c chemplot chemplot
-
-### Option 2: Use pip
+### Option 1: Use pip
 
 ChemPlot requires RDKit, which cannot be installed using pip. The
 official RDKit installation documentation can be found
@@ -28,6 +21,12 @@ running:
 
     pip install chemplot
 
+### Option 2: Use conda
+
+To install ChemPlot using conda, run the following from the command line:
+
+    conda install -c rdkit -c chemplot chemplot
+    
 ## How to use ChemPlot
 
 ChemPlot is a cheminformatics tool whose purpose is to visualize subsets
@@ -70,36 +69,50 @@ plotter = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"]
 When the `Plotter` object was constructed descriptors for each SMILES
 were calculated, using the library
 [mordred](http://mordred-descriptor.github.io/documentation/v0.1.0/introduction.html),
-and then selected based on the target values. We can now plot the BBBP
-dataset in 2D to visually analyze the data. This is done by reducing the
-number of dimensions for each molecule from the number of descriptors
-selected to only 2. ChemPlot uses three different algorithms in order to
-achieve this. The first figure shows the results obtained by reducing
-the dimensions of features by Principal Component Analysis (PCA) [2].
+and then selected based on the target values. We reduce the number of 
+dimensions for each molecule from the number of descriptors selected to only 2. 
+ChemPlot uses three different algorithms in order to achieve this. 
+In this example we will first use t-SNE [2].
+
+``` {.sourceCode .python3}
+cp.tsne()
+```
+
+The output will be a dataframe containg the reduced dimensions and the target values.
+
+| t-SNE-1          | t-SNE-2          | target           |
+|------------------|------------------|------------------|
+| -41.056122       | 0.355575         | 1                |
+| -35.535915       | 21.648867        | 1                |
+| 23.771597        | -14.438373       | 1                |
+
+To now visualize the chemical space of the dataset we use `visualize_plot()`.
 
 ``` {.sourceCode .python3}
 import matplotlib.pyplot as plt
-cp.pca()
-plt.show()
-```
-
-![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_pca.png)
-
-The second figure shows the results obtained by reducing the dimensions
-of features by t-SNE [3].
-
-``` {.sourceCode .python3}
-cp.pca()
+cp.visualize_plot()
 plt.show()
 ```
 
 ![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_tsne.png)
 
+The second figure shows the results obtained by reducing the dimensions 
+of features Principal Component Analysis (PCA) [3].
+
+``` {.sourceCode .python3}
+cp.pca()
+cp.visualize_plot()
+plt.show()
+```
+
+![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_pca.png)
+
 The third figure shows the results obtained by reducing the dimensions
 of features by UMAP [4].
 
 ``` {.sourceCode .python3}
-cp.pca()
+cp.umap()
+cp.visualize_plot()
 plt.show()
 ```
 
@@ -119,15 +132,15 @@ References:
     modeling.](https://pubmed.ncbi.nlm.nih.gov/22612593/) Journal of
     chemical information and modeling 52.6, 1686-1697
 
-[2]: **Wold, S., Esbensen, K., Geladi, P.** (1987). [Principal
-    component
-    analysis.](https://www.sciencedirect.com/science/article/abs/pii/0169743987800849)
-    Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.
-
-[3]: **van der Maaten, Laurens, Hinton, Geoffrey.** (2008).
+[2]: **van der Maaten, Laurens, Hinton, Geoffrey.** (2008).
     [Viualizingdata using
     t-SNE.](https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbclid=IwAR0Bgg1eA5TFmqOZeCQXsIoL6PKrVXUFaskUKtg6yBhVXAFFvZA6yQiYx-M)
     Journal of Machine Learning Research. 9. 2579-2605.
+    
+[3]: **Wold, S., Esbensen, K., Geladi, P.** (1987). [Principal
+    component
+    analysis.](https://www.sciencedirect.com/science/article/abs/pii/0169743987800849)
+    Chemometrics and intelligent laboratory systems. 2(1-3). 37-52.
 
 [4]: **McInnes, L., Healy, J., Melville, J.** (2018). [Umap: Uniform
     manifold approximation and projection for dimension
