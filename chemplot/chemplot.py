@@ -9,7 +9,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import math
 import umap
 import base64
 import functools
@@ -25,7 +24,6 @@ from bokeh.models.mappers import LinearColorMapper
 from bokeh.models import ColorBar, HoverTool
 from bokeh.io import output_file, save, show
 from scipy import stats
-from PIL import Image
 from io import BytesIO
 
 def calltracker(func):

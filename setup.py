@@ -1,12 +1,21 @@
 from setuptools import setup
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name="chemplot", 
-    version="0.1.2",
+    version="1.0.0",
     author="Murat Cihan Sorkun",
     author_email="mcsorkun@gmail.com",
     description="A python library for chemical space visualization.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/mcsorkun/ChemPlot",
+    project_urls={
+        "Bug Tracker": "https://github.com/mcsorkun/ChemPlot/issues",
+	"Documentation": "https://chemplot.readthedocs.io/en/latest/"
+    },
     license="BSD",
     packages=["chemplot"],
     classifiers=[
@@ -24,14 +33,15 @@ setup(
     ],
     keywords="chemoinformatics, dimension reduction",
     install_requires=[
-        "numpy >= 1.17",
-        "mordred >= 1.2.0",
-        "pandas >= 1.0.1",
-        "scikit-learn >= 0.22",
-        "umap-learn >= 0.5.0",
-        "seaborn >= 0.11.0",
-        "scipy >= 1.3.1",
-        "matplotlib >= 3.2.0"
+	"pandas>=1.1.3",
+	"numpy>=1.19.2",
+	"matplotlib>=3.3.2",
+	"seaborn>=0.11.1",
+	"umap-learn>=0.5.1",
+	"scikit-learn>=0.23.2",
+	"bokeh>=2.2.3",
+	"scipy>=1.5.2",
+	"mordred>=1.2.0"
     ],
     python_requires='>=3.6',
 )
