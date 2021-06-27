@@ -6,6 +6,10 @@ Chemplot is a python library for chemical space visualization that allows users 
 
 You can find the detailed features and examples in the following link: [User Manual](https://chemplot.readthedocs.io/en/latest/).
 
+## Web application
+
+ChemPlot is also available as a web application. You can use it by following [this link](https://share.streamlit.io/mcsorkun/chemplot-web/main/web_app_chemplot.py).
+
 ## Installation
 
 There are two different options to install ChemPlot.
