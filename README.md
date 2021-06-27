@@ -10,7 +10,13 @@ You can find the detailed features and examples in the following link: [User Man
 
 There are two different options to install ChemPlot.
 
-### Option 1: Use pip
+### Option 1: Use conda
+
+To install ChemPlot using conda, run the following from the command line:
+
+    conda install -c conda-forge -c chemplot chemplot
+
+### Option 2: Use pip
 
 ChemPlot requires RDKit, which cannot be installed using pip. The
 official RDKit installation documentation can be found
@@ -20,12 +26,6 @@ After having installed RDKit, ChemPlot can be installed using pip by
 running:
 
     pip install chemplot
-
-### Option 2: Use conda
-
-To install ChemPlot using conda, run the following from the command line:
-
-    conda install -c rdkit -c chemplot chemplot
     
 ## How to use ChemPlot
 

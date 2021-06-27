@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="chemplot", 
-    version="1.0.0",
+    version="1.0.1",
     author="Murat Cihan Sorkun",
     author_email="mcsorkun@gmail.com",
     description="A python library for chemical space visualization.",
@@ -41,7 +41,8 @@ setup(
 	"scikit-learn>=0.23.2",
 	"bokeh>=2.2.3",
 	"scipy>=1.5.2",
-	"mordred>=1.2.0"
+	"mordred>=1.2.0",
+    "networkx>=2.5"
     ],
     python_requires='>=3.6',
 )

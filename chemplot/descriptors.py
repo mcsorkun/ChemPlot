@@ -95,7 +95,7 @@ def generate_mordred_descriptors(encoding_list, target_list, encoding_function, 
 
     if len(encodings_none_descriptors)>0:
         print("For the following {} not all descriptors can be computed:\n{}.\nThese {} will be removed from the data.".format(encoding_name, '\n'.join(map(str, encodings_none_descriptors)), encoding_name))
-        
+
     df_descriptors=pd.DataFrame(descriptors_list,columns=name_list)
     df_descriptors = df_descriptors.select_dtypes(exclude=['object'])   
     
