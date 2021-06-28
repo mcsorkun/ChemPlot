@@ -1,4 +1,4 @@
-name: aqsolpred
+name: chemplot
 channels:
 - conda-forge
 - chemplot
