@@ -8,7 +8,7 @@ chemical space in two dimensions. It uses the `RDKit chemistry framework`_, the
 
 Getting started
 ---------------
-To demonstrate how to use the functions the library offers we will use a BBBP 
+To demonstrate how to use the functions the library offers we will use a `BBBP <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv>`__ 
 (blood-brain barrier penetration) [1]_ molecular dataset. This is a set of 
 molecules encoded as SMILES, which have been assigned a binary label according 
 to their permeability properties. In this example the dataset has been 
