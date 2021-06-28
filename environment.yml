@@ -5,4 +5,4 @@ channels:
 - defaults
 dependencies:
     - rdkit
-    - chemplot==1.0.1
+    - chemplot==1.0.2
