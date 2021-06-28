@@ -10,7 +10,7 @@ the chemical space, aside from the scatterplots showed in the previous sections.
 These plots investigate the density distribution of the chemical space an are 
 hexagonal bin plot and the kernel density estimate plot.
 
-To show the before mentioned features we will use the BBBP 
+To show the before mentioned features we will use the `BBBP <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv>`__ 
 (blood-brain barrier penetration) dataset [1]_, already mentioned in the 
 previous section: 
 
