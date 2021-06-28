@@ -1,9 +1,9 @@
 Similarity Analysis 
 ===================
 
-In this example we will use two molecular datasets: the BBBP (blood-brain 
+In this example we will use two molecular datasets: the `BBBP <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv>`__ (blood-brain 
 barrier penetration) dataset [1]_, already used in the previous section, and 
-the BACE (β-secretase inhibitors) dataset [2]_. While the target values of the 
+the `BACE <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/R_1513_BACE.csv>`__ (β-secretase inhibitors) dataset [2]_. While the target values of the 
 molecules collected by the BBBP dataset are binary, and therefore discrete, the 
 target values of the molecules collected by the BACE dataset are continuous.  
 

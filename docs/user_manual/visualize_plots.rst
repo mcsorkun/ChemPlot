@@ -4,8 +4,8 @@ Visualize the Chemical Space
 ChemPlot can generate two types of plots for a given chemical space: static and
 interactive.
 
-For the following examples we will use the BBBP (blood-brain barrier penetration) 
-dataset [1]_.. 
+For the following examples we will use the `BBBP <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv>`__ (blood-brain barrier penetration) 
+dataset [1]_.
 
 .. code:: python3
 

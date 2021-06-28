@@ -42,7 +42,7 @@ framework](http://www.rdkit.org), the
 ### Getting started
 
 To demonstrate how to use the functions the library offers we use
-BBBP (blood-brain barrier penetration) [1] molecular dataset. BBBP is a
+[BBBP](https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv) (blood-brain barrier penetration) [1] molecular dataset. BBBP is a
 set of molecules encoded as SMILES, which have been assigned a binary
 label according to their permeability properties. In this example the
 dataset has been previously saved locally as a CSV file and is imported
