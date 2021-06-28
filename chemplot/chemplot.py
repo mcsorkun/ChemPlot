@@ -168,11 +168,10 @@ class Plotter(object):
     
     def pca(self):
         """
-        Calculates the first 2 PCA components of ECFP fingerprints and plots
-        the data based on the result.
+        Calculates the first 2 PCA components of the molecular descriptors.
         
-        :returns: The matplotlib axes containing the plot.
-        :rtype: Axes
+        :returns: The dataframe containing the PCA components.
+        :rtype: Dataframe
         """
         self.__data = self.__data_scaler()
         
@@ -198,8 +197,7 @@ class Plotter(object):
     
     def tsne(self, perplexity=None, pca=False, random_state=None):
         """
-        Calculates the first 2 t-SNE components of ECFP fingerprints and plots
-        the data based on the result.
+        Calculates the first 2 t-SNE components of the molecular descriptors.
         
         :param perplexity: perplexity value for the t-SNE model  
         :param pca: indicates if the features must be preprocessed by PCA
@@ -207,8 +205,8 @@ class Plotter(object):
         :type perplexity: int
         :type pca: boolean
         :type random_state: int
-        :returns: The matplotlib axes containing the plot.
-        :rtype: Axes
+        :returns: The dataframe containing the t-SNE components.
+        :rtype: Dataframe
         """ 
         self.__data = self.__data_scaler()
         self.__plot_title = "t-SNE plot"
@@ -249,8 +247,7 @@ class Plotter(object):
         
     def umap(self, n_neighbors=None, min_dist=None, pca=False, random_state=None):
         """
-        Calculates the first 2 UMAP components of ECFP fingerprints and plots
-        the data based on the result.
+        Calculates the first 2 UMAP components of the molecular descriptors.
         
         :param num_neighbors: Number of neighbours used in the UMAP madel.
         :param min_dist: Value between 0.0 and 0.99, indicates how close to each other the points can be displayed.
@@ -258,8 +255,8 @@ class Plotter(object):
         :type num_neighbors: int
         :type min_dist: float
         :type random_state: int
-        :returns: The matplotlib axes containing the plot.
-        :rtype: Axes
+        :returns: The dataframe containing the UMAP components.
+        :rtype: Dataframe
         """  
         self.__data = self.__data_scaler()
         
@@ -407,8 +404,8 @@ class Plotter(object):
         :type remove_outliers: boolean
         :type is_colored: boolean
         :type filename: string
-        :returns: The matplotlib axes containing the plot.
-        :rtype: Axes
+        :returns: The bokeh figure containing the plot.
+        :rtype: Figure
         """
         if self.__df_2_components is None:
             print('Reduce the dimensions of your molecules before creating a plot.')
