@@ -6,8 +6,8 @@ dimensions, or features, of each molecule to only two in order to then create
 2D graphs. These algorithms are: PCA [1]_, t-SNE [2]_ and UMAP [3]_.
 
 For the following examples we will use two molecular datasets, already
-mentioned in the previous section: the BBBP (blood-brain barrier penetration) 
-dataset [4]_ and the BACE (β-secretase inhibitors) dataset [5]_. 
+mentioned in the previous section: the `BBBP <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv>`__ (blood-brain barrier penetration) 
+dataset [4]_ and the `BACE <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/R_1513_BACE.csv>`__ (β-secretase inhibitors) dataset [5]_. 
 
 .. code:: python3
 
