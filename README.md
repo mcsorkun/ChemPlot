@@ -98,7 +98,7 @@ cp.visualize_plot()
 plt.show()
 ```
 
-![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_tsne.png)
+![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/blob/main/images/gs_tsne.png)
 
 The second figure shows the results obtained by reducing the dimensions 
 of features Principal Component Analysis (PCA) [3].
@@ -109,7 +109,7 @@ cp.visualize_plot()
 plt.show()
 ```
 
-![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_pca.png)
+![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/blob/main/images/gs_pca.png)
 
 The third figure shows the results obtained by reducing the dimensions
 of features by UMAP [4].
@@ -120,7 +120,7 @@ cp.visualize_plot()
 plt.show()
 ```
 
-![image](https://github.com/mcsorkun/ChemPlot/blob/main/images/gs_umap.png)
+![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/blob/main/images/gs_umap.png)
 
 In each figure the molecules are coloured by class value.
 
