@@ -1,4 +1,5 @@
 from chemplot import Plotter
+import platform
 import time
 import pandas as pd 
 import gc
@@ -81,9 +82,9 @@ if __name__ == '__main__':
     file_name = "performance_test_" + date_test
     
     # Create metadata
-    py_version = "Python version: 3.7.9\n"
-    cpu_version = "Processor version: Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz  2.81GHz\n"
-    os_version = "Operating System version: Windows 10 Enterprise"
+    py_version = f"Python version: {platform.python_version()}\n"
+    cpu_version = f"Processor version: {platform.processor()}\n"
+    os_version = f"Operating System version: {platform.platform()}"
     metadata = open(file_name + '_metadata.txt',"w") 
     metadata.writelines([py_version, cpu_version, os_version])  
     metadata.close()
