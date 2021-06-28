@@ -4,6 +4,7 @@ from unittest.mock import patch
 from chemplot import Plotter
 import pandas as pd 
 import numpy as np
+import os
 from scipy import stats
 from matplotlib import pyplot
 from io import StringIO
@@ -282,6 +283,92 @@ class TestVisualizePlot(unittest.TestCase):
         assert result is None
         assert 'Reduce the dimensions of your molecules before creating a plot.' in mock_stdout.getvalue()
         
+    def test_default_filename_scatter(self):
+        """
+        29. Test checks if the default value of filename is assigned with scatter
+        """
+        try:
+            os.remove("scatter_test.png")
+        except FileNotFoundError:
+            pass
+        expected = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.plotter_pca_BBBP.visualize_plot(kind='scatter')
+        result = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.assertEqual(expected, result)
+        pyplot.close()
+        
+    def test_filename_scatter(self):
+        """
+        30. Test checks if the value of filename is assigned with scatter
+        """
+        try:
+            os.remove("scatter_test.png")
+        except FileNotFoundError:
+            pass
+        expected = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.plotter_pca_BBBP.visualize_plot(kind='scatter', filename="scatter_test.png")
+        result = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.assertEqual(expected, result - 1)
+        os.remove("scatter_test.png")
+        pyplot.close()
+        
+    def test_default_filename_hex(self):
+        """
+        31. Test checks if the default value of filename is assigned with hex
+        """
+        try:
+            os.remove("hex_test.png")
+        except FileNotFoundError:
+            pass
+        expected = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.plotter_pca_BBBP.visualize_plot(kind='hex')
+        result = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.assertEqual(expected, result)
+        pyplot.close()
+        
+    def test_filename_hex(self):
+        """
+        32. Test checks if the value of filename is assigned with hex
+        """
+        try:
+            os.remove("hex_test.png")
+        except FileNotFoundError:
+            pass
+        expected = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.plotter_pca_BBBP.visualize_plot(kind='hex', filename="hex_test.png")
+        result = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.assertEqual(expected, result - 1)
+        os.remove("hex_test.png")
+        pyplot.close()
+        
+    def test_default_filename_kde(self):
+        """
+        33. Test checks if the default value of filename is assigned with kde
+        """
+        try:
+            os.remove("kde_test.png")
+        except FileNotFoundError:
+            pass
+        expected = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.plotter_pca_BBBP.visualize_plot(kind='kde')
+        result = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.assertEqual(expected, result)
+        pyplot.close()
+        
+    def test_filename_kde(self):
+        """
+        34. Test checks if the value of filename is assigned with kde
+        """
+        try:
+            os.remove("kde_test.png")
+        except FileNotFoundError:
+            pass
+        expected = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.plotter_pca_BBBP.visualize_plot(kind='kde', filename="kde_test.png")
+        result = len([name for name in os.listdir('.') if os.path.isfile(name)])
+        self.assertEqual(expected, result - 1)
+        os.remove("kde_test.png")
+        pyplot.close()
         
     
 if __name__ == '__main__':

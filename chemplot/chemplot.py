@@ -300,7 +300,7 @@ class Plotter(object):
         
         return self.__df_2_components
     
-    def visualize_plot(self, size=20, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, title=None):
+    def visualize_plot(self, size=20, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, filename=None, title=None):
         """
         Generates a plot for the given molecules embedded in two dimensions.
         
@@ -309,11 +309,13 @@ class Plotter(object):
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed 
         :param is_colored: Indicates if the points must be colored according to target 
         :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is "R".
+        :param filename: Indicates the file where to save the plot
         :type size: int
         :type kind: string
         :type remove_outliers: boolean
         :type is_colored: boolean
         :type colorbar: boolean
+        :type filename: string
         :returns: The matplotlib axes containing the plot.
         :rtype: Axes
         """
@@ -386,6 +388,10 @@ class Plotter(object):
         axis.set_xlabel(x,fontsize=size*2)
         axis.set_ylabel(y,fontsize=size*2)
         
+        # Save plot
+        if filename is not None:
+            fig.savefig(filename)
+            
         self.df_plot_xy = df_data[[x,y]]
         
         return axis
