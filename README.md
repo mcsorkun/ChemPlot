@@ -7,6 +7,7 @@
 
 [![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/version.svg)](https://anaconda.org/chemplot/chemplot) [![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/downloads.svg)](https://anaconda.org/chemplot/chemplot)
 
+[![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/license.svg)](https://anaconda.org/chemplot/chemplot)
 
 # ChemPlot
 
