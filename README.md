@@ -1,4 +1,6 @@
-![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/logo_chemplot.png)
+<p align="center">
+  <img width="460" height="300" src="https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/logo_chemplot.png">
+</p>
 
 # ChemPlot
 
