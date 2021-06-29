@@ -3,6 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. image:: logo_chemplot.png
+  :width: 600
+  :align: center
+
+.. raw:: html   
+
+    <h3> 
+    
+.. raw:: html
+
+    </h3>
+
 ChemPlot: A python library for chemical space visualization
 ===========================================================
 
