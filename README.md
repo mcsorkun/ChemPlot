@@ -1,3 +1,5 @@
+![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/logo_chemplot.png)
+
 # ChemPlot
 
 Chemplot is a python library for chemical space visualization that allows users to plot the chemical space of their molecular datasets. Chemplot contains both structural and tailored similarity algorithms to plot similar molecules together based on the needs of users. Moreover, it is easy to use even for non-experts.
