@@ -1,5 +1,5 @@
 {% set name = "chemplot" %}
-{% set version = "1.0.2" %}
+{% set version = "1.1.0" %}
 
 package:
   name: "{{ name|lower }}"
@@ -8,7 +8,7 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
-  sha256: 748510989c044cc9b990db3a6d8ef463f6a69ad3a692e87ebc70cdab923a5287
+  sha256: 55ee0cc2f843936322015129938ed645ab5f9fbf6102c260b3001a4c6c777fdd
 
 build:
   number: 0
