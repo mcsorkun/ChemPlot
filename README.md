@@ -5,9 +5,9 @@
 
 [![PyPI version](https://badge.fury.io/py/chemplot.svg)](https://badge.fury.io/py/chemplot)  [![Downloads](https://pepy.tech/badge/chemplot/month)](https://pepy.tech/project/chemplot)
 
-[![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/version.svg)](https://anaconda.org/chemplot/chemplot) [![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/downloads.svg)](https://anaconda.org/chemplot/chemplot)
+[![Conda fastai version](https://anaconda.org/chemplot/chemplot/badges/version.svg)](https://anaconda.org/chemplot/chemplot) [![Conda fastai version](https://anaconda.org/chemplot/chemplot/badges/downloads.svg)](https://anaconda.org/chemplot/chemplot)
 
-[![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/license.svg)](https://anaconda.org/chemplot/chemplot) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest)
+[![Conda fastai version](https://anaconda.org/chemplot/chemplot/badges/license.svg)](https://anaconda.org/chemplot/chemplot) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest)
 
 # ChemPlot
 
