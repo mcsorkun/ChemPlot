@@ -121,6 +121,7 @@ plt.show()
 ```
 
 ![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/images/gs_umap.png)
+![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/user_manual/BBBP.html)
 
 In each figure the molecules are coloured by class value.
 
