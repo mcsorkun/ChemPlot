@@ -2,6 +2,9 @@
   <img width="600" src="https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/logo_chemplot.png">
 </p>
 
+[![PyPI version](https://badge.fury.io/py/chemplot.svg)](https://badge.fury.io/py/chemplot)  [![Downloads](https://pepy.tech/badge/chemplot/month)](https://pepy.tech/project/chemplot)
+[![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/version.svg)](https://anaconda.org/chemplot/chemplot) [![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/downloads.svg)](https://anaconda.org/chemplot/chemplot)
+
 # ChemPlot
 
 Chemplot is a python library for chemical space visualization that allows users to plot the chemical space of their molecular datasets. Chemplot contains both structural and tailored similarity algorithms to plot similar molecules together based on the needs of users. Moreover, it is easy to use even for non-experts.
