@@ -7,7 +7,7 @@
 
 [![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/version.svg)](https://anaconda.org/chemplot/chemplot) [![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/downloads.svg)](https://anaconda.org/chemplot/chemplot)
 
-[![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/license.svg)](https://anaconda.org/chemplot/chemplot)
+[![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/license.svg)](https://anaconda.org/chemplot/chemplot) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest)
 
 # ChemPlot
 
