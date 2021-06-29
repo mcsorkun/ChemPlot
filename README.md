@@ -2,9 +2,13 @@
   <img width="600" src="https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/logo_chemplot.png">
 </p>
 <br />
+
 [![PyPI version](https://badge.fury.io/py/chemplot.svg)](https://badge.fury.io/py/chemplot)  [![Downloads](https://pepy.tech/badge/chemplot/month)](https://pepy.tech/project/chemplot)
+
 <br />
+
 [![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/version.svg)](https://anaconda.org/chemplot/chemplot) [![Anaconda-Server Badge](https://anaconda.org/chemplot/chemplot/badges/downloads.svg)](https://anaconda.org/chemplot/chemplot)
+
 <br />
 
 # ChemPlot
