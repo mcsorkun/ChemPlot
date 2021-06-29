@@ -7,7 +7,7 @@
 
 ![Conda](https://img.shields.io/conda/v/chemplot/chemplot) ![Conda](https://img.shields.io/conda/dn/chemplot/chemplot?color=green)
 
-[![Conda fastai version](https://anaconda.org/chemplot/chemplot/badges/license.svg)](https://anaconda.org/chemplot/chemplot) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest)
+![PyPI - License](https://img.shields.io/pypi/l/chemplot?color=yellow) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest)
 
 # ChemPlot
 
