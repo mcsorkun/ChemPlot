@@ -18,8 +18,10 @@ class TestInteractivePlot(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        cls.data_LOGS = pd.read_csv("test_data\\R_1291_LOGS.csv") 
-        cls.data_BBBP = pd.read_csv("test_data\\C_2039_BBBP_2.csv") 
+        file_LOGS = os.path.join('test_data', 'R_1291_LOGS.csv')
+        cls.data_LOGS = pd.read_csv(file_LOGS) 
+        file_BBBP = os.path.join('test_data', 'C_2039_BBBP_2.csv')
+        cls.data_BBBP = pd.read_csv(file_BBBP) 
         
         cls.plotter_pca_LOGS = Plotter.from_smiles(cls.data_LOGS["smiles"], target=cls.data_LOGS["target"], target_type="R", sim_type="tailored")
         cls.plotter_pca_BBBP = Plotter.from_smiles(cls.data_BBBP["smiles"], target=cls.data_BBBP["target"], target_type="C", sim_type="tailored")
@@ -226,8 +228,9 @@ class TestInteractivePlot(unittest.TestCase):
         for tool in result.tools:
             if isinstance(tool, bokeh.models.tools.HoverTool):
                 self.assertEqual(tool.tooltips, parameters.TOOLTIPS_TARGET)
-        
-        data_SAMPL = pd.read_csv("test_data\\R_642_SAMPL.csv") 
+                
+        file_SAMPL = os.path.join('test_data', 'R_642_SAMPL.csv')
+        data_SAMPL = pd.read_csv(file_SAMPL) 
         cp_SAMPL = Plotter.from_smiles(data_SAMPL["smiles"], sim_type="structural")
         cp_SAMPL.pca()
         result = cp_SAMPL.interactive_plot(kind='scatter')
@@ -323,7 +326,8 @@ class TestInteractivePlot(unittest.TestCase):
         """
         28. Test checks if user is informed a plot cannot be created without reducing the dimensions first
         """
-        data_SAMPL = pd.read_csv("test_data\\R_642_SAMPL.csv") 
+        file_SAMPL = os.path.join('test_data', 'R_642_SAMPL.csv')
+        data_SAMPL = pd.read_csv(file_SAMPL) 
         cp = Plotter.from_smiles(data_SAMPL["smiles"], target=data_SAMPL["target"], target_type="R", sim_type="tailored")
         result = cp.interactive_plot()
         assert result is None

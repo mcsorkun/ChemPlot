@@ -4,19 +4,30 @@ import time
 import pandas as pd 
 import gc
 import datetime
+import os
 
 class PerformanceTest(object):
     
     def __init__(self):
-        self.data_LOGS = pd.read_csv("..\\test_data\\R_1291_LOGS.csv") 
-        self.data_LOGP = pd.read_csv("..\\test_data\\R_4200_LOGP.csv")
-        self.data_BACE = pd.read_csv("..\\test_data\\R_1513_BACE.csv")
-        self.data_SAMPL = pd.read_csv("..\\test_data\\R_642_SAMPL.csv") 
-        self.data_AQSOLDB = pd.read_csv("..\\test_data\\R_9982_AQSOLDB.csv") 
-        self.data_BBBP = pd.read_csv("..\\test_data\\C_2039_BBBP_2.csv") 
-        self.data_HIV_3 = pd.read_csv("..\\test_data\\C_41127_HIV_3.csv") 
-        self.data_BACE_2 = pd.read_csv("..\\test_data\\C_1513_BACE_2.csv")
-        self.data_CLINTOX_2 = pd.read_csv("..\\test_data\\C_1478_CLINTOX_2.csv")
+        file_LOGS = os.path.join('..', 'test_data', 'R_1291_LOGS.csv')
+        file_LOGP = os.path.join('..', 'test_data', 'R_4200_LOGP.csv')
+        file_BACE = os.path.join('..', 'test_data', 'R_1513_BACE.csv')
+        file_SAMPL = os.path.join('..', 'test_data', 'R_642_SAMPL.csv')
+        file_AQSOLDB = os.path.join('..', 'test_data', 'R_9982_AQSOLDB.csv')
+        file_BBBP = os.path.join('..', 'test_data', 'C_2039_BBBP_2.csv')
+        file_HIV_3 = os.path.join('..', 'test_data', 'C_41127_HIV_3.csv')
+        file_BACE_2 = os.path.join('..', 'test_data', 'C_1513_BACE_2.csv')
+        file_CLINTOX_2 = os.path.join('..', 'test_data', 'C_1478_CLINTOX_2.csv')
+        
+        self.data_LOGS = pd.read_csv(file_LOGS) 
+        self.data_LOGP = pd.read_csv(file_LOGP)
+        self.data_BACE = pd.read_csv(file_BACE)
+        self.data_SAMPL = pd.read_csv(file_SAMPL) 
+        self.data_AQSOLDB = pd.read_csv(file_AQSOLDB) 
+        self.data_BBBP = pd.read_csv(file_BBBP) 
+        self.data_HIV_3 = pd.read_csv(file_HIV_3) 
+        self.data_BACE_2 = pd.read_csv(file_BACE_2)
+        self.data_CLINTOX_2 = pd.read_csv(file_CLINTOX_2)
         
         self.df_perf_test = pd.DataFrame(columns=['name', 'data_samples', 'target_type', 'sym_type','execution_time_from_smiles','execution_time_pca','execution_time_tsne','execution_time_umap'])
 
