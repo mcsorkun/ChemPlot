@@ -452,6 +452,13 @@ class TestFromSmilesErroneusSMILES(unittest.TestCase):
                       'Cc1cc2c(cc1C)N3C=N2[Co]456(N7=C8[C@H](C(C7=CC9=N4C(=C(C1=N5[C@@]([C@@H]2N6C(=C8C)[C@@]([C@H]2CC(=O)N)(CCC(=O)NC[C@H](OP(=O)(O[C@@H]2[C@H](O[C@H]3[C@@H]2O)CO)O)C)C)([C@@]([C@@H]1CCC(=O)N)(C)CC(=O)N)C)C)[C@@]([C@@H]9CCC(=O)N)(C)CC(=O)N)(C)C)CCC(=O)N)C#N\n'+
                       'CCCCc1c(=O)n(n(c1=O)c2ccc(cc2)O)c3ccccc3\nCCCCc1c(=O)n(n(c1=O)c2ccccc2)c3ccccc3.\n' +
                       'The erroneous SMILES will be removed from the data.') 
+        
+    def test_structural_remove_columns_all_1_0(self):
+        """
+        50. Test if columns with only 1s or 0s are removed correctly in structural similarity
+        """
+        cp = Plotter.from_smiles(['CCCC', 'CCCC'], sim_type="structural")
+        self.assertTrue(cp._Plotter__df_descriptors.empty)
 
         
 if __name__ == '__main__':

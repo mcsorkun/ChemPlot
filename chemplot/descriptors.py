@@ -206,11 +206,12 @@ def generate_ecfp(encoding_list, encoding_function, encoding_name, target_list, 
             mol=Chem.AddHs(mol)
             mols.append(mol)
             list_bits_fingerprint = []
-            list_bits_fingerprint[:0] = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits).ToBitString()
+            list_bits_fingerprint[:0] = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits)
             ecfp_fingerprints.append(list_bits_fingerprint)  
     
     # Create dataframe of fingerprints
     df_ecfp_fingerprints = pd.DataFrame(data = ecfp_fingerprints, index = encoding_list)
+    
     # Remove erroneous data
     if len(erroneous_encodings)>0:
         print("The following erroneous {} have been found in the data:\n{}.\nThe erroneous {} will be removed from the data.".format(encoding_name, '\n'.join(map(str, erroneous_encodings)), encoding_name))
