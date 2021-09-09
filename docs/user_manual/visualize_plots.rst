@@ -10,10 +10,10 @@ dataset [1]_.
 .. code:: python3
 
     import pandas as pd
-    import chemplot
+    from chemplot import Plotter
     
     data = pd.read_csv("BBBP.csv")
-    cp = chemplot.Plotter.from_smiles(data["smiles"], target=data["target"], target_type="C")
+    cp = Plotter.from_smiles(data["smiles"], target=data["target"], target_type="C")
 
 
 Static Plot

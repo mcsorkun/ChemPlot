@@ -32,9 +32,9 @@ the BBBP dataset, their target values (the binary labels) and the target type
 
 .. code:: python3
 
-    import chemplot as cp
+    from chemplot import Plotter
     
-    plotter = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
+    cp = Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
 
 Plotting the results
 --------------------

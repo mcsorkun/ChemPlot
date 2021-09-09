@@ -10,7 +10,7 @@ target values of the molecules collected by the BACE dataset are continuous.
 .. code:: python3
 
     import pandas as pd
-    import chemplot as cp
+    from chemplot import Plotter
     
     data_BBBP = pd.read_csv("BBBP.csv")
     data_BACE = pd.read_csv("BACE.csv")
@@ -38,8 +38,8 @@ parameter when constructing the object.
 
 .. code:: python3
 
-    cp_BBBP = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C", sim_type="structural")
-    cp_BACE = cp.Plotter.from_smiles(data_BACE["smiles"], target=data_BACE["target"], target_type="R", sim_type="structural")
+    cp_BBBP = Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C", sim_type="structural")
+    cp_BACE = Plotter.from_smiles(data_BACE["smiles"], target=data_BACE["target"], target_type="R", sim_type="structural")
 
 .. code:: python3
     
@@ -73,8 +73,8 @@ omitted the last parameter and still have got the same objects.
 
 .. code:: python3
 
-    cp_BBBP = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C", sim_type="tailored")
-    cp_BACE = cp.Plotter.from_smiles(data_BACE["smiles"], target=data_BACE["target"], target_type="R", sim_type="tailored")
+    cp_BBBP = Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C", sim_type="tailored")
+    cp_BACE = Plotter.from_smiles(data_BACE["smiles"], target=data_BACE["target"], target_type="R", sim_type="tailored")
 
 .. code:: python3
     

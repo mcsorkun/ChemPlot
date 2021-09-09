@@ -12,12 +12,12 @@ dataset [4]_ and the `BACE <https://github.com/mcsorkun/ChemPlot/blob/main/tests
 .. code:: python3
 
     import pandas as pd
-    import chemplot as cp
+    from chemplot import Plotter
     
     data_BBBP = pd.read_csv("BBBP.csv")
     data_BACE = pd.read_csv("BACE.csv")
-    cp_BBBP = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
-    cp_BACE = cp.Plotter.from_smiles(data_BACE["smiles"], target=data_BACE["target"], target_type="R")
+    cp_BBBP = Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
+    cp_BACE = Plotter.from_smiles(data_BACE["smiles"], target=data_BACE["target"], target_type="R")
 
 
 PCA
