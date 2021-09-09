@@ -2,10 +2,10 @@
 
 **Name Formatting:** type_size_name_num_of_classes.csv
 
-- **type:** R->Regression and C->Classification
+- **type:** R->Numerical and C->Categorical
 - **size:** Number of instances in the dataset
 - **name:** Name of dataset
-- **num_of_classes:** Number of classes (Classification only)
+- **num_of_classes:** Number of classes (Categorical only)
 
 ##  Datasets and Sources
 
