@@ -72,7 +72,7 @@ class Plotter(object):
     
     _target_types = {'R', 'C'}
 
-    def __init__(self, encoding_list, target, target_type, sim_type, get_desc, get_fingerprints, pca):
+    def __init__(self, encoding_list, target, target_type, sim_type, get_desc, get_fingerprints):
            
         # Error handeling sym_type
         if sim_type not in self._sim_types:
@@ -127,7 +127,7 @@ class Plotter(object):
             
     
     @classmethod        
-    def from_smiles(cls, smiles_list, target=[], target_type=None, sim_type=None, pca=30):
+    def from_smiles(cls, smiles_list, target=[], target_type=None, sim_type=None):
         """
         Class method to construct a Plotter object from a list of SMILES.
         
@@ -143,7 +143,7 @@ class Plotter(object):
         :rtype: Plotter
         """
             
-        return cls(smiles_list, target, target_type, sim_type, desc.get_mordred_descriptors, desc.get_ecfp, pca)
+        return cls(smiles_list, target, target_type, sim_type, desc.get_mordred_descriptors, desc.get_ecfp)
             
 
     @classmethod
