@@ -8,7 +8,7 @@ class TestPCA(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        file_LOGS = os.path.join('test_data', 'R_1291_LOGS.csv')
+        file_LOGS = os.path.join('tests', 'test_data', 'R_1291_LOGS.csv')
         cls.data_LOGS = pd.read_csv(file_LOGS) 
         cls.plotter_target_LOGS = Plotter.from_smiles(cls.data_LOGS["smiles"], target=cls.data_LOGS["target"], target_type="R")
         cls.plotter_no_target_LOGS = Plotter.from_smiles(cls.data_LOGS["smiles"], target_type="R", sim_type="structural")

@@ -1,0 +1,6 @@
+name: rdkit
+channels:
+- conda-forge
+- defaults
+dependencies:
+    - rdkit

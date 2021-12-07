@@ -44,5 +44,9 @@ setup(
 	"mordred>=1.2.0",
     "networkx>=2.5"
     ],
+    tests_require=[
+    "pytest==6.2.4",
+    "pytest-cov==2.12.1"
+    ],
     python_requires='>=3.6',
 )
