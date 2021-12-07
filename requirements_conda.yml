@@ -4,3 +4,13 @@ channels:
 - defaults
 dependencies:
     - rdkit
+    - pandas
+    - numpy
+    - matplotlib
+    - seaborn
+    - umap-learn
+    - scikit-learn
+    - bokeh
+    - scipy
+    - mordred
+    - networkx
