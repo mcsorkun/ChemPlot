@@ -33,4 +33,5 @@ jobs:
             pip install -r requirements_dev.txt 
         - name: Test with pytest
           run: |
+            pip install numpy --upgrade
             pytest
