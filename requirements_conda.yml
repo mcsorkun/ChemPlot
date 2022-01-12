@@ -1,0 +1,16 @@
+name: rdkit
+channels:
+- conda-forge
+- defaults
+dependencies:
+    - rdkit
+    - pandas
+    - numpy
+    - matplotlib
+    - seaborn
+    - umap-learn
+    - scikit-learn
+    - bokeh
+    - scipy
+    - mordred
+    - networkx

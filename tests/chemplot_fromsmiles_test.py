@@ -11,7 +11,7 @@ class TestFromSmilesR(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        file_LOGS = os.path.join('test_data', 'R_1291_LOGS.csv')
+        file_LOGS = os.path.join('tests', 'test_data', 'R_1291_LOGS.csv')
         cls.data_LOGS = pd.read_csv(file_LOGS) 
     
     def test_target_type_assigned_tailored(self):
@@ -178,7 +178,7 @@ class TestFromSmilesC(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        file_BBBP = os.path.join('test_data', 'C_2039_BBBP_2.csv')
+        file_BBBP = os.path.join('tests', 'test_data', 'C_2039_BBBP_2.csv')
         cls.data_BBBP = pd.read_csv(file_BBBP)  
     
     def test_target_type_assigned_tailored(self):
@@ -353,9 +353,9 @@ class TestFromSmilesErroneusSMILES(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        file_BBBP_erroneous_smiles = os.path.join('test_data', 'C_2039_BBBP_2_erroneous_smiles.csv')
+        file_BBBP_erroneous_smiles = os.path.join('tests', 'test_data', 'C_2039_BBBP_2_erroneous_smiles.csv')
         cls.data_BBBP_erroneous_smiles = pd.read_csv(file_BBBP_erroneous_smiles) 
-        file_CLINTOX_2_erroneous_smiles = os.path.join('test_data', 'C_1484_CLINTOX_2_erroneous_smiles.csv')
+        file_CLINTOX_2_erroneous_smiles = os.path.join('tests', 'test_data', 'C_1484_CLINTOX_2_erroneous_smiles.csv')
         cls.data_CLINTOX_2_erroneous_smiles = pd.read_csv(file_CLINTOX_2_erroneous_smiles)
         cls.list_BBBP_erroneous_smiles = ['C12CCN(CC1)Cc1cccc(c1)OCCCNC(=O)CC12', 'C(Cl)Cl1', 'Nc1nc(c(N@)n1)c2c=ccc(Cl)c2Cl', 'non_smile', 'non_smile', 'non_smile', 
                                           'non_smile', 'non_smile', 'CNc1CCCN1c2ccccc2CCc3ccccc13', 'non_smile', '[O-]][N+](=O)c1ccc2NC(=O)CN=C(c3ccccc3)c2c1', 'non_smile', 

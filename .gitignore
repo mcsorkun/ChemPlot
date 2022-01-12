@@ -10,3 +10,9 @@
 
 # metadata from pip-installing repo
 *.egg-info/
+
+# metadata coverage
+*.coverage
+
+# tox output
+*.tox

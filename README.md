@@ -7,7 +7,7 @@
 
 [![Conda](https://img.shields.io/conda/v/chemplot/chemplot)](https://anaconda.org/chemplot/chemplot) [![Conda](https://img.shields.io/conda/dn/chemplot/chemplot?color=green)](https://anaconda.org/chemplot/chemplot)
 
-[![PyPI - License](https://img.shields.io/pypi/l/chemplot?color=yellow)](https://github.com/mcsorkun/ChemPlot/blob/main/LICENSE) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest)
+[![PyPI - License](https://img.shields.io/pypi/l/chemplot?color=yellow)](https://github.com/mcsorkun/ChemPlot/blob/main/LICENSE) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest) [![Tests](https://github.com/dajtmullaj/ChemPlot/actions/workflows/tests.yml/badge.svg?branch=ci)](https://github.com/dajtmullaj/ChemPlot/actions/workflows/tests.yml)
 
 # ChemPlot
 
