@@ -28,6 +28,7 @@ jobs:
         - name: Activate conda env
           shell: bash
           run: |
+            conda init bash
             conda activate requirements_conda.yml
         - name: Install pip dependencies
           shell: bash
