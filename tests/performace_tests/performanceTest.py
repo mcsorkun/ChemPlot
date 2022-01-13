@@ -1,23 +1,33 @@
+"""
+Performance Test for ChemPlot methods.
+
+Output will be a .txt file containing the metadata about performance (machine
+processor, RAM...) and a .csv file containing a report about performance.
+"""
+
 from chemplot import Plotter
+from pathlib import Path
+
 import platform
 import time
 import pandas as pd 
 import gc
 import datetime
-import os
+
+THIS_DIR = Path(__file__).parent
 
 class PerformanceTest(object):
     
     def __init__(self):
-        file_LOGS = os.path.join('..', 'test_data', 'R_1291_LOGS.csv')
-        file_LOGP = os.path.join('..', 'test_data', 'R_4200_LOGP.csv')
-        file_BACE = os.path.join('..', 'test_data', 'R_1513_BACE.csv')
-        file_SAMPL = os.path.join('..', 'test_data', 'R_642_SAMPL.csv')
-        file_AQSOLDB = os.path.join('..', 'test_data', 'R_9982_AQSOLDB.csv')
-        file_BBBP = os.path.join('..', 'test_data', 'C_2039_BBBP_2.csv')
-        file_HIV_3 = os.path.join('..', 'test_data', 'C_41127_HIV_3.csv')
-        file_BACE_2 = os.path.join('..', 'test_data', 'C_1513_BACE_2.csv')
-        file_CLINTOX_2 = os.path.join('..', 'test_data', 'C_1478_CLINTOX_2.csv')
+        file_LOGS = THIS_DIR / '..' / 'test_data' / 'R_1291_LOGS.csv'
+        file_LOGP = THIS_DIR / '..' / 'test_data' / 'R_4200_LOGP.csv'
+        file_BACE = THIS_DIR / '..' / 'test_data' / 'R_1513_BACE.csv'
+        file_SAMPL = THIS_DIR / '..' / 'test_data' / 'R_642_SAMPL.csv'
+        file_AQSOLDB = THIS_DIR / '..' / 'test_data' / 'R_9982_AQSOLDB.csv'
+        file_BBBP = THIS_DIR / '..' / 'test_data' / 'C_2039_BBBP_2.csv'
+        file_HIV_3 = THIS_DIR / '..' / 'test_data' / 'C_41127_HIV_3.csv'
+        file_BACE_2 = THIS_DIR / '..' / 'test_data' / 'C_1513_BACE_2.csv'
+        file_CLINTOX_2 = THIS_DIR / '..' / 'test_data' / 'C_1478_CLINTOX_2.csv'
         
         self.data_LOGS = pd.read_csv(file_LOGS) 
         self.data_LOGP = pd.read_csv(file_LOGP)

@@ -1,8 +1,17 @@
+"""
+Visual Plots Test for ChemPlot
+
+The output of these tests will be a .pdf file containing different plots 
+with all possible parameters in order to visually inspect the output of 
+ChemPlot.
+"""
 from chemplot import Plotter
-import pandas as pd 
 from matplotlib import pyplot
 from matplotlib.backends.backend_pdf import PdfPages
-import os
+from pathlib import Path
+import pandas as pd 
+
+THIS_DIR = Path(__file__).parent
 
 class PlotsTest(object):
     
@@ -85,13 +94,13 @@ class PlotsTest(object):
         
         
 if __name__ == '__main__':
-    file_LOGS = os.path.join('..', 'test_data', 'R_1291_LOGS.csv')
-    file_BACE = os.path.join('..', 'test_data', 'R_1513_BACE.csv')
+    file_LOGS = THIS_DIR / '..' / 'test_data' / 'R_1291_LOGS.csv'
+    file_BACE = THIS_DIR / '..' / 'test_data' / 'R_1513_BACE.csv'
     data_LOGS = pd.read_csv(file_LOGS)
     data_BACE = pd.read_csv(file_BACE)
     
-    file_BBBP = os.path.join('..', 'test_data', 'C_2039_BBBP_2.csv')
-    file_BACE_2 = os.path.join('..', 'test_data', 'C_1513_BACE_2.csv')
+    file_BBBP = THIS_DIR / '..' / 'test_data' / 'C_2039_BBBP_2.csv'
+    file_BACE_2 = THIS_DIR / '..' / 'test_data' / 'C_1513_BACE_2.csv'
     data_BBBP = pd.read_csv(file_BBBP)
     data_BACE_2 = pd.read_csv(file_BACE_2)
     

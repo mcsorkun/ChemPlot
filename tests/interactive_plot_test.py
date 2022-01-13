@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+import pytest
 
 import bokeh
 import pandas as pd 
@@ -13,21 +14,10 @@ from rdkit.Chem import Draw
 from io import StringIO
 from PIL import Image
 from io import BytesIO
+from pathlib import Path
 
+@pytest.mark.usefixtures("visualize_data")
 class TestInteractivePlot(unittest.TestCase):
-    
-    @classmethod
-    def setUpClass(cls):
-        file_LOGS = os.path.join('tests', 'test_data', 'R_1291_LOGS.csv')
-        cls.data_LOGS = pd.read_csv(file_LOGS) 
-        file_BBBP = os.path.join('tests', 'test_data', 'C_2039_BBBP_2.csv')
-        cls.data_BBBP = pd.read_csv(file_BBBP) 
-        
-        cls.plotter_pca_LOGS = Plotter.from_smiles(cls.data_LOGS["smiles"], target=cls.data_LOGS["target"], target_type="R", sim_type="tailored")
-        cls.plotter_pca_BBBP = Plotter.from_smiles(cls.data_BBBP["smiles"], target=cls.data_BBBP["target"], target_type="C", sim_type="tailored")
-        
-        cls.plotter_pca_LOGS.pca()
-        cls.plotter_pca_BBBP.pca()
         
     @classmethod
     def tearDownClass(cls):
@@ -229,7 +219,7 @@ class TestInteractivePlot(unittest.TestCase):
             if isinstance(tool, bokeh.models.tools.HoverTool):
                 self.assertEqual(tool.tooltips, parameters.TOOLTIPS_TARGET)
                 
-        file_SAMPL = os.path.join('tests', 'test_data', 'R_642_SAMPL.csv')
+        file_SAMPL = Path(__file__).parent / 'test_data' / 'R_642_SAMPL.csv'
         data_SAMPL = pd.read_csv(file_SAMPL) 
         cp_SAMPL = Plotter.from_smiles(data_SAMPL["smiles"], sim_type="structural")
         cp_SAMPL.pca()
@@ -326,10 +316,7 @@ class TestInteractivePlot(unittest.TestCase):
         """
         28. Test checks if user is informed a plot cannot be created without reducing the dimensions first
         """
-        file_SAMPL = os.path.join('tests', 'test_data', 'R_642_SAMPL.csv')
-        data_SAMPL = pd.read_csv(file_SAMPL) 
-        cp = Plotter.from_smiles(data_SAMPL["smiles"], target=data_SAMPL["target"], target_type="R", sim_type="tailored")
-        result = cp.interactive_plot()
+        result = self.plotter_sampl.interactive_plot()
         assert result is None
         assert 'Reduce the dimensions of your molecules before creating a plot.' in mock_stdout.getvalue()
         
