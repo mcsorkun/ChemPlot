@@ -25,6 +25,9 @@ jobs:
             auto-update-conda: true
             activate-environment: requirements_conda.yml
             python-version: ${{ matrix.python-version }}
+        - name: Activate conda env
+          run: |
+            conda activate requirements_conda.yml
         - name: Install pip dependencies
           run: |
             python -m pip install --upgrade pip
