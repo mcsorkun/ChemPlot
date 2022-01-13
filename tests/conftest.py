@@ -2,7 +2,6 @@
 Session Testing Fixtures
 
 To share the data accross the different tests.
-
 """
 import pytest
 import pandas as pd
