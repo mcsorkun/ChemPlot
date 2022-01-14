@@ -17,6 +17,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.manifold import TSNE
 from sklearn.cluster import KMeans
+from pandas.api.types import is_numeric_dtype
 from rdkit.Chem import Draw
 from bokeh.plotting import figure
 from bokeh.transform import transform, factor_cmap
@@ -95,21 +96,26 @@ class Plotter(object):
         
         # Error handeling target_type
         if len(target) > 0:
+            if len(target) != len(encoding_list):
+                raise Exception("If target is provided its length must match the instances of molecules")
+                
+        if len(target) > 0:
             df_target = pd.DataFrame(data=target)
             unique_targets_ratio = 1.*df_target.iloc[:, 0].nunique()/df_target.iloc[:, 0].count() < 0.05
-            if target_type == 'R' and unique_targets_ratio:
+            numeric_target = is_numeric_dtype(df_target.dtypes[0])
+            if target_type == 'R' and (unique_targets_ratio or not numeric_target):
                 print('Input received is \'R\' for target values that seem not continuous.')
             if target_type not in self._target_types:
-                if unique_targets_ratio:
-                    self.__target_type = 'C'
-                    print('target_type indicates if the target is a continuous variable or a class label.\n'+
-                          'R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.\n'+
-                          'From analysis of the target, C has been selected for target_type.')
-                else:
+                if not unique_targets_ratio and numeric_target:
                     self.__target_type = 'R'
                     print('target_type indicates if the target is a continuous variable or a class label.\n'+
                           'R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.\n'+
                           'From analysis of the target, R has been selected for target_type.')
+                else:
+                    self.__target_type = 'C'
+                    print('target_type indicates if the target is a continuous variable or a class label.\n'+
+                          'R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.\n'+
+                          'From analysis of the target, C has been selected for target_type.')
             else:
                 self.__target_type = target_type
         else:
@@ -124,8 +130,8 @@ class Plotter(object):
         elif self.__sim_type == "structural":
             self.__mols, self.__df_descriptors, self.__target = get_fingerprints(encoding_list,target,2,2048)
             
-        if not self.__mols or self.__df_descriptors.empty:
-                raise Exception("Plotter object cannot be instantiated for given molecules")
+        if len(self.__mols) < 2 or len(self.__df_descriptors.columns) < 2:
+            raise Exception("Plotter object cannot be instantiated for given molecules")
                 
         self.__df_2_components = None
         self.__plot_title = None
@@ -428,10 +434,10 @@ class Plotter(object):
                 if is_colored:
                     df_data = df_data.assign(target=self.__target)
                     hue = 'target'
+                    palette = 'deep'
                     if self.__target_type == "R":
                         palette = sns.color_palette("inferno", as_cmap=True)
-                    else:
-                        palette = 'deep'
+                        
         
         # Remove outliers (using Z-score)
         if remove_outliers:

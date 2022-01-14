@@ -7,6 +7,7 @@ from __future__ import print_function
 import pandas as pd
 import math
 import mordred
+import numpy as np
 
 from rdkit import Chem
 from rdkit.Chem import AllChem
@@ -100,7 +101,8 @@ def generate_mordred_descriptors(encoding_list, target_list, encoding_function, 
     df_descriptors = df_descriptors.select_dtypes(exclude=['object'])   
     
     # Remove erroneous data
-    df_descriptors = df_descriptors.assign(target=target_list.values)
+    if not isinstance(target_list,list): target_list = target_list.values
+    df_descriptors = df_descriptors.assign(target=target_list)
     df_descriptors = df_descriptors.dropna(how='any')
     target_list = df_descriptors['target'].to_list()
     df_descriptors = df_descriptors.drop(columns=['target'])
@@ -134,12 +136,16 @@ def select_descriptors_lasso(df_descriptors,target_list, R_select=0.05, C_select
    
     selected = SelectFromModel(model, prefit=True)
     X_new_lasso = selected.transform(df_descriptors)
-    # Get back the kept features as a DataFrame with dropped columns as all 0s
-    selected_features = pd.DataFrame(selected.inverse_transform(X_new_lasso), index=df_descriptors.index, columns=df_descriptors.columns)
-    # Dropped columns have values of all 0s, keep other columns 
-    selected_columns_lasso = selected_features.columns[selected_features.var() != 0]    
-    selected_data = df_descriptors[selected_columns_lasso] 
-    
+    if X_new_lasso.size > 0:
+        # Get back the kept features as a DataFrame with dropped columns as all 0s
+        selected_features = pd.DataFrame(selected.inverse_transform(X_new_lasso), index=df_descriptors.index, columns=df_descriptors.columns)
+        # Dropped columns have values of all 0s, keep other columns 
+        selected_columns_lasso = selected_features.columns[selected_features.var() != 0]    
+        selected_data = df_descriptors[selected_columns_lasso] 
+    else:
+        # No features were selected
+        selected_data = df_descriptors
+        
     return selected_data, target_list
 
 
@@ -217,7 +223,8 @@ def generate_ecfp(encoding_list, encoding_function, encoding_name, target_list, 
         print("The following erroneous {} have been found in the data:\n{}.\nThe erroneous {} will be removed from the data.".format(encoding_name, '\n'.join(map(str, erroneous_encodings)), encoding_name))
     
     if len(target_list)>0:
-        df_ecfp_fingerprints = df_ecfp_fingerprints.assign(target=target_list.values)
+        if not isinstance(target_list,list): target_list = target_list.values
+        df_ecfp_fingerprints = df_ecfp_fingerprints.assign(target=target_list)
         
     df_ecfp_fingerprints = df_ecfp_fingerprints.dropna(how='any')
     
