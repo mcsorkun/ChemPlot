@@ -118,13 +118,13 @@ class Plotter(object):
         # Instantiate Plotter class
         if self.__sim_type == "tailored":
             self.__mols, df_descriptors, target = get_desc(encoding_list, target)
-            if not df_descriptors:
+            if df_descriptors.empty:
                 raise Exception("Descriptors could not be computed for given molecules")
             self.__df_descriptors, self.__target = desc.select_descriptors_lasso(df_descriptors,target,kind=self.__target_type)
         elif self.__sim_type == "structural":
             self.__mols, self.__df_descriptors, self.__target = get_fingerprints(encoding_list,target,2,2048)
             
-        if not self.__mols or not self.__df_descriptors:
+        if not self.__mols or self.__df_descriptors.empty:
                 raise Exception("Plotter object cannot be instantiated for given molecules")
                 
         self.__df_2_components = None
@@ -309,10 +309,9 @@ class Plotter(object):
         if len(self.__target) > 0: 
             self.__df_2_components['target'] = self.__target
         
-        ##TODO dont return actual object
         return self.__df_2_components.copy()
     
-    ## TODO cluster fun
+    
     def cluster(self, n_clusters=5, **kwargs):
         """
         Computes the clusters presents in the embedded chemical space.
@@ -337,6 +336,7 @@ class Plotter(object):
         self.__df_2_components['clusters'] = cluster.labels_.tolist()
         
         return self.__df_2_components.copy()
+    
     
     def visualize_plot(self, size=20, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, clusters=False, filename=None, title=None):
         """
@@ -367,7 +367,6 @@ class Plotter(object):
         
         if clusters is not False and 'clusters' not in self.__df_2_components:
             print('Call cluster() before visualizing a plot with clusters.')
-            return None
         
         if title is None:
             title = self.__plot_title
@@ -387,7 +386,7 @@ class Plotter(object):
         hue = None
         hue_order = None
         palette = None
-        if clusters is not False:
+        if clusters is not False and 'clusters' in self.__df_2_components.columns:
             hue = 'clusters'
             palette = 'deep'
             if not isinstance(clusters, bool):
@@ -408,9 +407,16 @@ class Plotter(object):
                 total = df_data['clusters'].value_counts()
                 sum_tot = total.sum()
                 labels = {}
+                count = 0
                 for key, value in total.items():
-                    p = value / sum_tot
-                    labels[key] = f'Cluster {key} - {p:.0%}'
+                    p = float(f"{(value/sum_tot)*100:.0f}")
+                    labels[key] = p
+                    count += p
+                # Solve possible rounding errors
+                if 100 - count > 0:
+                    labels[0] = labels[0] + 100 - count
+                for key, value in labels.items():
+                    labels[key] = f"Cluster {key} - {value:.0f}%"
                 df_data.clusters.replace(labels,
                                          inplace=True)
                 hue_order = list(labels.values())

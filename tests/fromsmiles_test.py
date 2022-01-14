@@ -4,9 +4,6 @@ import pytest
 
 from chemplot import Plotter
 from io import StringIO
-import pandas as pd 
-import os
-
 
 @pytest.mark.usefixtures("logs_data")
 class TestFromSmilesR(unittest.TestCase):
