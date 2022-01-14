@@ -7,7 +7,7 @@ from io import StringIO
 
 @pytest.mark.usefixtures("logs_data")
 class TestFromSmilesR(unittest.TestCase):
-    
+
     def test_target_type_assigned_tailored(self):
         """
         1. Test checks if target_type is assigned
@@ -421,14 +421,91 @@ class TestFromSmilesErroneusSMILES(unittest.TestCase):
                       'Cc1cc2c(cc1C)N3C=N2[Co]456(N7=C8[C@H](C(C7=CC9=N4C(=C(C1=N5[C@@]([C@@H]2N6C(=C8C)[C@@]([C@H]2CC(=O)N)(CCC(=O)NC[C@H](OP(=O)(O[C@@H]2[C@H](O[C@H]3[C@@H]2O)CO)O)C)C)([C@@]([C@@H]1CCC(=O)N)(C)CC(=O)N)C)C)[C@@]([C@@H]9CCC(=O)N)(C)CC(=O)N)(C)C)CCC(=O)N)C#N\n'+
                       'CCCCc1c(=O)n(n(c1=O)c2ccc(cc2)O)c3ccccc3\nCCCCc1c(=O)n(n(c1=O)c2ccccc2)c3ccccc3.\n' +
                       'The erroneous SMILES will be removed from the data.') 
+ 
+    def test_no_descriptors_computed(self):
+        """
+        50. Test if exception is raised when no descriptors can be computed
+        """
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['CCCC', 'CCCC'], sim_type="structural")
+        self.assertTrue('Plotter object cannot be instantiated for given molecules' in str(context.exception))
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['CCCC', 'CCCCCC'], target=[1,0], sim_type="tailored")
+        self.assertTrue('Plotter object cannot be instantiated for given molecules' in str(context.exception))
         
-    def test_structural_remove_columns_all_1_0(self):
+    def test_empty_smiles(self):
         """
-        50. Test if columns with only 1s or 0s are removed correctly in structural similarity
+        51. Test if exception is raised because no mols could be computed
         """
-        cp = Plotter.from_smiles(['CCCC', 'CCCC'], sim_type="structural")
-        self.assertTrue(cp._Plotter__df_descriptors.empty)
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['aaaa', 'aaaa'], sim_type="structural")
+        self.assertTrue('Plotter object cannot be instantiated for given molecules' in str(context.exception))
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['aaaa', 'aaaa'], target=[0, 0], sim_type="tailored")
+        self.assertTrue('Descriptors could not be computed for given molecules' in str(context.exception))
 
+    def test_target_diff_smiles(self):
+        """
+        52. Test if exception is raised target length is not equal to SMILES len
+        """
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['CCCC', 'CC'], target=[9])
+        self.assertTrue('If target is provided its length must match the instances of molecules' in str(context.exception))
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['CCCC', 'CC'], target=[9,1,1])
+        self.assertTrue('If target is provided its length must match the instances of molecules' in str(context.exception))
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['CCCC', 'CC'], target=[9], sim_type="structural")
+        self.assertTrue('If target is provided its length must match the instances of molecules' in str(context.exception))
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['CCCC', 'CC'], target=[9,1,1], sim_type="structural")
+        self.assertTrue('If target is provided its length must match the instances of molecules' in str(context.exception))
         
+    @patch('builtins.print')
+    def test_INFO_target_type_correct(self, mock_print):
+        """
+        53. Test checks if user gets notified when target type is non numeric but 'R' is selected
+        """
+        Plotter.from_smiles(['CCCC', 'CC'], target=[4, '5'], target_type='R', sim_type="structural")
+        mock_print.assert_called_with('Input received is \'R\' for target values that seem not continuous.')
+        with self.assertRaises(Exception):
+            Plotter.from_smiles(['CCCC', 'CC'], target=[4, '5'], target_type='R', sim_type="tailored")
+        mock_print.assert_called_with('Input received is \'R\' for target values that seem not continuous.')
+
+    @patch('builtins.print')
+    def test_select_target_type_correct(self, mock_print):
+        """
+        54. Test checks is for non numeric target types 'C' is selected
+        """
+        result = Plotter.from_smiles(['CCCC', 'CC'], target=[4, '5'], sim_type="structural")
+        mock_print.assert_called_with('target_type indicates if the target is a continuous variable or a class label.\n'+
+                  'R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.\n'+
+                  'From analysis of the target, C has been selected for target_type.')
+        assert result._Plotter__target_type == 'C'
+        result = Plotter.from_smiles(['CCCC', 'CC'], target=[4, '5'], sim_type="tailored")
+        mock_print.assert_called_with('target_type indicates if the target is a continuous variable or a class label.\n'+
+                  'R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.\n'+
+                  'From analysis of the target, C has been selected for target_type.')
+        assert result._Plotter__target_type == 'C'
+    
+    def test_one_smiles(self):
+        """
+        55. Test if exception is raised because only one mol is computed
+        """
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['CCCC'], sim_type="structural")
+        self.assertTrue('Plotter object cannot be instantiated for given molecules' in str(context.exception))
+        with self.assertRaises(Exception) as context:
+            Plotter.from_smiles(['CCCC'], target=[0], sim_type="tailored")
+        self.assertTrue('Plotter object cannot be instantiated for given molecules' in str(context.exception))
+    
+    def test_no_feature_selected(self):
+        """
+        50. Test if no feature is selected the class does not crash
+        """
+        result = Plotter.from_smiles(['CCCC', 'CCCCCC'], target=[0,0])
+        assert len(result._Plotter__df_descriptors.columns) == 202
+
+
 if __name__ == '__main__':
     unittest.main()

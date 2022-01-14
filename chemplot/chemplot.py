@@ -79,8 +79,6 @@ class Plotter(object):
         # Error handeling sym_type
         if sim_type not in self._sim_types:
             if len(target) > 0:
-                if len(target) != len(encoding_list):
-                    raise Exception("Target length must match the instances of molecules")
                 self.__sim_type = 'tailored' 
                 print('sim_type indicates the similarity type by which the plots are constructed.\n' +
                       'The supported similarity types are structural and tailored.\n' +
@@ -98,22 +96,26 @@ class Plotter(object):
         
         # Error handeling target_type
         if len(target) > 0:
+            if len(target) != len(encoding_list):
+                raise Exception("If target is provided its length must match the instances of molecules")
+                
+        if len(target) > 0:
             df_target = pd.DataFrame(data=target)
             unique_targets_ratio = 1.*df_target.iloc[:, 0].nunique()/df_target.iloc[:, 0].count() < 0.05
             numeric_target = is_numeric_dtype(df_target.dtypes[0])
             if target_type == 'R' and (unique_targets_ratio or not numeric_target):
                 print('Input received is \'R\' for target values that seem not continuous.')
             if target_type not in self._target_types:
-                if unique_targets_ratio:
-                    self.__target_type = 'C'
-                    print('target_type indicates if the target is a continuous variable or a class label.\n'+
-                          'R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.\n'+
-                          'From analysis of the target, C has been selected for target_type.')
-                else:
+                if not unique_targets_ratio and numeric_target:
                     self.__target_type = 'R'
                     print('target_type indicates if the target is a continuous variable or a class label.\n'+
                           'R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.\n'+
                           'From analysis of the target, R has been selected for target_type.')
+                else:
+                    self.__target_type = 'C'
+                    print('target_type indicates if the target is a continuous variable or a class label.\n'+
+                          'R stands for regression and C for classification. Input R as target type for continuous variables and C for class labels.\n'+
+                          'From analysis of the target, C has been selected for target_type.')
             else:
                 self.__target_type = target_type
         else:
@@ -448,7 +450,6 @@ class Plotter(object):
         
         # Create a plot based on the reduced components 
         if kind == "scatter":
-            print(type(palette))
             plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*3)
             plot.set_label("scatter")
             axis = plot
