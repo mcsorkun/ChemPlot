@@ -1,24 +1,14 @@
 import unittest
 from unittest.mock import patch
+import pytest
 
-from chemplot import Plotter
 from chemplot import parameters
 import pandas as pd 
 from io import StringIO
-import os
 
+@pytest.mark.usefixtures("logs_plotter", "logs_structural")
 class TestUMAP(unittest.TestCase):
-    
-    @classmethod
-    def setUpClass(cls):
-        file_LOGS = os.path.join('test_data', 'R_1291_LOGS.csv')
-        cls.data_LOGS = pd.read_csv(file_LOGS) 
-        file_BBBP = os.path.join('test_data', 'C_2039_BBBP_2.csv')
-        cls.data_BBBP = pd.read_csv(file_BBBP)   
-        cls.plotter_tailored_LOGS = Plotter.from_smiles(cls.data_LOGS["smiles"], target=cls.data_LOGS["target"], target_type="R", sim_type="tailored")
-        cls.plotter_structural_LOGS = Plotter.from_smiles(cls.data_LOGS["smiles"], target=cls.data_LOGS["target"], target_type="R", sim_type="structural")
-        cls.plotter_no_target_LOGS = Plotter.from_smiles(cls.data_LOGS["smiles"], target_type="R", sim_type="structural")
-      
+
     def test_default_structural_n_neighbors(self):
         """
         1. Test checks if default structural n_neighbors is assigned

@@ -16,6 +16,7 @@ import functools
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.manifold import TSNE
+from sklearn.cluster import KMeans
 from rdkit.Chem import Draw
 from bokeh.plotting import figure
 from bokeh.transform import transform, factor_cmap
@@ -117,11 +118,15 @@ class Plotter(object):
         # Instantiate Plotter class
         if self.__sim_type == "tailored":
             self.__mols, df_descriptors, target = get_desc(encoding_list, target)
+            if not df_descriptors:
+                raise Exception("Descriptors could not be computed for given molecules")
             self.__df_descriptors, self.__target = desc.select_descriptors_lasso(df_descriptors,target,kind=self.__target_type)
         elif self.__sim_type == "structural":
             self.__mols, self.__df_descriptors, self.__target = get_fingerprints(encoding_list,target,2,2048)
             
-            
+        if not self.__mols or not self.__df_descriptors:
+                raise Exception("Plotter object cannot be instantiated for given molecules")
+                
         self.__df_2_components = None
         self.__plot_title = None
             
@@ -166,17 +171,19 @@ class Plotter(object):
         return cls(inchi_list, target, target_type, sim_type, desc.get_mordred_descriptors_from_inchi, desc.get_ecfp_from_inchi)
         
     
-    def pca(self):
+    def pca(self, **kwargs):
         """
         Calculates the first 2 PCA components of the molecular descriptors.
         
+        :param kwargs: Other keyword arguments are passed down to sklearn.decomposition.PCA
+        :type kwargs: key, value mappings
         :returns: The dataframe containing the PCA components.
         :rtype: Dataframe
         """
         self.__data = self.__data_scaler()
         
         # Linear dimensionality reduction to 2 components by PCA
-        self.pca_fit = PCA(n_components=2)
+        self.pca_fit = PCA(n_components=2, **kwargs)
         first2ecpf_components = self.pca_fit.fit_transform(self.__data)
         coverage_components = self.pca_fit.explained_variance_ratio_
         
@@ -192,19 +199,21 @@ class Plotter(object):
         if len(self.__target) > 0: 
             self.__df_2_components['target'] = self.__target
         
-        return self.__df_2_components
+        return self.__df_2_components.copy()
     
     
-    def tsne(self, perplexity=None, pca=False, random_state=None):
+    def tsne(self, perplexity=None, pca=False, random_state=None, **kwargs):
         """
         Calculates the first 2 t-SNE components of the molecular descriptors.
         
         :param perplexity: perplexity value for the t-SNE model  
         :param pca: indicates if the features must be preprocessed by PCA
-        :param random_state: random seed that can be passed as a parameter for reproducing the same results        
+        :param random_state: random seed that can be passed as a parameter for reproducing the same results     
+        :param kwargs: Other keyword arguments are passed down to sklearn.manifold.TSNE
         :type perplexity: int
         :type pca: boolean
         :type random_state: int
+        :type kwargs: key, value mappings
         :returns: The dataframe containing the t-SNE components.
         :rtype: Dataframe
         """ 
@@ -233,7 +242,7 @@ class Plotter(object):
                 print('Robust results are obtained for values of perplexity between 5 and 50')
         
         # Embed the data in two dimensions
-        self.tsne_fit = TSNE(n_components=2, perplexity=perplexity, random_state=random_state)
+        self.tsne_fit = TSNE(n_components=2, perplexity=perplexity, random_state=random_state, **kwargs)
         ecfp_tsne_embedding = self.tsne_fit.fit_transform(self.__data)
         # Create a dataframe containinting the first 2 TSNE components of ECFP 
         self.__df_2_components = pd.DataFrame(data = ecfp_tsne_embedding
@@ -242,19 +251,21 @@ class Plotter(object):
         if len(self.__target) > 0: 
             self.__df_2_components['target'] = self.__target
         
-        return self.__df_2_components
+        return self.__df_2_components.copy()
         
         
-    def umap(self, n_neighbors=None, min_dist=None, pca=False, random_state=None):
+    def umap(self, n_neighbors=None, min_dist=None, pca=False, random_state=None, **kwargs):
         """
         Calculates the first 2 UMAP components of the molecular descriptors.
         
         :param num_neighbors: Number of neighbours used in the UMAP madel.
         :param min_dist: Value between 0.0 and 0.99, indicates how close to each other the points can be displayed.
         :param random_state: random seed that can be passed as a parameter for reproducing the same results
+        :param kwargs: Other keyword arguments are passed down to umap.UMAP
         :type num_neighbors: int
         :type min_dist: float
         :type random_state: int
+        :type kwargs: key, value mappings
         :returns: The dataframe containing the UMAP components.
         :rtype: Dataframe
         """  
@@ -289,7 +300,7 @@ class Plotter(object):
                 min_dist = parameters.MIN_DIST_TAILORED
             
         # Embed the data in two dimensions
-        self.umap_fit = umap.UMAP(n_neighbors=n_neighbors, min_dist=min_dist, random_state=random_state, n_components=2)
+        self.umap_fit = umap.UMAP(n_neighbors=n_neighbors, min_dist=min_dist, random_state=random_state, n_components=2, **kwargs)
         ecfp_umap_embedding = self.umap_fit.fit_transform(self.__data)
         # Create a dataframe containinting the first 2 UMAP components of ECFP 
         self.__df_2_components = pd.DataFrame(data = ecfp_umap_embedding
@@ -298,9 +309,36 @@ class Plotter(object):
         if len(self.__target) > 0: 
             self.__df_2_components['target'] = self.__target
         
-        return self.__df_2_components
+        ##TODO dont return actual object
+        return self.__df_2_components.copy()
     
-    def visualize_plot(self, size=20, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, filename=None, title=None):
+    ## TODO cluster fun
+    def cluster(self, n_clusters=5, **kwargs):
+        """
+        Computes the clusters presents in the embedded chemical space.
+        
+        :param n_clusters: Number of clusters that will be computed  
+        :param kwargs: Other keyword arguments are passed down to sklearn.cluster.KMeans
+        :type n_clusters: int
+        :type kwargs: key, value mappings
+        :returns: The dataframe containing the 2D embedding.
+        :rtype: Dataframe
+        """
+        if self.__df_2_components is None:
+            print('Reduce the dimensions of your molecules before clustering.')
+            return None
+        
+        x = self.__df_2_components.columns[0]
+        y = self.__df_2_components.columns[1]
+        
+        cluster = KMeans(n_clusters, **kwargs)
+        
+        cluster.fit(self.__df_2_components[[x,y]])
+        self.__df_2_components['clusters'] = cluster.labels_.tolist()
+        
+        return self.__df_2_components.copy()
+    
+    def visualize_plot(self, size=20, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, clusters=False, filename=None, title=None):
         """
         Generates a plot for the given molecules embedded in two dimensions.
         
@@ -309,18 +347,26 @@ class Plotter(object):
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed 
         :param is_colored: Indicates if the points must be colored according to target 
         :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is "R".
+        :param clusters: If True the clusters are shown instead of possible targets. Pass a list or a int to only show selected clusters (indexed by int).
         :param filename: Indicates the file where to save the plot
+        :param title: Title of the plot.
         :type size: int
         :type kind: string
         :type remove_outliers: boolean
         :type is_colored: boolean
         :type colorbar: boolean
+        :type clusters: boolean or list or int
         :type filename: string
+        :type title: string
         :returns: The matplotlib axes containing the plot.
         :rtype: Axes
         """
         if self.__df_2_components is None:
             print('Reduce the dimensions of your molecules before creating a plot.')
+            return None
+        
+        if clusters is not False and 'clusters' not in self.__df_2_components:
+            print('Call cluster() before visualizing a plot with clusters.')
             return None
         
         if title is None:
@@ -339,15 +385,47 @@ class Plotter(object):
         
         # Define colors 
         hue = None
+        hue_order = None
         palette = None
-        if len(self.__target) == 0:
-            is_colored = False;
+        if clusters is not False:
+            hue = 'clusters'
+            palette = 'deep'
+            if not isinstance(clusters, bool):
+                if isinstance(clusters, int): clusters = [clusters]
+                df_data['clusters'] = df_data['clusters'].isin(clusters)
+                # Labels cluster
+                total = df_data['clusters'].value_counts()
+                t_s = total.get(True) if total.get(True) else 0
+                p_s = t_s / total.sum()
+                p_o = 1 - p_s
+                labels = {
+                    True: f'Selected - {p_s:.0%}', 
+                    False: f'Other - {p_o:.0%}'
+                    }
+                df_data.clusters.replace(labels, inplace=True)
+                hue_order = list(labels.values())
+            else:
+                total = df_data['clusters'].value_counts()
+                sum_tot = total.sum()
+                labels = {}
+                for key, value in total.items():
+                    p = value / sum_tot
+                    labels[key] = f'Cluster {key} - {p:.0%}'
+                df_data.clusters.replace(labels,
+                                         inplace=True)
+                hue_order = list(labels.values())
+                hue_order.sort()
         else:
-            if is_colored:
-                df_data = df_data.assign(target=self.__target)
-                hue = 'target'
-                if self.__target_type == "R":
-                    palette = sns.color_palette("inferno", as_cmap=True)
+            if len(self.__target) == 0:
+                is_colored = False;
+            else:
+                if is_colored:
+                    df_data = df_data.assign(target=self.__target)
+                    hue = 'target'
+                    if self.__target_type == "R":
+                        palette = sns.color_palette("inferno", as_cmap=True)
+                    else:
+                        palette = 'deep'
         
         # Remove outliers (using Z-score)
         if remove_outliers:
@@ -360,7 +438,7 @@ class Plotter(object):
         
         # Create a plot based on the reduced components 
         if kind == "scatter":
-            plot = sns.scatterplot(x=x, y=y, hue=hue, palette=palette, data=df_data, s=size*3)
+            plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*3)
             plot.set_label("scatter")
             axis = plot
             # Add colorbar
@@ -405,11 +483,15 @@ class Plotter(object):
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed 
         :param is_colored: Indicates if the points must be colored according to target 
         :param filename: Indicates the file where to save the Bokeh plot
+        :param show_plot: Immediately display the current plot. 
+        :param title: Title of the plot.
         :type size: int
         :type kind: string
         :type remove_outliers: boolean
         :type is_colored: boolean
         :type filename: string
+        :type show_plot: boolean
+        :type title: string
         :returns: The bokeh figure containing the plot.
         :rtype: Figure
         """
