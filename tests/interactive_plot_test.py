@@ -26,7 +26,7 @@ class TestInteractivePlot(unittest.TestCase):
     def tearDownClass(cls):
         try:
             os.remove("test_filename.html")
-        except FileNotFoundError:
+        except:
             pass
         
     def test_default_kind_none(self):
