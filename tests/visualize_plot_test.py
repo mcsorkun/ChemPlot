@@ -3,16 +3,17 @@ from unittest.mock import patch
 import pytest
 
 from chemplot import Plotter
-import pandas as pd 
 import numpy as np
 import os
+import re
 from scipy import stats
 from matplotlib import pyplot
 from io import StringIO
 
+
 @pytest.mark.usefixtures("visualize_data")
 class TestVisualizePlot(unittest.TestCase):
-        
+
     def test_default_kind_none(self):
         """
         1. Test checks if default kind is assigned
@@ -343,7 +344,7 @@ class TestVisualizePlot(unittest.TestCase):
         result = len([name for name in os.listdir('.') if os.path.isfile(name)])
         self.assertEqual(expected, result)
         pyplot.close()
-        
+       
     def test_filename_kde(self):
         """
         34. Test checks if the value of filename is assigned with kde
@@ -358,8 +359,95 @@ class TestVisualizePlot(unittest.TestCase):
         self.assertEqual(expected, result - 1)
         os.remove("kde_test.png")
         pyplot.close()
-        
+
+
+    # Clustering 
     
+    @patch('sys.stdout', new_callable=StringIO)  
+    def test_INFO_cluster_call_without_reduction(self, mock_stdout):
+        """
+        35. Test checks if user is informed a cluster plot cannot be created without reducing the dimensions first
+        """
+        self.plotter_sampl.visualize_plot(clusters=True)
+        assert 'Reduce the dimensions of your molecules before creating a plot.' in mock_stdout.getvalue()
+        pyplot.close()
+        
+    def test_cluster_legend(self):
+        """
+        36. Test checks if legend is correctly set for clusters
+        """
+        self.plotter_pca_BBBP.cluster(n_clusters=5)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=True)
+        assert len(result.get_legend().texts) == 5
+        self.plotter_pca_BBBP.cluster(n_clusters=10)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=True)
+        assert len(result.get_legend().texts) == 10
+        pyplot.close()
+    
+    def test_cluster_legend_text(self):
+        """
+        37. Test checks if legend has correct ordered labels
+        """
+        self.plotter_pca_BBBP.cluster(n_clusters=5)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=True)
+        count = 0
+        pre_d = -1
+        for t in result.get_legend().texts:
+            digits = re.search(r'Cluster (\d) - (\d\d?)%', t._text).groups()
+            assert int(digits[0]) > pre_d
+            pre_d = int(digits[0])
+            count += int(digits[1])
+        self.assertEqual(100, count)
+        pyplot.close()
+    
+    def test_cluster_selection(self):
+        """
+        36. Test checks if legend is correctly set for clusters
+        """
+        self.plotter_pca_BBBP.cluster(n_clusters=10)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=[1,2,3,24,45])
+        assert len(result.get_legend().texts) == 2
+        self.plotter_pca_BBBP.cluster(n_clusters=4)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=4)
+        assert len(result.get_legend().texts) == 2
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=[0,1,2,3,4])
+        assert len(result.get_legend().texts) == 2
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=[])
+        assert len(result.get_legend().texts) == 2
+        pyplot.close()
+
+    def test_cluster_selection_legend_text(self):
+        """
+        37. Test checks if legend has correct selected labels
+        """
+        self.plotter_pca_BBBP.cluster(n_clusters=5)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=1)
+        count = 0
+        for t in result.get_legend().texts:
+            digits = re.search(r'(Selected|Other) - (\d{1,3})%', t._text).groups()
+            count += int(digits[1])
+        self.assertEqual(100, count)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=[1,9,0])
+        count = 0
+        for t in result.get_legend().texts:
+            digits = re.search(r'(Selected|Other) - (\d{1,3})%', t._text).groups()
+            count += int(digits[1])
+        self.assertEqual(100, count)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=[])
+        count = 0
+        for t in result.get_legend().texts:
+            digits = re.search(r'(Selected|Other) - (\d{1,3})%', t._text).groups()
+            count += int(digits[1])
+        self.assertEqual(100, count)
+        result = self.plotter_pca_BBBP.visualize_plot(clusters=[0,1,2,3,4,5])
+        count = 0
+        for t in result.get_legend().texts:
+            digits = re.search(r'(Selected|Other) - (\d{1,3})%', t._text).groups()
+            count += int(digits[1])
+        self.assertEqual(100, count)
+        pyplot.close()        
+        
+        
 if __name__ == '__main__':
     unittest.main()
     
