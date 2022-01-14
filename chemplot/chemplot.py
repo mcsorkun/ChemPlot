@@ -16,13 +16,14 @@ import functools
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.manifold import TSNE
-from sklearn.cluster import KMeans, DBSCAN
+from sklearn.cluster import KMeans
 from rdkit.Chem import Draw
 from bokeh.plotting import figure
 from bokeh.transform import transform, factor_cmap
 from bokeh.palettes import Category10, Inferno
 from bokeh.models.mappers import LinearColorMapper
 from bokeh.models import ColorBar, HoverTool
+from bokeh.models import Panel, Tabs
 from bokeh.io import output_file, save, show
 from scipy import stats
 from io import BytesIO
@@ -343,7 +344,7 @@ class Plotter(object):
             print('Reduce the dimensions of your molecules before creating a plot.')
             return None
         
-        if clusters == False and 'clusters' not in self.__df_2_components:
+        if clusters is not False and 'clusters' not in self.__df_2_components:
             print('Call cluster() before visualizing a plot with clusters.')
             return None
         
