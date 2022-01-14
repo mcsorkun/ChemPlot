@@ -1,8 +1,0 @@
-name: chemplot
-channels:
-- conda-forge
-- chemplot
-- defaults
-dependencies:
-    - rdkit
-    - chemplot>=1.1.1
