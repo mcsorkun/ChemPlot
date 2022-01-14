@@ -343,7 +343,7 @@ class Plotter(object):
             print('Reduce the dimensions of your molecules before creating a plot.')
             return None
         
-        if clusters and 'clusters' not in self.__df_2_components:
+        if clusters == False and 'clusters' not in self.__df_2_components:
             print('Call cluster() before visualizing a plot with clusters.')
             return None
         
@@ -365,7 +365,7 @@ class Plotter(object):
         hue = None
         hue_order = None
         palette = None
-        if clusters or not isinstance(clusters, bool):
+        if clusters is not False:
             hue = 'clusters'
             palette = 'deep'
             if not isinstance(clusters, bool):
@@ -376,9 +376,12 @@ class Plotter(object):
                 t_s = total.get(True) if total.get(True) else 0
                 p_s = t_s / total.sum()
                 p_o = 1 - p_s
-                df_data.clusters.replace({True: f'Selected - {p_s:.0%}', 
-                                          False: f'Other - {p_o:.0%}'},
-                                         inplace=True)
+                labels = {
+                    True: f'Selected - {p_s:.0%}', 
+                    False: f'Other - {p_o:.0%}'
+                    }
+                df_data.clusters.replace(labels, inplace=True)
+                hue_order = list(labels.values())
             else:
                 total = df_data['clusters'].value_counts()
                 sum_tot = total.sum()
