@@ -501,7 +501,7 @@ class TestFromSmilesErroneusSMILES(unittest.TestCase):
     
     def test_no_feature_selected(self):
         """
-        50. Test if no feature is selected the class does not crash
+        56. Test if no feature is selected the class does not crash
         """
         result = Plotter.from_smiles(['CCCC', 'CCCCCC'], target=[0,0])
         assert len(result._Plotter__df_descriptors.columns) == 202
