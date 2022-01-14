@@ -505,6 +505,15 @@ class TestFromSmilesErroneusSMILES(unittest.TestCase):
         """
         result = Plotter.from_smiles(['CCCC', 'CCCCCC'], target=[0,0])
         assert len(result._Plotter__df_descriptors.columns) == 202
+        
+    def test_C_unique_class(self):
+        """
+        57. Test if target is removed for 'C' target type when only one class is present
+        """
+        result = Plotter.from_smiles(['CCCC', 'OOOOOC'], target=[0,0], target_type="C")
+        assert not result._Plotter__target
+        result = Plotter.from_smiles(['CCCC', 'OOOOOC'], target=[0,0], target_type="C", sim_type="structural")
+        assert not result._Plotter__target
 
 
 if __name__ == '__main__':
