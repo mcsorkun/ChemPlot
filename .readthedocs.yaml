@@ -14,12 +14,4 @@ python:
    version: 3.7
 
 conda:
-  environment: 
-    name: chemplot
-    channels:
-    - conda-forge
-    - chemplot
-    - defaults
-    dependencies:
-      - rdkit
-      - chemplot
+  environment: docs_env.yml
