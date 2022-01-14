@@ -23,7 +23,6 @@ from bokeh.transform import transform, factor_cmap
 from bokeh.palettes import Category10, Inferno
 from bokeh.models.mappers import LinearColorMapper
 from bokeh.models import ColorBar, HoverTool
-from bokeh.models import Panel, Tabs
 from bokeh.io import output_file, save, show
 from scipy import stats
 from io import BytesIO
@@ -119,12 +118,15 @@ class Plotter(object):
         # Instantiate Plotter class
         if self.__sim_type == "tailored":
             self.__mols, df_descriptors, target = get_desc(encoding_list, target)
-            ## TODO validater descriptors
+            if not df_descriptors:
+                raise Exception("Descriptors could not be computed for given molecules")
             self.__df_descriptors, self.__target = desc.select_descriptors_lasso(df_descriptors,target,kind=self.__target_type)
         elif self.__sim_type == "structural":
             self.__mols, self.__df_descriptors, self.__target = get_fingerprints(encoding_list,target,2,2048)
             
-            
+        if not self.__mols or not self.__df_descriptors:
+                raise Exception("Plotter object cannot be instantiated for given molecules")
+                
         self.__df_2_components = None
         self.__plot_title = None
             
@@ -169,17 +171,19 @@ class Plotter(object):
         return cls(inchi_list, target, target_type, sim_type, desc.get_mordred_descriptors_from_inchi, desc.get_ecfp_from_inchi)
         
     
-    def pca(self, *args, **kwargs):
+    def pca(self, **kwargs):
         """
         Calculates the first 2 PCA components of the molecular descriptors.
         
+        :param kwargs: Other keyword arguments are passed down to sklearn.decomposition.PCA
+        :type kwargs: key, value mappings
         :returns: The dataframe containing the PCA components.
         :rtype: Dataframe
         """
         self.__data = self.__data_scaler()
         
         # Linear dimensionality reduction to 2 components by PCA
-        self.pca_fit = PCA(n_components=2, *args, **kwargs)
+        self.pca_fit = PCA(n_components=2, **kwargs)
         first2ecpf_components = self.pca_fit.fit_transform(self.__data)
         coverage_components = self.pca_fit.explained_variance_ratio_
         
@@ -198,16 +202,18 @@ class Plotter(object):
         return self.__df_2_components.copy()
     
     
-    def tsne(self, perplexity=None, pca=False, random_state=None, *args, **kwargs):
+    def tsne(self, perplexity=None, pca=False, random_state=None, **kwargs):
         """
         Calculates the first 2 t-SNE components of the molecular descriptors.
         
         :param perplexity: perplexity value for the t-SNE model  
         :param pca: indicates if the features must be preprocessed by PCA
-        :param random_state: random seed that can be passed as a parameter for reproducing the same results        
+        :param random_state: random seed that can be passed as a parameter for reproducing the same results     
+        :param kwargs: Other keyword arguments are passed down to sklearn.manifold.TSNE
         :type perplexity: int
         :type pca: boolean
         :type random_state: int
+        :type kwargs: key, value mappings
         :returns: The dataframe containing the t-SNE components.
         :rtype: Dataframe
         """ 
@@ -236,7 +242,7 @@ class Plotter(object):
                 print('Robust results are obtained for values of perplexity between 5 and 50')
         
         # Embed the data in two dimensions
-        self.tsne_fit = TSNE(n_components=2, perplexity=perplexity, random_state=random_state, *args, **kwargs)
+        self.tsne_fit = TSNE(n_components=2, perplexity=perplexity, random_state=random_state, **kwargs)
         ecfp_tsne_embedding = self.tsne_fit.fit_transform(self.__data)
         # Create a dataframe containinting the first 2 TSNE components of ECFP 
         self.__df_2_components = pd.DataFrame(data = ecfp_tsne_embedding
@@ -248,16 +254,18 @@ class Plotter(object):
         return self.__df_2_components.copy()
         
         
-    def umap(self, n_neighbors=None, min_dist=None, pca=False, random_state=None, *args, **kwargs):
+    def umap(self, n_neighbors=None, min_dist=None, pca=False, random_state=None, **kwargs):
         """
         Calculates the first 2 UMAP components of the molecular descriptors.
         
         :param num_neighbors: Number of neighbours used in the UMAP madel.
         :param min_dist: Value between 0.0 and 0.99, indicates how close to each other the points can be displayed.
         :param random_state: random seed that can be passed as a parameter for reproducing the same results
+        :param kwargs: Other keyword arguments are passed down to umap.UMAP
         :type num_neighbors: int
         :type min_dist: float
         :type random_state: int
+        :type kwargs: key, value mappings
         :returns: The dataframe containing the UMAP components.
         :rtype: Dataframe
         """  
@@ -292,7 +300,7 @@ class Plotter(object):
                 min_dist = parameters.MIN_DIST_TAILORED
             
         # Embed the data in two dimensions
-        self.umap_fit = umap.UMAP(n_neighbors=n_neighbors, min_dist=min_dist, random_state=random_state, n_components=2, *args, **kwargs)
+        self.umap_fit = umap.UMAP(n_neighbors=n_neighbors, min_dist=min_dist, random_state=random_state, n_components=2, **kwargs)
         ecfp_umap_embedding = self.umap_fit.fit_transform(self.__data)
         # Create a dataframe containinting the first 2 UMAP components of ECFP 
         self.__df_2_components = pd.DataFrame(data = ecfp_umap_embedding
@@ -305,8 +313,17 @@ class Plotter(object):
         return self.__df_2_components.copy()
     
     ## TODO cluster fun
-    def cluster(self, n_clusters=5, *args, **kwargs):
+    def cluster(self, n_clusters=5, **kwargs):
+        """
+        Computes the clusters presents in the embedded chemical space.
         
+        :param n_clusters: Number of clusters that will be computed  
+        :param kwargs: Other keyword arguments are passed down to sklearn.cluster.KMeans
+        :type n_clusters: int
+        :type kwargs: key, value mappings
+        :returns: The dataframe containing the 2D embedding.
+        :rtype: Dataframe
+        """
         if self.__df_2_components is None:
             print('Reduce the dimensions of your molecules before clustering.')
             return None
@@ -314,7 +331,7 @@ class Plotter(object):
         x = self.__df_2_components.columns[0]
         y = self.__df_2_components.columns[1]
         
-        cluster = KMeans(n_clusters, *args, **kwargs)
+        cluster = KMeans(n_clusters, **kwargs)
         
         cluster.fit(self.__df_2_components[[x,y]])
         self.__df_2_components['clusters'] = cluster.labels_.tolist()
@@ -330,13 +347,17 @@ class Plotter(object):
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed 
         :param is_colored: Indicates if the points must be colored according to target 
         :param colorbar: Indicates if the plot legend must be represented as a colorbar. Only considered when the target_type is "R".
+        :param clusters: If True the clusters are shown instead of possible targets. Pass a list or a int to only show selected clusters (indexed by int).
         :param filename: Indicates the file where to save the plot
+        :param title: Title of the plot.
         :type size: int
         :type kind: string
         :type remove_outliers: boolean
         :type is_colored: boolean
         :type colorbar: boolean
+        :type clusters: boolean or list or int
         :type filename: string
+        :type title: string
         :returns: The matplotlib axes containing the plot.
         :rtype: Axes
         """
@@ -403,7 +424,6 @@ class Plotter(object):
                     hue = 'target'
                     if self.__target_type == "R":
                         palette = sns.color_palette("inferno", as_cmap=True)
-                    ## TODO - made palette deep 
                     else:
                         palette = 'deep'
         
@@ -463,11 +483,15 @@ class Plotter(object):
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed 
         :param is_colored: Indicates if the points must be colored according to target 
         :param filename: Indicates the file where to save the Bokeh plot
+        :param show_plot: Immediately display the current plot. 
+        :param title: Title of the plot.
         :type size: int
         :type kind: string
         :type remove_outliers: boolean
         :type is_colored: boolean
         :type filename: string
+        :type show_plot: boolean
+        :type title: string
         :returns: The bokeh figure containing the plot.
         :rtype: Figure
         """
