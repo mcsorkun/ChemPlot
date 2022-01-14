@@ -7,8 +7,11 @@ import pandas as pd
 import numpy as np
 import base64
 import os, os.path
+import re
 from chemplot import Plotter
 from chemplot import parameters
+from bokeh.models import Tabs
+from bokeh.plotting.figure import Figure
 from scipy import stats
 from rdkit.Chem import Draw
 from io import StringIO
@@ -18,7 +21,7 @@ from pathlib import Path
 
 @pytest.mark.usefixtures("visualize_data")
 class TestInteractivePlot(unittest.TestCase):
-        
+
     @classmethod
     def tearDownClass(cls):
         try:
@@ -39,6 +42,7 @@ class TestInteractivePlot(unittest.TestCase):
         """
         result = self.plotter_pca_LOGS.interactive_plot(kind='anytext', size=20, remove_outliers=False, is_colored=True)
         self.assertTrue(isinstance(result.renderers[0].glyph, bokeh.models.markers.Circle))
+        assert len(result.renderers) == 1
     
     @patch('sys.stdout', new_callable=StringIO)  
     def test_INFO_kind_with_anytext(self, mock_stdout):
@@ -319,6 +323,80 @@ class TestInteractivePlot(unittest.TestCase):
         result = self.plotter_sampl.interactive_plot()
         assert result is None
         assert 'Reduce the dimensions of your molecules before creating a plot.' in mock_stdout.getvalue()
+        
+    # Clustering 
+    
+    @patch('sys.stdout', new_callable=StringIO)  
+    def test_INFO_cluster_call_without_clusters(self, mock_stdout):
+        """
+        29. Test checks if user is informed a cluster plot cannot be created without reducing the dimensions first
+        """
+        self.plotter_pca_LOGS.interactive_plot(clusters=True)
+        assert 'Call cluster() before visualizing a plot with clusters.' in mock_stdout.getvalue()
+        
+    def test_clusters_default(self):
+        """
+        30. Test if default value of clusters is assigned
+        """
+        self.plotter_pca_BBBP.cluster(n_clusters=5)
+        result = self.plotter_pca_BBBP.interactive_plot()
+        assert isinstance(result, Figure)
+        assert not isinstance(result, Tabs)
+        
+    def test_clusters_true(self):
+        """
+        31. Test to check if the cluster panel is correctly set up
+        """
+        self.plotter_pca_BBBP.cluster(n_clusters=5)
+        result = self.plotter_pca_BBBP.interactive_plot(clusters=True)
+        assert isinstance(result, Tabs)
+        tab1 = result.tabs[0]
+        tab2 = result.tabs[1]
+        assert result.active == 0
+        assert tab1.title == 'Plot'
+        assert tab2.title == 'Clusters'
+        assert isinstance(tab1.child, Figure)
+        assert isinstance(tab2.child, Figure)
+    
+    def test_clusters_groups(self):
+        """
+        31. Test to check if all clusters group are added to the figure
+        """
+        data = self.plotter_pca_BBBP.cluster(n_clusters=5)
+        result = self.plotter_pca_BBBP.interactive_plot(clusters=True)
+        figure = result.tabs[1].child
+        assert len(figure.renderers) == 5
+        self.plotter_pca_BBBP.cluster(n_clusters=3)
+        result = self.plotter_pca_BBBP.interactive_plot(clusters=True)
+        figure = result.tabs[1].child
+        assert len(figure.renderers) == 3
+        total = 0
+        for marker in figure.renderers:
+            self.assertTrue(isinstance(marker.glyph, bokeh.models.markers.Circle))
+            assert marker.muted_glyph.fill_color == '#717375'
+            total += marker.data_source.data['clusters'].size
+        assert total == len(data)
+
+    def test_clusters_legend(self):
+        """
+        32. Test to check if the legend is set correctly when clusters is True
+        """
+        self.plotter_pca_BBBP.cluster(n_clusters=5)
+        result = self.plotter_pca_BBBP.interactive_plot(clusters=True)
+        legend = result.tabs[1].child.legend
+        assert legend.location == "top_left"
+        assert legend.title == "Clusters"
+        assert legend.click_policy == "mute"
+        assert len(legend.items) == 5
+        indeces = ['0', '1', '2', '3', '4']
+        total = 0
+        for item in legend.items:
+            digits = re.search(r'^Cluster (\d) - (\d\d?\d?)%', item.label['value']).groups()
+            assert digits[0] in indeces
+            indeces.remove(digits[0])
+            total += int(digits[1])
+        assert len(indeces) == 0
+        assert total == 100
         
     
 if __name__ == '__main__':

@@ -647,12 +647,12 @@ class Plotter(object):
             clusters = df_data.groupby(['clusters'])
             for cluster, color in zip(clusters, Category10[10]):
                 p_c.circle(x=x, y=y, size=2.5, alpha=1, line_color=color, fill_color=color,
-                     legend_label=f'Cluster {cluster[0]}', muted_color=('#717375'), muted_alpha=0.2,
+                     legend_label=f'{cluster[0]}', muted_color=('#717375'), muted_alpha=0.2,
                      source=cluster[1])
                 
             p_c.legend.location = "top_left"
             p_c.legend.title = "Clusters"
-            p_c.legend.click_policy="mute"
+            p_c.legend.click_policy = "mute"
             
             p_c.xaxis[0].axis_label = x
             p_c.yaxis[0].axis_label = y
