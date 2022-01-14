@@ -21,9 +21,9 @@ from pandas.api.types import is_numeric_dtype
 from rdkit.Chem import Draw
 from bokeh.plotting import figure
 from bokeh.transform import transform, factor_cmap
-from bokeh.palettes import Category10, Inferno
+from bokeh.palettes import Category10, Inferno, Spectral4
 from bokeh.models.mappers import LinearColorMapper
-from bokeh.models import ColorBar, HoverTool
+from bokeh.models import ColorBar, HoverTool, Panel, Tabs
 from bokeh.io import output_file, save, show
 from scipy import stats
 from io import BytesIO
@@ -94,7 +94,7 @@ class Plotter(object):
         if self.__sim_type != "structural" and len(target) == 0:
             raise Exception("Target values missing")
         
-        # Error handeling target_type
+        # Error handeling target_type                
         if len(target) > 0:
             if len(target) != len(encoding_list):
                 raise Exception("If target is provided its length must match the instances of molecules")
@@ -120,6 +120,13 @@ class Plotter(object):
                 self.__target_type = target_type
         else:
             self.__target_type = None
+        
+        if len(target) > 0 and self.__target_type == 'C':
+            df_target = pd.DataFrame(data=target)
+            if df_target.iloc[:, 0].nunique() == 1:
+                target = []
+                self.__sim_type = "structural"
+                print("Only one class found in the targets")
           
         # Instantiate Plotter class
         if self.__sim_type == "tailored":
@@ -410,22 +417,7 @@ class Plotter(object):
                 df_data.clusters.replace(labels, inplace=True)
                 hue_order = list(labels.values())
             else:
-                total = df_data['clusters'].value_counts()
-                sum_tot = total.sum()
-                labels = {}
-                count = 0
-                for key, value in total.items():
-                    p = float(f"{(value/sum_tot)*100:.0f}")
-                    labels[key] = p
-                    count += p
-                # Solve possible rounding errors
-                if 100 - count > 0:
-                    labels[0] = labels[0] + 100 - count
-                for key, value in labels.items():
-                    labels[key] = f"Cluster {key} - {value:.0f}%"
-                df_data.clusters.replace(labels,
-                                         inplace=True)
-                hue_order = list(labels.values())
+                hue_order = self.__percentage_clusters(df_data)
                 hue_order.sort()
         else:
             if len(self.__target) == 0:
@@ -486,7 +478,7 @@ class Plotter(object):
         
         return axis
     
-    def interactive_plot(self, size=700, kind="scatter", remove_outliers=False, is_colored=True, filename=None, show_plot=False, title=None,):
+    def interactive_plot(self, size=700, kind="scatter", remove_outliers=False, is_colored=True, clusters=False, filename=None, show_plot=False, title=None,):
         """
         Generates an interactive Bokeh plot for the given molecules embedded in two dimensions.
         
@@ -494,6 +486,7 @@ class Plotter(object):
         :param kind: Type of plot 
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed 
         :param is_colored: Indicates if the points must be colored according to target 
+        :param clusters: Indicates if to add a tab with the clusters if these have been computed
         :param filename: Indicates the file where to save the Bokeh plot
         :param show_plot: Immediately display the current plot. 
         :param title: Title of the plot.
@@ -501,6 +494,7 @@ class Plotter(object):
         :type kind: string
         :type remove_outliers: boolean
         :type is_colored: boolean
+        :type cluster: boolean
         :type filename: string
         :type show_plot: boolean
         :type title: string
@@ -511,6 +505,9 @@ class Plotter(object):
             print('Reduce the dimensions of your molecules before creating a plot.')
             return None
         
+        if clusters and 'clusters' not in self.__df_2_components:
+            print('Call cluster() before visualizing a plot with clusters.')
+            
         if title is None:
             title = self.__plot_title
         
@@ -535,9 +532,10 @@ class Plotter(object):
         # Remove outliers (using Z-score)
         if remove_outliers:
             df_data = self.__remove_outliers(x, y, df_data)
-            
+        
+        tabs = None
         if kind == "scatter":
-            p = self.__interactive_scatter(x, y, df_data, size, is_colored, title)
+            p, tabs = self.__interactive_scatter(x, y, df_data, size, is_colored, clusters, title)
         else: 
             p = self.__interactive_hex(x, y, df_data, size, title)
             
@@ -551,6 +549,9 @@ class Plotter(object):
         p.xaxis.major_label_text_font_size = '0pt'  
         p.yaxis.major_label_text_font_size = '0pt' 
         
+        if tabs is not None:
+            p = tabs
+            
         # Save plot
         if filename is not None:
             output_file(filename, title=title)
@@ -587,7 +588,25 @@ class Plotter(object):
         
         return df[filtered_entries]
     
-    def __interactive_scatter(self, x, y, df_data, size, is_colored, title):       
+    def __percentage_clusters(self, df_data):
+        total = df_data['clusters'].value_counts()
+        sum_tot = total.sum()
+        labels = {}
+        count = 0
+        for key, value in total.items():
+            p = float(f"{(value/sum_tot)*100:.0f}")
+            labels[key] = p
+            count += p
+        # Solve possible rounding errors
+        if 100 - count > 0:
+            labels[0] = labels[0] + 100 - count
+        for key, value in labels.items():
+            labels[key] = f"Cluster {key} - {value:.0f}%"
+        # Edit df_data and return labels
+        df_data.clusters.replace(labels, inplace=True)
+        return list(labels.values())
+            
+    def __interactive_scatter(self, x, y, df_data, size, is_colored, clusters, title):       
         # Add images column
         df_data['imgs'] = self.__mol_to_2Dimage(list(df_data['mols']))
         df_data.drop(columns=['mols'], inplace=True)
@@ -620,7 +639,36 @@ class Plotter(object):
                 color_bar = ColorBar(color_mapper=color_mapper, location=(0,0))
                 p.add_layout(color_bar, 'right')
         
-        return p
+        tabs = None
+        if clusters and 'clusters' in df_data.columns:
+            p_c = figure(title=title, plot_width=size, plot_height=size, tools=tools, tooltips=parameters.TOOLTIPS_CLUSTER)
+            # Get percentages
+            self.__percentage_clusters(df_data)
+            clusters = df_data.groupby(['clusters'])
+            for cluster, color in zip(clusters, Category10[10]):
+                p_c.circle(x=x, y=y, size=2.5, alpha=1, line_color=color, fill_color=color,
+                     legend_label=f'{cluster[0]}', muted_color=('#717375'), muted_alpha=0.2,
+                     source=cluster[1])
+                
+            p_c.legend.location = "top_left"
+            p_c.legend.title = "Clusters"
+            p_c.legend.click_policy = "mute"
+            
+            p_c.xaxis[0].axis_label = x
+            p_c.yaxis[0].axis_label = y
+            
+            p_c.xaxis.major_tick_line_color = None  
+            p_c.xaxis.minor_tick_line_color = None
+            p_c.yaxis.major_tick_line_color = None  
+            p_c.yaxis.minor_tick_line_color = None 
+            p_c.xaxis.major_label_text_font_size = '0pt'  
+            p_c.yaxis.major_label_text_font_size = '0pt' 
+            
+            tab1 = Panel(child=p, title="Plot")
+            tab2 = Panel(child=p_c, title="Clusters")
+            tabs = Tabs(tabs=[tab1, tab2])
+        
+        return p, tabs
                 
     def __interactive_hex(self, x, y, df_data, size, title):      
         # Hex Plot

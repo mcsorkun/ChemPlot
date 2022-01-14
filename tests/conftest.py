@@ -13,17 +13,17 @@ THIS_DIR = Path(__file__).parent
 @pytest.fixture(scope="session")
 def logs():
     file_LOGS = THIS_DIR / 'test_data' / 'R_1291_LOGS.csv'
-    return pd.read_csv(file_LOGS) 
+    return pd.read_csv(file_LOGS).head(20)
 
 @pytest.fixture(scope="session")
 def bbbp():
     file_BBBP = THIS_DIR / 'test_data' / 'C_2039_BBBP_2.csv'
-    return pd.read_csv(file_BBBP) 
+    return pd.read_csv(file_BBBP).head(100)
 
 @pytest.fixture(scope="session")
 def sampl():
     file_SAMPL = THIS_DIR / 'test_data' / 'R_642_SAMPL.csv'
-    return pd.read_csv(file_SAMPL) 
+    return pd.read_csv(file_SAMPL).head(20)
 
 @pytest.fixture(scope="class")
 def logs_data(request, logs):

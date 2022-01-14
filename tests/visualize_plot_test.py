@@ -364,12 +364,12 @@ class TestVisualizePlot(unittest.TestCase):
     # Clustering 
     
     @patch('sys.stdout', new_callable=StringIO)  
-    def test_INFO_cluster_call_without_reduction(self, mock_stdout):
+    def test_INFO_cluster_call_without_clusters(self, mock_stdout):
         """
         35. Test checks if user is informed a cluster plot cannot be created without reducing the dimensions first
         """
-        self.plotter_sampl.visualize_plot(clusters=True)
-        assert 'Reduce the dimensions of your molecules before creating a plot.' in mock_stdout.getvalue()
+        self.plotter_pca_LOGS.visualize_plot(clusters=True)
+        assert 'Call cluster() before visualizing a plot with clusters.' in mock_stdout.getvalue()
         pyplot.close()
         
     def test_cluster_legend(self):
