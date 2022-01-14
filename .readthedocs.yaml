@@ -14,4 +14,12 @@ python:
    version: 3.7
 
 conda:
-  environment: chemplot.yml
+  environment: 
+    name: chemplot
+    channels:
+    - conda-forge
+    - chemplot
+    - defaults
+    dependencies:
+      - rdkit
+      - chemplot
