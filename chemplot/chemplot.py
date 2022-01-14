@@ -118,13 +118,13 @@ class Plotter(object):
         # Instantiate Plotter class
         if self.__sim_type == "tailored":
             self.__mols, df_descriptors, target = get_desc(encoding_list, target)
-            if not df_descriptors:
+            if df_descriptors.empty():
                 raise Exception("Descriptors could not be computed for given molecules")
             self.__df_descriptors, self.__target = desc.select_descriptors_lasso(df_descriptors,target,kind=self.__target_type)
         elif self.__sim_type == "structural":
             self.__mols, self.__df_descriptors, self.__target = get_fingerprints(encoding_list,target,2,2048)
             
-        if not self.__mols or not self.__df_descriptors:
+        if not self.__mols or self.__df_descriptors.empty():
                 raise Exception("Plotter object cannot be instantiated for given molecules")
                 
         self.__df_2_components = None
