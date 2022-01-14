@@ -16,6 +16,7 @@ import functools
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.manifold import TSNE
+from sklearn.cluster import KMeans, DBSCAN
 from rdkit.Chem import Draw
 from bokeh.plotting import figure
 from bokeh.transform import transform, factor_cmap
@@ -117,6 +118,7 @@ class Plotter(object):
         # Instantiate Plotter class
         if self.__sim_type == "tailored":
             self.__mols, df_descriptors, target = get_desc(encoding_list, target)
+            ## TODO validater descriptors
             self.__df_descriptors, self.__target = desc.select_descriptors_lasso(df_descriptors,target,kind=self.__target_type)
         elif self.__sim_type == "structural":
             self.__mols, self.__df_descriptors, self.__target = get_fingerprints(encoding_list,target,2,2048)
@@ -166,7 +168,7 @@ class Plotter(object):
         return cls(inchi_list, target, target_type, sim_type, desc.get_mordred_descriptors_from_inchi, desc.get_ecfp_from_inchi)
         
     
-    def pca(self):
+    def pca(self, *args, **kwargs):
         """
         Calculates the first 2 PCA components of the molecular descriptors.
         
@@ -176,7 +178,7 @@ class Plotter(object):
         self.__data = self.__data_scaler()
         
         # Linear dimensionality reduction to 2 components by PCA
-        self.pca_fit = PCA(n_components=2)
+        self.pca_fit = PCA(n_components=2, *args, **kwargs)
         first2ecpf_components = self.pca_fit.fit_transform(self.__data)
         coverage_components = self.pca_fit.explained_variance_ratio_
         
@@ -192,10 +194,10 @@ class Plotter(object):
         if len(self.__target) > 0: 
             self.__df_2_components['target'] = self.__target
         
-        return self.__df_2_components
+        return self.__df_2_components.copy()
     
     
-    def tsne(self, perplexity=None, pca=False, random_state=None):
+    def tsne(self, perplexity=None, pca=False, random_state=None, *args, **kwargs):
         """
         Calculates the first 2 t-SNE components of the molecular descriptors.
         
@@ -233,7 +235,7 @@ class Plotter(object):
                 print('Robust results are obtained for values of perplexity between 5 and 50')
         
         # Embed the data in two dimensions
-        self.tsne_fit = TSNE(n_components=2, perplexity=perplexity, random_state=random_state)
+        self.tsne_fit = TSNE(n_components=2, perplexity=perplexity, random_state=random_state, *args, **kwargs)
         ecfp_tsne_embedding = self.tsne_fit.fit_transform(self.__data)
         # Create a dataframe containinting the first 2 TSNE components of ECFP 
         self.__df_2_components = pd.DataFrame(data = ecfp_tsne_embedding
@@ -242,10 +244,10 @@ class Plotter(object):
         if len(self.__target) > 0: 
             self.__df_2_components['target'] = self.__target
         
-        return self.__df_2_components
+        return self.__df_2_components.copy()
         
         
-    def umap(self, n_neighbors=None, min_dist=None, pca=False, random_state=None):
+    def umap(self, n_neighbors=None, min_dist=None, pca=False, random_state=None, *args, **kwargs):
         """
         Calculates the first 2 UMAP components of the molecular descriptors.
         
@@ -289,7 +291,7 @@ class Plotter(object):
                 min_dist = parameters.MIN_DIST_TAILORED
             
         # Embed the data in two dimensions
-        self.umap_fit = umap.UMAP(n_neighbors=n_neighbors, min_dist=min_dist, random_state=random_state, n_components=2)
+        self.umap_fit = umap.UMAP(n_neighbors=n_neighbors, min_dist=min_dist, random_state=random_state, n_components=2, *args, **kwargs)
         ecfp_umap_embedding = self.umap_fit.fit_transform(self.__data)
         # Create a dataframe containinting the first 2 UMAP components of ECFP 
         self.__df_2_components = pd.DataFrame(data = ecfp_umap_embedding
@@ -298,9 +300,27 @@ class Plotter(object):
         if len(self.__target) > 0: 
             self.__df_2_components['target'] = self.__target
         
-        return self.__df_2_components
+        ##TODO dont return actual object
+        return self.__df_2_components.copy()
     
-    def visualize_plot(self, size=20, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, filename=None, title=None):
+    ## TODO cluster fun
+    def cluster(self, n_clusters=5, *args, **kwargs):
+        
+        if self.__df_2_components is None:
+            print('Reduce the dimensions of your molecules before clustering.')
+            return None
+        
+        x = self.__df_2_components.columns[0]
+        y = self.__df_2_components.columns[1]
+        
+        cluster = KMeans(n_clusters, *args, **kwargs)
+        
+        cluster.fit(self.__df_2_components[[x,y]])
+        self.__df_2_components['clusters'] = cluster.labels_.tolist()
+        
+        return self.__df_2_components.copy()
+    
+    def visualize_plot(self, size=20, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, clusters=False, filename=None, title=None):
         """
         Generates a plot for the given molecules embedded in two dimensions.
         
@@ -323,6 +343,10 @@ class Plotter(object):
             print('Reduce the dimensions of your molecules before creating a plot.')
             return None
         
+        if clusters and 'clusters' not in self.__df_2_components:
+            print('Call cluster() before visualizing a plot with clusters.')
+            return None
+        
         if title is None:
             title = self.__plot_title
         
@@ -339,15 +363,45 @@ class Plotter(object):
         
         # Define colors 
         hue = None
+        hue_order = None
         palette = None
-        if len(self.__target) == 0:
-            is_colored = False;
+        if clusters or not isinstance(clusters, bool):
+            hue = 'clusters'
+            palette = 'deep'
+            if not isinstance(clusters, bool):
+                if isinstance(clusters, int): clusters = [clusters]
+                df_data['clusters'] = df_data['clusters'].isin(clusters)
+                # Labels cluster
+                total = df_data['clusters'].value_counts()
+                t_s = total.get(True) if total.get(True) else 0
+                p_s = t_s / total.sum()
+                p_o = 1 - p_s
+                df_data.clusters.replace({True: f'Selected - {p_s:.0%}', 
+                                          False: f'Other - {p_o:.0%}'},
+                                         inplace=True)
+            else:
+                total = df_data['clusters'].value_counts()
+                sum_tot = total.sum()
+                labels = {}
+                for key, value in total.items():
+                    p = value / sum_tot
+                    labels[key] = f'Cluster {key} - {p:.0%}'
+                df_data.clusters.replace(labels,
+                                         inplace=True)
+                hue_order = list(labels.values())
+                hue_order.sort()
         else:
-            if is_colored:
-                df_data = df_data.assign(target=self.__target)
-                hue = 'target'
-                if self.__target_type == "R":
-                    palette = sns.color_palette("inferno", as_cmap=True)
+            if len(self.__target) == 0:
+                is_colored = False;
+            else:
+                if is_colored:
+                    df_data = df_data.assign(target=self.__target)
+                    hue = 'target'
+                    if self.__target_type == "R":
+                        palette = sns.color_palette("inferno", as_cmap=True)
+                    ## TODO - made palette deep 
+                    else:
+                        palette = 'deep'
         
         # Remove outliers (using Z-score)
         if remove_outliers:
@@ -360,7 +414,7 @@ class Plotter(object):
         
         # Create a plot based on the reduced components 
         if kind == "scatter":
-            plot = sns.scatterplot(x=x, y=y, hue=hue, palette=palette, data=df_data, s=size*3)
+            plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*3)
             plot.set_label("scatter")
             axis = plot
             # Add colorbar
