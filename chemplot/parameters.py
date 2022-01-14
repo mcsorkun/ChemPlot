@@ -96,3 +96,18 @@ TOOLTIPS_NO_TARGET = """
             </div>
         </div>
     """
+    
+TOOLTIPS_CLUSTER = """
+        <div>
+            <div>
+                <img
+                    src="@imgs" height="130" alt="@imgs" width="200"
+                    style="float: left; margin: 0px 15px 15px 0px;"
+                    border="2"
+                ></img>
+            </div>
+            <div>
+                <span style="font-size: 13px;">@clusters</span>
+            </div>
+        </div>
+    """

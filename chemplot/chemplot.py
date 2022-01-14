@@ -417,22 +417,7 @@ class Plotter(object):
                 df_data.clusters.replace(labels, inplace=True)
                 hue_order = list(labels.values())
             else:
-                total = df_data['clusters'].value_counts()
-                sum_tot = total.sum()
-                labels = {}
-                count = 0
-                for key, value in total.items():
-                    p = float(f"{(value/sum_tot)*100:.0f}")
-                    labels[key] = p
-                    count += p
-                # Solve possible rounding errors
-                if 100 - count > 0:
-                    labels[0] = labels[0] + 100 - count
-                for key, value in labels.items():
-                    labels[key] = f"Cluster {key} - {value:.0f}%"
-                df_data.clusters.replace(labels,
-                                         inplace=True)
-                hue_order = list(labels.values())
+                hue_order = self.__percentage_clusters(df_data)
                 hue_order.sort()
         else:
             if len(self.__target) == 0:
@@ -493,7 +478,7 @@ class Plotter(object):
         
         return axis
     
-    def interactive_plot(self, size=700, kind="scatter", remove_outliers=False, is_colored=True, filename=None, show_plot=False, title=None,):
+    def interactive_plot(self, size=700, kind="scatter", remove_outliers=False, is_colored=True, clusters=False, filename=None, show_plot=False, title=None,):
         """
         Generates an interactive Bokeh plot for the given molecules embedded in two dimensions.
         
@@ -501,6 +486,7 @@ class Plotter(object):
         :param kind: Type of plot 
         :param remove_outliers: Boolean value indicating if the outliers must be identified and removed 
         :param is_colored: Indicates if the points must be colored according to target 
+        :param clusters: Indicates if to add a tab with the clusters if these have been computed
         :param filename: Indicates the file where to save the Bokeh plot
         :param show_plot: Immediately display the current plot. 
         :param title: Title of the plot.
@@ -508,6 +494,7 @@ class Plotter(object):
         :type kind: string
         :type remove_outliers: boolean
         :type is_colored: boolean
+        :type cluster: boolean
         :type filename: string
         :type show_plot: boolean
         :type title: string
@@ -518,6 +505,9 @@ class Plotter(object):
             print('Reduce the dimensions of your molecules before creating a plot.')
             return None
         
+        if clusters and 'clusters' not in self.__df_2_components:
+            print('Call cluster() before visualizing a plot with clusters.')
+            
         if title is None:
             title = self.__plot_title
         
@@ -545,7 +535,7 @@ class Plotter(object):
         
         tabs = None
         if kind == "scatter":
-            p, tabs = self.__interactive_scatter(x, y, df_data, size, is_colored, title)
+            p, tabs = self.__interactive_scatter(x, y, df_data, size, is_colored, clusters, title)
         else: 
             p = self.__interactive_hex(x, y, df_data, size, title)
             
@@ -598,7 +588,25 @@ class Plotter(object):
         
         return df[filtered_entries]
     
-    def __interactive_scatter(self, x, y, df_data, size, is_colored, title):       
+    def __percentage_clusters(self, df_data):
+        total = df_data['clusters'].value_counts()
+        sum_tot = total.sum()
+        labels = {}
+        count = 0
+        for key, value in total.items():
+            p = float(f"{(value/sum_tot)*100:.0f}")
+            labels[key] = p
+            count += p
+        # Solve possible rounding errors
+        if 100 - count > 0:
+            labels[0] = labels[0] + 100 - count
+        for key, value in labels.items():
+            labels[key] = f"Cluster {key} - {value:.0f}%"
+        # Edit df_data and return labels
+        df_data.clusters.replace(labels, inplace=True)
+        return list(labels.values())
+            
+    def __interactive_scatter(self, x, y, df_data, size, is_colored, clusters, title):       
         # Add images column
         df_data['imgs'] = self.__mol_to_2Dimage(list(df_data['mols']))
         df_data.drop(columns=['mols'], inplace=True)
@@ -632,10 +640,10 @@ class Plotter(object):
                 p.add_layout(color_bar, 'right')
         
         tabs = None
-        if 'clusters' in df_data.columns:
-            p_c = figure(title=title, plot_width=size, plot_height=size, tools=tools, tooltips=TOOLTIPS)
-            
-            df_data['clusters'] = list(map(str, df_data['clusters'].values))
+        if clusters and 'clusters' in df_data.columns:
+            p_c = figure(title=title, plot_width=size, plot_height=size, tools=tools, tooltips=parameters.TOOLTIPS_CLUSTER)
+            # Get percentages
+            self.__percentage_clusters(df_data)
             clusters = df_data.groupby(['clusters'])
             for cluster, color in zip(clusters, Category10[10]):
                 p_c.circle(x=x, y=y, size=2.5, alpha=1, line_color=color, fill_color=color,
