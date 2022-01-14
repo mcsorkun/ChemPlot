@@ -1,4 +1,4 @@
-name: rdkit
+name: conda_env
 channels:
 - conda-forge
 - defaults
