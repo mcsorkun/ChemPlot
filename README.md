@@ -9,7 +9,7 @@
 
 [![PyPI - License](https://img.shields.io/pypi/l/chemplot?color=yellow)](https://github.com/mcsorkun/ChemPlot/blob/main/LICENSE) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest) 
 
-[![Tests](https://github.com/dajtmullaj/ChemPlot/actions/workflows/tests.yml/badge.svg?branch=ci)](https://github.com/dajtmullaj/ChemPlot/actions/workflows/tests.yml)
+[![Tests](https://github.com/mcsorkun/ChemPlot/actions/workflows/tests.yml/badge.svg?branch=ci)](https://github.com/mcsorkun/ChemPlot/actions/workflows/tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mcsorkun/ChemPlot/badge.svg)](https://coveralls.io/github/mcsorkun/ChemPlot)
 
 # ChemPlot
