@@ -5,7 +5,7 @@ Output will be a .txt file containing the metadata about performance (machine
 processor, RAM...) and a .csv file containing a report about performance.
 """
 
-from chemplot import Plotter
+from chemplot import Plotter, load_data
 from pathlib import Path
 
 import platform
@@ -19,28 +19,27 @@ THIS_DIR = Path(__file__).parent
 class PerformanceTest(object):
     
     def __init__(self):
-        file_LOGS = THIS_DIR / '..' / 'test_data' / 'R_1291_LOGS.csv'
-        file_LOGP = THIS_DIR / '..' / 'test_data' / 'R_4200_LOGP.csv'
-        file_BACE = THIS_DIR / '..' / 'test_data' / 'R_1513_BACE.csv'
-        file_SAMPL = THIS_DIR / '..' / 'test_data' / 'R_642_SAMPL.csv'
-        file_AQSOLDB = THIS_DIR / '..' / 'test_data' / 'R_9982_AQSOLDB.csv'
-        file_BBBP = THIS_DIR / '..' / 'test_data' / 'C_2039_BBBP_2.csv'
-        file_HIV_3 = THIS_DIR / '..' / 'test_data' / 'C_41127_HIV_3.csv'
-        file_BACE_2 = THIS_DIR / '..' / 'test_data' / 'C_1513_BACE_2.csv'
-        file_CLINTOX_2 = THIS_DIR / '..' / 'test_data' / 'C_1478_CLINTOX_2.csv'
+        file_LOGS = 'R_1291_LOGS.csv'
+        file_LOGP = 'R_4200_LOGP.csv'
+        file_BACE = 'R_1513_BACE.csv'
+        file_SAMPL = 'R_642_SAMPL.csv'
+        file_AQSOLDB = 'R_9982_AQSOLDB.csv'
+        file_BBBP = 'C_2039_BBBP_2.csv'
+        file_HIV_3 = 'C_41127_HIV_3.csv'
+        file_BACE_2 = 'C_1513_BACE_2.csv'
+        file_CLINTOX_2 = 'C_1478_CLINTOX_2.csv'
         
-        self.data_LOGS = pd.read_csv(file_LOGS) 
-        self.data_LOGP = pd.read_csv(file_LOGP)
-        self.data_BACE = pd.read_csv(file_BACE)
-        self.data_SAMPL = pd.read_csv(file_SAMPL) 
-        self.data_AQSOLDB = pd.read_csv(file_AQSOLDB) 
-        self.data_BBBP = pd.read_csv(file_BBBP) 
-        self.data_HIV_3 = pd.read_csv(file_HIV_3) 
-        self.data_BACE_2 = pd.read_csv(file_BACE_2)
-        self.data_CLINTOX_2 = pd.read_csv(file_CLINTOX_2)
+        self.data_LOGS = load_data(file_LOGS) 
+        self.data_LOGP = load_data(file_LOGP)
+        self.data_BACE = load_data(file_BACE)
+        self.data_SAMPL = load_data(file_SAMPL) 
+        self.data_AQSOLDB = load_data(file_AQSOLDB) 
+        self.data_BBBP = load_data(file_BBBP) 
+        self.data_HIV_3 = load_data(file_HIV_3) 
+        self.data_BACE_2 = load_data(file_BACE_2)
+        self.data_CLINTOX_2 = load_data(file_CLINTOX_2)
         
         self.df_perf_test = pd.DataFrame(columns=['name', 'data_samples', 'target_type', 'sym_type','execution_time_from_smiles','execution_time_pca','execution_time_tsne','execution_time_umap'])
-
         
     def fun_performace_test(self, data, name, data_samples, target_type, sim_type, index):
         t0 = time.time()
