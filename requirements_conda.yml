@@ -14,3 +14,6 @@ dependencies:
     - scipy
     - mordred
     - networkx
+    # testing
+    - pytest
+    - pytest-cov

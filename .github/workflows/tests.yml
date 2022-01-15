@@ -29,16 +29,15 @@ jobs:
           shell: bash -l {0}
           run: |
             conda activate test
-        - name: Install testing requirements
+        - name: Install library for testing
           shell: bash -l {0}
           run: |
-            conda install pytest pytest-cov
             pip install coveralls
-            pip install -e .
+            pip install .
         - name: Run Tests
           shell: bash -l {0}
           run: |
-            pytest --cov
+            pytest --cov --pyargs chemplot
         - name: Upload coverage data to coveralls.io
           shell: bash -l {0}
           run: coveralls --service=github
@@ -70,16 +69,15 @@ jobs:
           shell: bash -l {0}
           run: |
             conda activate test
-        - name: Install testing requirements
+        - name: Install library for testing
           shell: bash -l {0}
           run: |
-            conda install pytest pytest-cov
             pip install coveralls
-            pip install -e .
+            pip install .
         - name: Run Tests
           shell: bash -l {0}
           run: |
-            pytest --cov
+            pytest --cov --pyargs chemplot
         - name: Upload coverage data to coveralls.io
           shell: bash -l {0}
           run: coveralls --service=github
@@ -111,16 +109,15 @@ jobs:
           shell: bash -l {0}
           run: |
             conda activate test
-        - name: Install testing requirements
+        - name: Install library for testing
           shell: bash -l {0}
           run: |
-            conda install pytest pytest-cov
             pip install coveralls
-            pip install -e .
+            pip install .
         - name: Run Tests
           shell: bash -l {0}
           run: |
-            pytest --cov
+            pytest --cov --pyargs chemplot
         - name: Upload coverage data to coveralls.io
           shell: bash -l {0}
           run: coveralls --service=github

@@ -6,8 +6,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name="chemplot", 
     version="1.1.1",
-    author="Murat Cihan Sorkun",
-    author_email="mcsorkun@gmail.com",
+    author="Murat Cihan Sorkun,Dajt Mullaj",
+    author_email="mcsorkun@gmail.com,dajt.mullai@gmail.com",
     description="A python library for chemical space visualization.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -44,8 +44,11 @@ setup(
 	"mordred>=1.2.0",
     "networkx>=2.5"
     ],
+    test_suite="pytest",
     tests_require=[
     "pytest>=6.2.4",
     ],
+    include_package_data=True,
+    package_data={'': ['data/*.csv'], 'chemplot.tests': ['test_data/*.csv']},
     python_requires='>=3.6',
 )

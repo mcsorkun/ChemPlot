@@ -5,25 +5,23 @@ To share the data accross the different tests.
 """
 import pytest
 import pandas as pd
-from chemplot import Plotter
+import pkg_resources
+from chemplot import Plotter, load_data
 from pathlib import Path
 
 THIS_DIR = Path(__file__).parent
 
 @pytest.fixture(scope="session")
 def logs():
-    file_LOGS = THIS_DIR / 'test_data' / 'R_1291_LOGS.csv'
-    return pd.read_csv(file_LOGS).head(20)
+    return load_data('R_1291_LOGS').head(20)
 
 @pytest.fixture(scope="session")
 def bbbp():
-    file_BBBP = THIS_DIR / 'test_data' / 'C_2039_BBBP_2.csv'
-    return pd.read_csv(file_BBBP).head(100)
+    return load_data('C_2039_BBBP_2').head(100)
 
 @pytest.fixture(scope="session")
 def sampl():
-    file_SAMPL = THIS_DIR / 'test_data' / 'R_642_SAMPL.csv'
-    return pd.read_csv(file_SAMPL).head(20)
+    return load_data('R_642_SAMPL').head(20)
 
 @pytest.fixture(scope="class")
 def logs_data(request, logs):
@@ -35,9 +33,9 @@ def bbbp_data(request, bbbp):
     
 @pytest.fixture(scope="class")
 def error(request):
-    file_BBBP_erroneous_smiles = THIS_DIR / 'test_data' / 'C_2039_BBBP_2_erroneous_smiles.csv'
+    file_BBBP_erroneous_smiles = pkg_resources.resource_stream('chemplot.tests', 'test_data/C_2039_BBBP_2_erroneous_smiles.csv')
     request.cls.data_BBBP_erroneous_smiles = pd.read_csv(file_BBBP_erroneous_smiles) 
-    file_CLINTOX_2_erroneous_smiles = THIS_DIR / 'test_data' / 'C_1484_CLINTOX_2_erroneous_smiles.csv'
+    file_CLINTOX_2_erroneous_smiles = pkg_resources.resource_stream('chemplot.tests', 'test_data/C_1484_CLINTOX_2_erroneous_smiles.csv')
     request.cls.data_CLINTOX_2_erroneous_smiles = pd.read_csv(file_CLINTOX_2_erroneous_smiles) 
     request.cls.list_BBBP_erroneous_smiles = ['C12CCN(CC1)Cc1cccc(c1)OCCCNC(=O)CC12', 'C(Cl)Cl1', 'Nc1nc(c(N@)n1)c2c=ccc(Cl)c2Cl', 'non_smile', 'non_smile', 'non_smile', 
                                           'non_smile', 'non_smile', 'CNc1CCCN1c2ccccc2CCc3ccccc13', 'non_smile', '[O-]][N+](=O)c1ccc2NC(=O)CN=C(c3ccccc3)c2c1', 'non_smile', 

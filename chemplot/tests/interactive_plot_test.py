@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+from chemplot.utils import load_data
 import pytest
 
 import bokeh
@@ -223,8 +224,7 @@ class TestInteractivePlot(unittest.TestCase):
             if isinstance(tool, bokeh.models.tools.HoverTool):
                 self.assertEqual(tool.tooltips, parameters.TOOLTIPS_TARGET)
                 
-        file_SAMPL = Path(__file__).parent / 'test_data' / 'R_642_SAMPL.csv'
-        data_SAMPL = pd.read_csv(file_SAMPL) 
+        data_SAMPL = load_data('R_642_SAMPL') 
         cp_SAMPL = Plotter.from_smiles(data_SAMPL["smiles"], sim_type="structural")
         cp_SAMPL.pca()
         result = cp_SAMPL.interactive_plot(kind='scatter')
@@ -249,12 +249,12 @@ class TestInteractivePlot(unittest.TestCase):
         for mol in self.plotter_pca_LOGS._Plotter__mols:
             try:
                 png = Draw.MolToImage(mol)
+                out = BytesIO()
+                png.save(out, format='png')
+                png = out.getvalue()
+                url = 'data:image/png;base64,' + base64.b64encode(png).decode('utf-8')
             except:
-                png = Image.open("No_image_available.png")
-            out = BytesIO()
-            png.save(out, format='png')
-            png = out.getvalue()
-            url = 'data:image/png;base64,' + base64.b64encode(png).decode('utf-8')
+                url = None
             expected.append(url)
         result = self.plotter_pca_LOGS.interactive_plot(kind='scatter')
         self.assertEqual(list.sort(list(result.renderers[0].data_source.data['imgs'])),
@@ -397,7 +397,16 @@ class TestInteractivePlot(unittest.TestCase):
             total += int(digits[1])
         assert len(indeces) == 0
         assert total == 100
-        
+    
+    def test_tooltips_cluster(self):
+        """
+        33. Test to check if the tooltips for cluster plots are set correctly
+        """
+        self.plotter_pca_BBBP.cluster(n_clusters=5)
+        result = self.plotter_pca_BBBP.interactive_plot(clusters=True)
+        for tool in result.tabs[1].child.tools:
+            if isinstance(tool, bokeh.models.tools.HoverTool):
+                self.assertEqual(tool.tooltips, parameters.TOOLTIPS_CLUSTER)
     
 if __name__ == '__main__':
     unittest.main()

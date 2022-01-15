@@ -1,4 +1,7 @@
-# Test Datasets for Chemical Space Visualization
+# Sample Datasets for Chemical Space Visualization
+
+The sample datasets are distributed within the library. In the repository they can be 
+found [here](https://github.com/mcsorkun/ChemPlot/tree/main/chemplot/data). Hereby the datasets sources are cited.
 
 **Name Formatting:** type_size_name_num_of_classes.csv
 
