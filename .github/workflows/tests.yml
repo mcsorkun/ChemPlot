@@ -48,6 +48,7 @@ jobs:
             COVERALLS_PARALLEL: true
   Macos:
     name: Test on MacOS
+    needs: Ubuntu
     runs-on: macos-latest
     strategy: 
       max-parallel: 4
@@ -89,6 +90,7 @@ jobs:
             COVERALLS_PARALLEL: true
   Windows:
     name: Test on Windows
+    needs: Macos
     runs-on: windows-latest
     strategy: 
       max-parallel: 4
