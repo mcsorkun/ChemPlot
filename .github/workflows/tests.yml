@@ -44,7 +44,6 @@ jobs:
           run: coveralls --service=github
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COVERALLS_FLAG_NAME: ubuntu-latest py${{ matrix.python-version }}
             COVERALLS_PARALLEL: true
   Macos:
     name: Test on MacOS
@@ -86,7 +85,6 @@ jobs:
           run: coveralls --service=github
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COVERALLS_FLAG_NAME: macos-latest py${{ matrix.python-version }}
             COVERALLS_PARALLEL: true
   Windows:
     name: Test on Windows
@@ -128,7 +126,6 @@ jobs:
           run: coveralls --service=github
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COVERALLS_FLAG_NAME: windows-latest py${{ matrix.python-version }}
             COVERALLS_PARALLEL: true
   Coveralls:
     name: Indicate completion to coveralls.io
