@@ -8,6 +8,9 @@
 *.pyc
 *__pycache__
 
+# building package
+dist/
+
 # metadata from pip-installing repo
 *.egg-info/
 
