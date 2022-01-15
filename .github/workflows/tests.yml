@@ -5,14 +5,13 @@ on:
   - pull_request
 
 jobs:
-  tests:
-    runs-on: ${{ matrix.os }}
+  Ubuntu:
+    name: Test on Ubuntu
+    runs-on: ubuntu-latest
     strategy: 
       max-parallel: 4
       matrix:
-        os: ["ubuntu-latest"]
-        python-version: ['3.9']
-
+        python-version: ['3.6','3.7','3.8','3.9']
     steps:
         - uses: actions/checkout@v2
         - name: Set up Python ${{ matrix.python-version }}
@@ -45,11 +44,93 @@ jobs:
           run: coveralls --service=github
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COVERALLS_FLAG_NAME: ${{ matrix.test-name }}
+            COVERALLS_FLAG_NAME: ubuntu-latest py${{ matrix.python-version }}
             COVERALLS_PARALLEL: true
-  coveralls:
+  Macos:
+    name: Test on MacOS
+    runs-on: macos-latest
+    strategy: 
+      max-parallel: 4
+      matrix:
+        python-version: ['3.6','3.7','3.8','3.9']
+    steps:
+        - uses: actions/checkout@v2
+        - name: Set up Python ${{ matrix.python-version }}
+          uses: actions/setup-python@v2
+          with:
+            python-version: ${{ matrix.python-version }}
+        - name: Setup Miniconda
+          uses: conda-incubator/setup-miniconda@v2
+          with:
+            activate-environment: test
+            environment-file: requirements_conda.yml
+            python-version: ${{ matrix.python-version }}
+            auto-activate-base: false
+        - name: Activate conda env
+          shell: bash -l {0}
+          run: |
+            conda activate test
+        - name: Install testing requirements
+          shell: bash -l {0}
+          run: |
+            conda install pytest pytest-cov
+            pip install coveralls
+            pip install -e .
+        - name: Run Tests
+          shell: bash -l {0}
+          run: |
+            pytest --cov
+        - name: Upload coverage data to coveralls.io
+          shell: bash -l {0}
+          run: coveralls --service=github
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            COVERALLS_FLAG_NAME: macos-latest py${{ matrix.python-version }}
+            COVERALLS_PARALLEL: true
+  Windows:
+    name: Test on Windows
+    runs-on: windows-latest
+    strategy: 
+      max-parallel: 4
+      matrix:
+        python-version: ['3.6','3.7','3.8','3.9']
+    steps:
+        - uses: actions/checkout@v2
+        - name: Set up Python ${{ matrix.python-version }}
+          uses: actions/setup-python@v2
+          with:
+            python-version: ${{ matrix.python-version }}
+        - name: Setup Miniconda
+          uses: conda-incubator/setup-miniconda@v2
+          with:
+            activate-environment: test
+            environment-file: requirements_conda.yml
+            python-version: ${{ matrix.python-version }}
+            auto-activate-base: false
+        - name: Activate conda env
+          shell: bash -l {0}
+          run: |
+            conda activate test
+        - name: Install testing requirements
+          shell: bash -l {0}
+          run: |
+            conda install pytest pytest-cov
+            pip install coveralls
+            pip install -e .
+        - name: Run Tests
+          shell: bash -l {0}
+          run: |
+            pytest --cov
+        - name: Upload coverage data to coveralls.io
+          shell: bash -l {0}
+          run: coveralls --service=github
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            COVERALLS_FLAG_NAME: windows-latest py${{ matrix.python-version }}
+            COVERALLS_PARALLEL: true
+  Coveralls:
     name: Indicate completion to coveralls.io
-    needs: tests
+    needs: Windows
     runs-on: ubuntu-latest
     container: python:3-slim
     steps:
