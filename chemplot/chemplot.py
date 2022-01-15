@@ -1,6 +1,6 @@
-# Authors: Murat Cihan Sorkun <m.c.sorkun@differ.nl>, Dajt Mullaj <d.mullaj@differ.nl>
+# Authors: Murat Cihan Sorkun <mcsorkun@gmail.com>, Dajt Mullaj <dajt.mullai@gmail.com>
 #
-# License: BSD 3 clause
+# License: BSD 3 clause 
 from __future__ import print_function
 
 import chemplot.descriptors as desc

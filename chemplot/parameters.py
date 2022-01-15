@@ -1,6 +1,6 @@
-# Authors: Murat Cihan Sorkun <m.c.sorkun@differ.nl>, Dajt Mullaj <d.mullaj@differ.nl>
+# Authors: Murat Cihan Sorkun <mcsorkun@gmail.com>, Dajt Mullaj <dajt.mullai@gmail.com>
 #
-# License: BSD 3 clause
+# License: BSD 3 clause 
 import math
 
 ######### Linear Models Functions #########
@@ -111,3 +111,61 @@ TOOLTIPS_CLUSTER = """
             </div>
         </div>
     """
+
+######### Sample Dataset
+SAMPLE_DATASETS = {
+    'C_1478_CLINTOX_2' : ['C_1478_CLINTOX_2.csv', 'Clintox', 'C_1478_CLINTOX_2'],
+    'C_1513_BACE_2' : ['C_1513_BACE_2.csv', 'BACE', 'C_1513_BACE_2'],
+    'C_2039_BBBP_2' : ['C_2039_BBBP_2.csv', 'BBBP', 'C_2039_BBBP_2'],
+    'C_41127_HIV_3' : ['C_41127_HIV_3.csv', 'HIV', 'C_41127_HIV_3'],
+    'R_642_SAMPL' : ['R_642_SAMPL.csv', 'SAMPL', 'R_642_SAMPL'],
+    'R_1513_BACE' : ['R_1513_BACE.csv', 'BACE', 'R_1513_BACE'],
+    'R_4200_LOGP' : ['R_4200_LOGP.csv', 'LOGP', 'R_4200_LOGP'],
+    'R_1291_LOGS' : ['R_1291_LOGS.csv', 'LOGS', 'R_1291_LOGS'],
+    'R_9982_AQSOLDB' : ['R_9982_AQSOLDB.csv', 'AQSOLDB', 'R_9982_AQSOLDB']
+}
+
+INFO_DATASET = """\
+============ Sample Datasets ============
+- Clintox (Toxicity):
+    type: C
+    size: 1478
+    name: CLINTOX
+    classes: 2
+- BACE (Inhibitor):
+    type: C
+    size: 1513
+    name: BACE
+    classes: 2
+- BBBP (Blood-brain barrier penetration):
+    type: C
+    size: 2039
+    name: BBBP
+    classes: 2
+- HIV:
+    type: C
+    size: 41127
+    name: HIV
+    classes: 2
+- SAMPL (Hydration free energy):
+    type: R
+    size: 642
+    name: SAMPL
+- BACE (Binding affinity):
+    type: R
+    size: 1513
+    name: BACE
+- LOGP (Lipophilicity):
+    type: R
+    size: 4200
+    name: LOGP
+- LOGS (Aqueous Solubility):
+    type: R
+    size: 1291
+    name: LOGS
+- AQSOLDB (Aqueous Solubility):
+    type: R
+    size: 9982
+    name: AQSOLDB
+=========================================\
+"""
