@@ -34,6 +34,7 @@ jobs:
           shell: bash -l {0}
           run: |
             conda install pytest pytest-cov
+            pip install coveralls
             pip install -e .
         - name: Run Tests
           shell: bash -l {0}
@@ -48,7 +49,7 @@ jobs:
             COVERALLS_PARALLEL: true
   coveralls:
     name: Indicate completion to coveralls.io
-    needs: test
+    needs: tests
     runs-on: ubuntu-latest
     container: python:3-slim
     steps:
