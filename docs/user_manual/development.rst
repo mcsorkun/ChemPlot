@@ -76,10 +76,10 @@ You can run these tests by navigating to the performance_test library:
     ~/ChemPlot/performance_tests$ python performanceTest.py
     ~/ChemPlot/performance_tests$ python visualplotsTest.py
 
-If it doesn't work you might have to change `python` with `python3` in the command.
-`performanceTest.py` will generate a `.csv` file containing all the times taken 
+If it doesn't work you might have to change ``python`` with ``python3`` in the command.
+``performanceTest.py`` will generate a ``.csv`` file containing all the times taken 
 by ChemPlot to run all the dimensionality reduction methods on your machine. It will
-use the sample datasets provided with the library. `visualplotsTest.py` will instead
-create a multipage `.pdf` file containing different figures illustrating all plotting
+use the sample datasets provided with the library. ``visualplotsTest.py`` will instead
+create a multipage ``.pdf`` file containing different figures illustrating all plotting
 options for ChemPlot. These method as well will use the sample datasets included in 
 the library. 

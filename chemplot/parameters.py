@@ -146,7 +146,7 @@ INFO_DATASET = """\
     type: C
     size: 41127
     name: HIV
-    classes: 2
+    classes: 3
 - SAMPL (Hydration free energy):
     type: R
     size: 642

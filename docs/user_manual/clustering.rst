@@ -4,7 +4,7 @@ Clustering your Data
 ChemPlot allows you to identify different clusters in you data by making use of
 the KMeans [1]_ algorithm as implemented in `sklearn <https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html>`_.
 To illustrate its implementation in ChemPlot we will load the ...
-sample dataset and create a `Plotter` object.
+sample dataset and create a ``Plotter`` object.
 
 .. code:: python3
 
@@ -26,11 +26,11 @@ chapters. We can also, however, identify some clusters in the data by calling th
 
     cp.cluster(n_clusters=9)
 
-`cluster()` will identify the clusters in our reduced dataset by using KMeans. The 
-function takes one parameter `n_clusters`, identifying the number of clusters we want 
-to see. By default `n_clusters` is 5. 
-Once we clustered the data we can call `visualize_plot(clusters=True)` to see the 
-plot. Notice how we need to pass a parameter `clusters` set to `True` in order to 
+``cluster()`` will identify the clusters in our reduced dataset by using KMeans. The 
+function takes one parameter ``n_clusters``, identifying the number of clusters we want 
+to see. By default ``n_clusters`` is 5. 
+Once we clustered the data we can call ``visualize_plot(clusters=True)`` to see the 
+plot. Notice how we need to pass a parameter ``clusters`` set to ``True`` in order to 
 see the clusters in the resulting image. 
 
 .. code:: python3
@@ -38,7 +38,7 @@ see the clusters in the resulting image.
     cp.visualize_plot(clusters=True)
 
 We can however also select a number of clusters we want to highlight. The parameter
-`clusters` in `visualize_plot()` can indeed also be a `list` of integers or an `int`
+``clusters`` in ``visualize_plot()`` can indeed also be a ``list`` of integers or an ``int``
 itself. An integer represents one of the clusters identified in the previous steps.
 ChemPlot will either read the list or the single number passed as a parameter
 and highlight those clusters as selected.
@@ -48,8 +48,8 @@ and highlight those clusters as selected.
     cp.visualize_plot(clusters=0)
     cp.visualize_plot(clusters=[1,2,3])
 
-We can also use `interactive_plot()` to visualize the clusters. In these case pass 
-`clusters=True` to generate a `bokeh <https://bokeh.org/>`__ plot with two tabs. The first tab will contain 
+We can also use ``interactive_plot()`` to visualize the clusters. In these case pass 
+``clusters=True`` to generate a `bokeh <https://bokeh.org/>`__ plot with two tabs. The first tab will contain 
 the plot that would have been generated also without clustering. The second tab 
 will contain a plot showing the different clusters. Click on the elements of the 
 legend to mute a cluster's data points.
