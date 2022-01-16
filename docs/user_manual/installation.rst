@@ -102,12 +102,16 @@ changes to be propagated through the library code without having to reinstall.
 
 You are now ready to develop ChemPlot!
 
+Testing 
+-------
+
 To run the unit tests for ChemPlot use this command:
 
 .. code-block:: bash
 
     ~$ pytest --pyargs chemplot
 
+.. code-block:: bash
 .. _`installation instructions for multiple platforms`: http://www.rdkit.org/docs/Install.html
 
     
