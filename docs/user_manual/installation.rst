@@ -34,14 +34,14 @@ You can verify that ChemPlot was installed on your local computer by running:
 .. code-block:: bash
 
     ~$ pip show chemplot
-    Name: chemplot
-    ...
+    >>> Name: chemplot
+    >>> ...
 
-If instead of what shown above your output is:
+If instead of what is shown above your output is:
 
 .. code-block:: bash
 
-    WARNING: Package(s) not found: chemplot
+    >>> WARNING: Package(s) not found: chemplot
 
 ChemPlot was not installed correctly or your system cannot find the path to it. 
 If ChemPlot is installed correctly you can also test the package by running:
