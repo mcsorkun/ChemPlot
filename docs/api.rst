@@ -1,23 +1,45 @@
 API documentation
 =================
 
-ChemPlot contains two modules: :mod:`chemplot` and :mod:`descriptors`. 
-The former has only one class :class:`Plotter`, to which the list of molecules 
-is passed as a parameter in order to then use different functions for plotting.
-The module :mod:`descriptors`, instead, contains different functions, which
-are used used by the class :class:`Plotter` during construction.  
+ChemPlot principal class is :class:`Plotter`. It receives a list of molecules 
+as a parameter in order to then use different functions for plotting the data
+in two dimensions. All the main functions of ChemPlot are part of the :class:`Plotter`.
+There are however two more functions outside of :class:`Plotter`, which can be 
+used to access the sample datasets.
 
-Plotter
--------
+.. currentmodule:: chemplot
 
-.. automodule:: chemplot.chemplot
- 
-.. autoclass:: chemplot.chemplot.Plotter
-    :members:
+chemplot.Plotter
+----------------
+
+.. autoclass:: Plotter
+
+.. autosummary::
+
+    Plotter
+
+.. autofunction:: Plotter.from_smiles
+
+.. autofunction:: Plotter.from_inchi
+
+.. autofunction:: Plotter.pca
+
+.. autofunction:: Plotter.tsne
+
+.. autofunction:: Plotter.umap
+
+.. autofunction:: Plotter.cluster
+
+.. autofunction:: Plotter.visualize_plot
+
+.. autofunction:: Plotter.interactive_plot
+
+Utils
+-----
+
+.. autofunction:: load_data
+
+.. autofunction:: info_data
     
     
-descriptors
------------
 
-.. automodule:: chemplot.descriptors
-    :members:

@@ -61,6 +61,7 @@ class Plotter(object):
     :type __df_2_components: Dataframe
     :type __plot_title: string
     :type __data: list
+    :type pca_fit: sklearn.decomposition.TSNE
     :type tsne_fit: sklearn.manifold.TSNE
     :type umap_fit: umap.umap_.UMAP
     :type df_plot_xy: Dataframe
