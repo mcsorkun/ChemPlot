@@ -16,7 +16,7 @@ manual. ``load_data()`` returns a pandas DataFrame built using the sample datase
 provided as a parameter.
 Chemplot contains the following sample datasets:
 
-.. list-table:: Title
+.. list-table:: 
    :header-rows: 1
 
    * - ID
@@ -44,7 +44,6 @@ Chemplot contains the following sample datasets:
      - Classification
      - 41127
      - [7]_
-
    * - R_642_SAMPL
      - SAMPL (Hydration free energy)
      - Regression

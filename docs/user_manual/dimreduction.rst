@@ -118,7 +118,6 @@ structures. The ``min_dist`` parameter is a value which ranges from 0.0 to
 0.99. It provides the minimum distance apart that points are allowed to be in 
 the 2D graph. The ``pca`` parameter is a Boolean value which indicates if the 
 data has to be preprocessed with PCA. 
-
    
 --------------
 
