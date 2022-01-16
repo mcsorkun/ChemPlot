@@ -5,9 +5,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="chemplot", 
-    version="1.1.1",
-    author="Murat Cihan Sorkun,Dajt Mullaj",
-    author_email="mcsorkun@gmail.com,dajt.mullai@gmail.com",
+    version="1.1.2",
+    author="Murat Cihan Sorkun, Dajt Mullaj",
+    author_email="mcsorkun@gmail.com, dajt.mullai@gmail.com",
     description="A python library for chemical space visualization.",
     long_description=long_description,
     long_description_content_type="text/markdown",

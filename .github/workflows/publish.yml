@@ -1,41 +1,11 @@
-name: Publish Python 🐍 distributions 📦 to PyPI and TestPyPI
+name: Publish Python 🐍 distributions 📦 to PyPI 
 
 on: push
 
 jobs:
-  Test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Setup Miniconda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          activate-environment: test
-          environment-file: requirements_conda.yml
-          python-version: 3.9
-          auto-activate-base: false
-      - name: Activate conda env
-        shell: bash -l {0}
-        run: |
-          conda activate test
-      - name: Install library for testing
-        shell: bash -l {0}
-        run: |
-          pip install coveralls
-          pip install .
-      - name: Run Tests
-        shell: bash -l {0}
-        run: |
-          pytest --pyargs chemplot
 
   Build-n-Publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
-    needs: Test
     runs-on: ubuntu-18.04
 
     steps:
