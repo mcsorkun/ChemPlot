@@ -17,7 +17,7 @@ setup(
 	"Documentation": "https://chemplot.readthedocs.io/en/latest/"
     },
     license="BSD",
-    packages=["chemplot"],
+    packages=["chemplot", "chemplot.tests"],
     classifiers=[
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
