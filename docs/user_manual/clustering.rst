@@ -1,5 +1,5 @@
-Clustering your Data
-====================
+Clustering Data
+===============
 
 ChemPlot allows you to identify different clusters in you data by making use of
 the KMeans [1]_ algorithm as implemented in `sklearn <https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html>`_.
