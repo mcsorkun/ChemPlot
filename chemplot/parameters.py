@@ -119,7 +119,7 @@ SAMPLE_DATASETS = {
     'C_2039_BBBP_2' : ['C_2039_BBBP_2.csv', 'BBBP', 'C_2039_BBBP_2'],
     'C_41127_HIV_3' : ['C_41127_HIV_3.csv', 'HIV', 'C_41127_HIV_3'],
     'R_642_SAMPL' : ['R_642_SAMPL.csv', 'SAMPL', 'R_642_SAMPL'],
-    'R_1513_BACE' : ['R_1513_BACE.csv', 'BACE', 'R_1513_BACE'],
+    'R_1513_BACE' : ['R_1513_BACE.csv', 'R_1513_BACE'],
     'R_4200_LOGP' : ['R_4200_LOGP.csv', 'LOGP', 'R_4200_LOGP'],
     'R_1291_LOGS' : ['R_1291_LOGS.csv', 'LOGS', 'R_1291_LOGS'],
     'R_9982_AQSOLDB' : ['R_9982_AQSOLDB.csv', 'AQSOLDB', 'R_9982_AQSOLDB']

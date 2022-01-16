@@ -19,9 +19,13 @@ class PlotsTest(object):
         self.output = PdfPages('Visual_Plots_Test.pdf')
     
     def run(self, reg_data_1, reg_data_2, class_data_1, class_data_2):
+        print('CHEMPLOT - VisualTest - Creating images for sample 1')
         self.plot_regression_data(reg_data_1[0], reg_data_1[1])
+        print('CHEMPLOT - VisualTest - Creating images for sample 2')
         self.plot_regression_data(reg_data_2[0], reg_data_2[1])
+        print('CHEMPLOT - VisualTest - Creating images for sample 3')
         self.plot_classification_data(class_data_1[0], class_data_1[1])
+        print('CHEMPLOT - VisualTest - Creating images for sample 4')
         self.plot_classification_data(class_data_2[0], class_data_2[1])
         
         self.output.close()
