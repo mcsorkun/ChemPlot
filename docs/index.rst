@@ -36,6 +36,7 @@ This guide provides the user with the explanantion of ChemPlot concepts and func
    user_manual/dimreduction
    user_manual/visualize_plots
    user_manual/add_features
+   user_manual/development
    
 .. toctree::
    :caption: API Reference:
