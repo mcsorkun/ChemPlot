@@ -21,7 +21,6 @@ jobs:
         conda env update --file requirements_conda.yml --name base
     - name: Test with pytest
       run: |
-        pip install .
         pytest --pyargs chemplot
 
   Build-n-Publish:
