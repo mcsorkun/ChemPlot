@@ -23,6 +23,7 @@ and material science. However, every ML model requires a definition of its appli
 We developed a python package, Chemplot, that allows users to plot the chemical space of their
 datasets. Chemplot contains smart algorithms behind which uses both structural and tailored
 similarity. Moreover, it is easy to use even for non-experts.
+For details on the background of ChemPlot you can find `here <https://chemrxiv.org/engage/chemrxiv/article-details/617180aaff3ba991f99af550>`_ our paper.
 
 This guide provides the user with the explanantion of ChemPlot concepts and functionality.
 
