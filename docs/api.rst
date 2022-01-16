@@ -14,10 +14,6 @@ chemplot.Plotter
 
 .. autoclass:: Plotter
 
-.. autosummary::
-
-    Plotter
-
 .. autofunction:: Plotter.from_smiles
 
 .. autofunction:: Plotter.from_inchi
