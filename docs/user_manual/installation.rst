@@ -27,7 +27,7 @@ An alternative method is to install is using pip::
    contains `installation instructions for multiple platforms`_.
 
 Verify Installation
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 You can verify that ChemPlot was installed on your local computer by running:
 
@@ -107,7 +107,7 @@ To run the unit tests for ChemPlot use this command:
 .. code-block:: bash
 
     ~$ pytest --pyargs chemplot
-    
+
 .. _`installation instructions for multiple platforms`: http://www.rdkit.org/docs/Install.html
 
     
