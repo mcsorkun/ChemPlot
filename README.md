@@ -24,6 +24,9 @@ You can find the detailed features and examples in the following link: [User Man
 
 ChemPlot is also available as a web application. You can use it at the following link: [Web Application](https://share.streamlit.io/mcsorkun/chemplot-web/main/web_app_chemplot.py).
 
+## Paper
+
+You can find the details for the background on ChemPlot in our [paper] (https://chemrxiv.org/engage/chemrxiv/article-details/617180aaff3ba991f99af550>).
 ## Installation
 
 There are two different options to install ChemPlot.
