@@ -58,9 +58,6 @@ legend to mute a cluster's data points.
 
     cp.interactive_plot(clusters=True)
 
-
-
-
 --------------
 
 .. raw:: html

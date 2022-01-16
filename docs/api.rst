@@ -14,21 +14,21 @@ chemplot.Plotter
 
 .. autoclass:: Plotter
 
-.. autofunction:: Plotter.from_smiles
+    .. automethod:: from_smiles
 
-.. autofunction:: Plotter.from_inchi
+    .. automethod:: from_inchi
 
-.. autofunction:: Plotter.pca
+    .. automethod:: pca
 
-.. autofunction:: Plotter.tsne
+    .. automethod:: tsne
 
-.. autofunction:: Plotter.umap
+    .. automethod:: umap
 
-.. autofunction:: Plotter.cluster
+    .. automethod:: cluster
 
-.. autofunction:: Plotter.visualize_plot
+    .. automethod:: visualize_plot
 
-.. autofunction:: Plotter.interactive_plot
+    .. automethod:: interactive_plot
 
 Utils
 -----
