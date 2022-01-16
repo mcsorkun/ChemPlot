@@ -445,6 +445,7 @@ class Plotter(object):
             plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*3)
             plot.set_label("scatter")
             axis = plot
+            plot.legend(markerscale=size*0.19)
             # Add colorbar
             if self.__target_type == "R" and colorbar:
                 plot.get_legend().remove()
