@@ -16,10 +16,9 @@ previous section:
 
 .. code:: python3
 
-    import pandas as pd
-    from chemplot import Plotter
+    from chemplot import Plotter, load_data
     
-    data_BBBP = pd.read_csv("BBBP.csv")
+    data_BBBP = load_data("BBBP")
     cp_BBBP = Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
     
 Hexagonal Bin Plot
@@ -36,7 +35,6 @@ parameter when visualizing the plot.
     
     cp_BBBP.tsne(random_state=0)
     cp_BBBP.visualize_plot(kind="hex")
-    plt.show()
 
 .. image:: images/tsne_hex.png
    :width: 600
@@ -52,9 +50,7 @@ create a kernel density estimate plot we need to pass the keyword “kde” as t
 
 .. code:: python3
     
-    cp_BBBP.tsne(random_state=0)
     cp_BBBP.visualize_plot(kind="kde")
-    plt.show()
 
 .. image:: images/tsne_kde.png
    :width: 600

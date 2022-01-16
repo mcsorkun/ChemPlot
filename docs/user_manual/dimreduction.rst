@@ -11,13 +11,12 @@ dataset [4]_ and the `BACE <https://github.com/mcsorkun/ChemPlot/blob/main/tests
 
 .. code:: python3
 
-    import pandas as pd
-    from chemplot import Plotter
+   from chemplot import Plotter, load_data
     
-    data_BBBP = pd.read_csv("BBBP.csv")
-    data_BACE = pd.read_csv("BACE.csv")
-    cp_BBBP = Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
-    cp_BACE = Plotter.from_smiles(data_BACE["smiles"], target=data_BACE["target"], target_type="R")
+   data_BBBP = load_data("BBBP")
+   data_BACE = load_data("BACE")
+   cp_BBBP = Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
+   cp_BACE = Plotter.from_smiles(data_BACE["smiles"], target=data_BACE["target"], target_type="R")
 
 
 PCA
@@ -30,18 +29,16 @@ view of the data.
 
 .. code:: python3
     
-    cp_BBBP.pca()
-    cp_BBBP.visualize_plot()
-    plt.show()
+   cp_BBBP.pca() 
+   cp_BBBP.visualize_plot()
 
 .. image:: images/gs_pca.png
    :width: 600
    
 .. code:: python3
     
-    cp_BACE.pca()
-    cp_BACE.visualize_plot()
-    plt.show()
+   cp_BACE.pca()
+   cp_BACE.visualize_plot()
 
 .. image:: images/bace_pca.png
    :width: 600
@@ -60,18 +57,16 @@ similar properties.
 
 .. code:: python3
     
-    cp_BBBP.tsne()
-    cp_BBBP.visualize_plot()
-    plt.show()
+   cp_BBBP.tsne()
+   cp_BBBP.visualize_plot()
 
 .. image:: images/gs_tsne.png
    :width: 600
    
 .. code:: python3
     
-    cp_BACE.tsne()
-    cp_BACE.visualize_plot()
-    plt.show()
+   cp_BACE.tsne()
+   cp_BACE.visualize_plot()
 
 .. image:: images/bace_tsne.png
    :width: 600
@@ -101,18 +96,16 @@ efficient and faster.
 
 .. code:: python3
     
-    cp_BBBP.umap()
-    cp_BBBP.visualize_plot()
-    plt.show()
+   cp_BBBP.umap()
+   cp_BBBP.visualize_plot()
 
 .. image:: images/gs_umap.png
    :width: 600
    
 .. code:: python3
     
-    cp_BACE.umap()
-    cp_BACE.visualize_plot()
-    plt.show()
+   cp_BACE.umap()
+   cp_BACE.visualize_plot()
 
 .. image:: images/bace_umap.png
    :width: 600

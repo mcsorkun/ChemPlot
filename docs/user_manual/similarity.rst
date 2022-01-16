@@ -9,11 +9,10 @@ target values of the molecules collected by the BACE dataset are continuous.
 
 .. code:: python3
 
-    import pandas as pd
-    from chemplot import Plotter
+    from chemplot import Plotter, load_data
     
-    data_BBBP = pd.read_csv("BBBP.csv")
-    data_BACE = pd.read_csv("BACE.csv")
+    data_BBBP = load_data("BBBP")
+    data_BACE = load_data("BACE")
 
 In order to plot a subset of the chemical space over a 2D graph it is necessary to 
 define the metric according to which a certain molecule will be plotted on a certain 
@@ -44,7 +43,7 @@ parameter when constructing the object.
 .. code:: python3
     
     cp_BBBP.tsne()
-    plt.show()
+    cp_BBBP.visualize_plot()
     
 .. image:: images/tsne_struct_bbbp.png
    :width: 600
@@ -52,7 +51,7 @@ parameter when constructing the object.
 .. code:: python3
     
     cp_BACE.tsne()
-    plt.show()
+    cp_BACE.visualize_plot()
     
 .. image:: images/tsne_struct_bace.png
    :width: 600
@@ -79,7 +78,7 @@ omitted the last parameter and still have got the same objects.
 .. code:: python3
     
     cp_BBBP.tsne()
-    plt.show()
+    cp_BBBP.visualize_plot()
     
 .. image:: images/gs_tsne.png
    :width: 600
@@ -87,7 +86,7 @@ omitted the last parameter and still have got the same objects.
 .. code:: python3
     
     cp_BACE.tsne()
-    plt.show()
+    cp_BACE.visualize_plot()
     
 .. image:: images/bace_tsne.png
    :width: 600

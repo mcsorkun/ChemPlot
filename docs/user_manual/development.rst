@@ -52,7 +52,7 @@ To run the unit tests for ChemPlot use this command:
 
 .. code-block:: bash
 
-    ~$ pytest --pyargs chemplot
+    ~$ python -m pytest --pyargs chemplot
 
 
 On your cloned version of the ChemPlot repository you have two more tests, used
@@ -83,8 +83,3 @@ use the sample datasets provided with the library. `visualplotsTest.py` will ins
 create a multipage `.pdf` file containing different figures illustrating all plotting
 options for ChemPlot. These method as well will use the sample datasets included in 
 the library. 
-
-.. note::
-
-   Performance testing takes a long time, up to an hour with certain machines.
-   Don't be alarmed if you don't get a result right away.

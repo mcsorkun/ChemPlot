@@ -9,10 +9,9 @@ dataset [1]_.
 
 .. code:: python3
 
-    import pandas as pd
-    from chemplot import Plotter
+    from chemplot import Plotter, load_data
     
-    data = pd.read_csv("BBBP.csv")
+    data = load_data("BBBP")
     cp = Plotter.from_smiles(data["smiles"], target=data["target"], target_type="C")
 
 
@@ -29,7 +28,6 @@ to generate a static visualization of the chemical space.
     
     cp.tsne()
     cp.visualize_plot()
-    plt.show()
 
 .. image:: images/gs_tsne.png
    :width: 600
@@ -44,7 +42,6 @@ to generate an interactive visualization of the chemical space.
 
 .. code:: python3
     
-    cp.tsne()
     cp.interactive_plot(show_plot=True)
 
 .. raw:: html

@@ -11,14 +11,15 @@ Getting started
 To demonstrate how to use the functions the library offers we will use a `BBBP <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv>`__ 
 (blood-brain barrier penetration) [1]_ molecular dataset. This is a set of 
 molecules encoded as SMILES, which have been assigned a binary label according 
-to their permeability properties. In this example the dataset has been 
-previously saved locally as a CSV file and is imported with `pandas <https://pandas.pydata.org/pandas-docs/stable/index.html>`__. 
+to their permeability properties. This dataset can be retrieved 
+from the library as a `pandas <https://pandas.pydata.org/pandas-docs/stable/index.html>`_`
+DataFrame object.
   
 .. code:: python3
 
-    import pandas as pd
+    from chemplot import load_data
 
-    data_BBBP = pd.read_csv("BBBP.csv")
+    data_BBBP = load_data("BBBP")
 
     
 To visualize the molecules in 2D according to their similarity it is first 
@@ -69,7 +70,6 @@ To now visualize the chemical space of the dataset we use :mod:`visualize_plot()
     import matplotlib.pyplot as plt
 
     cp.visualize_plot()
-    plt.show()
     
 .. image:: images/gs_tsne.png
    :width: 600
@@ -80,7 +80,6 @@ The second figure shows the results obtained by reducing the dimensions of featu
 
     cp.pca()
     cp.visualize_plot()
-    plt.show()
 
 .. image:: images/gs_pca.png
    :width: 600
@@ -91,7 +90,6 @@ The third figure shows the results obtained by reducing the dimensions of featur
 
     cp.umap()
     cp.visualize_plot()
-    plt.show()
 
 .. image:: images/gs_umap.png
    :width: 600

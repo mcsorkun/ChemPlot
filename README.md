@@ -27,6 +27,7 @@ ChemPlot is also available as a web application. You can use it at the following
 ## Paper
 
 You can find the details for the background on ChemPlot in our [paper] (https://chemrxiv.org/engage/chemrxiv/article-details/617180aaff3ba991f99af550>).
+
 ## Installation
 
 There are two different options to install ChemPlot.
@@ -61,13 +62,13 @@ framework](http://www.rdkit.org), the
 To demonstrate how to use the functions the library offers we use
 [BBBP](https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv) (blood-brain barrier penetration) [1] molecular dataset. BBBP is a
 set of molecules encoded as SMILES, which have been assigned a binary
-label according to their permeability properties. In this example the
-dataset has been previously saved locally as a CSV file and is imported
-with [pandas](https://pandas.pydata.org/pandas-docs/stable/index.html).
+label according to their permeability properties. This dataset can be retrieved 
+from the library as a [pandas](https://pandas.pydata.org/pandas-docs/stable/index.html)
+DataFrame object.
 
 ``` {.sourceCode .python3}
-import pandas as pd
-data_BBBP = pd.read_csv("BBBP.csv")
+import chemplot as cp
+data_BBBP = cp.load_data("BBBP")
 ```
 
 To visualize the molecules in 2D according to their similarity it is
@@ -81,7 +82,6 @@ target values (the binary labels) and the target type (in this case “C”,
 which stands for “Classification”).
 
 ``` {.sourceCode .python3}
-import chemplot as cp
 plotter = cp.Plotter.from_smiles(data_BBBP["smiles"], target=data_BBBP["target"], target_type="C")
 ```
 
@@ -96,7 +96,7 @@ ChemPlot uses three different algorithms in order to achieve this.
 In this example we will first use t-SNE [2].
 
 ``` {.sourceCode .python3}
-cp.tsne()
+plotter.tsne()
 ```
 
 The output will be a dataframe containg the reduced dimensions and the target values.
@@ -110,9 +110,7 @@ The output will be a dataframe containg the reduced dimensions and the target va
 To now visualize the chemical space of the dataset we use `visualize_plot()`.
 
 ``` {.sourceCode .python3}
-import matplotlib.pyplot as plt
-cp.visualize_plot()
-plt.show()
+plotter.visualize_plot()
 ```
 
 ![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/user_manual/images/gs_tsne.png)
@@ -121,9 +119,8 @@ The second figure shows the results obtained by reducing the dimensions
 of features Principal Component Analysis (PCA) [3].
 
 ``` {.sourceCode .python3}
-cp.pca()
-cp.visualize_plot()
-plt.show()
+plotter.pca()
+plotter.visualize_plot()
 ```
 
 ![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/user_manual/images/gs_pca.png)
@@ -132,9 +129,8 @@ The third figure shows the results obtained by reducing the dimensions
 of features by UMAP [4].
 
 ``` {.sourceCode .python3}
-cp.umap()
-cp.visualize_plot()
-plt.show()
+plotter.umap()
+plotter.visualize_plot()
 ```
 
 ![image](https://raw.githubusercontent.com/mcsorkun/ChemPlot/main/docs/user_manual/images/gs_umap.png)
