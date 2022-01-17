@@ -31,8 +31,6 @@ parameter when visualizing the plot.
 
 .. code:: python3
     
-    import matplotlib.pyplot as plt
-    
     cp_BBBP.tsne(random_state=0)
     cp_BBBP.visualize_plot(kind="hex")
 
