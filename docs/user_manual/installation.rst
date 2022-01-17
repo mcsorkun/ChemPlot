@@ -48,6 +48,7 @@ If ChemPlot is installed correctly you can also test the package by running:
 
 .. code-block:: bash
 
+    ~$ pip install pytest
     ~$ python -m pytest --pyargs chemplot
 
 These will run all the library tests against your installation. For every official 
