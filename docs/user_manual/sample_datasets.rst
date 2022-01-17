@@ -23,52 +23,42 @@ Chemplot contains the following sample datasets:
      - Name
      - Type
      - Size
-     - Reference
    * - C_1478_CLINTOX_2
-     - Clintox (Toxicity)
+     - Clintox (Toxicity) [1]_, [2]_, [3]_, [4]_
      - Classification
      - 1478
-     - [1]_ [2]_ [3]_ [4]_
    * - C_1513_BACE_2
-     - BACE (Inhibitor)
+     - BACE (Inhibitor) [5]_
      - Classification
      - 1513
-     - [5]_
    * - C_2039_BBBP_2
-     - BBBP (Blood-brain barrier penetration)
+     - BBBP (Blood-brain barrier penetration) [6]_
      - Classification
      - 2039
-     - [6]_
    * - C_41127_HIV_3
-     - HIV
+     - HIV [7]_
      - Classification
      - 41127
-     - [7]_
    * - R_642_SAMPL
-     - SAMPL (Hydration free energy)
+     - SAMPL (Hydration free energy) [8]_
      - Regression
      - 642
-     - [8]_
    * - R_1513_BACE
-     - BACE (Binding affinity)
+     - BACE (Binding affinity) [5]_
      - Regression
      - 1513
-     - [5]_
    * - R_4200_LOGP
-     - LOGP (Lipophilicity)
+     - LOGP (Lipophilicity) [9]_
      - Regression
      - 4200
-     - [9]_
    * - R_1291_LOGS
-     - LOGS (Aqueous Solubility)
+     - LOGS (Aqueous Solubility) [10]_
      - Regression
      - 1291
-     - [10]_
    * - R_9982_AQSOLDB
-     - AQSOLDB (Aqueous Solubility)
+     - AQSOLDB (Aqueous Solubility) [11]_
      - Regression
      - 9982
-     - [11]_
 
 The datasets ID are constructed in the following way:
 

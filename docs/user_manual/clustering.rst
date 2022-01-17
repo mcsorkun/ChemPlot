@@ -38,7 +38,7 @@ see the clusters in the resulting image.
 
     cp.visualize_plot(clusters=True)
 
-.. image:: images/cluster_all.png
+.. image:: images/clusters_all.png
    :width: 600
 
 We can however also select a number of clusters we want to highlight. The parameter
@@ -51,14 +51,14 @@ and highlight those clusters as selected.
 
     cp.visualize_plot(clusters=0)
 
-.. image:: images/cluster_0.png
+.. image:: images/clusters_0.png
    :width: 600
 
 .. code:: python3
 
     cp.visualize_plot(clusters=[1,2,3])
 
-.. image:: images/cluster_list.png
+.. image:: images/clusters_list.png
    :width: 600
 
 We can also use ``interactive_plot()`` to visualize the clusters. In these case pass 
