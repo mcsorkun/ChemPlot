@@ -24,7 +24,7 @@ Chemplot contains the following sample datasets:
      - Type
      - Size
    * - C_1478_CLINTOX_2
-     - Clintox (Toxicity) [1]_, [2]_, [3]_, [4]_
+     - Clintox (Toxicity) [1]_ [2]_ [3]_ [4]_
      - Classification
      - 1478
    * - C_1513_BACE_2
