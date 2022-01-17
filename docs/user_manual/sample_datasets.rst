@@ -109,10 +109,10 @@ References:
 .. [1] **Gayvert, Kaitlyn M., Neel S. Madhukar, and Olivier Elemento.** (2016) `A data-driven approach to predicting successes and failures of clinical trials.` Cell chemical biology 23.10 1294-1301.
 .. [2] **Artemov, Artem V., et al.** (2016) `Integrated deep learned transcriptomic and structure-based predictor of clinical trials outcomes.` bioRxiv 095653.
 .. [3] **Novick, Paul A., et al.** (2013) `SWEETLEAD: an in silico database of approved drugs, regulated chemicals, and herbal isolates for computer-aided drug discovery.` PloS one 8.11 e79568.
-.. [4] `**Aggregate Analysis of ClincalTrials.gov (AACT) Database.** <https://www.ctti-clinicaltrials.org/aact-database>`_
+.. [4] `Aggregate Analysis of ClincalTrials.gov (AACT) Database. <https://www.ctti-clinicaltrials.org/aact-database>`_
 .. [5] **Subramanian, Govindan, et al.** (2016) `Computational modeling of β-secretase 1 (BACE-1) inhibitors using ligand based approaches.` Journal of chemical information and modeling 56.10 1936-1949.
 .. [6] **Martins, Ines Filipa, et al.** (2014) `A Bayesian approach to in silico blood-brain barrier penetration modeling.` Journal of chemical information and modeling 52.6 (2012): 1686-1697.
-.. [7] `**AIDS Antiviral Screen Data.** <https://wiki.nci.nih.gov/display/NCIDTPdata/AIDS+Antiviral+Screen+Data>`_
+.. [7] `AIDS Antiviral Screen Data. <https://wiki.nci.nih.gov/display/NCIDTPdata/AIDS+Antiviral+Screen+Data>`_
 .. [8] **Mobley, David L., and J. Peter Guthrie.** `FreeSolv: a database of experimental and calculated hydration free energies, with input files.` Journal of computer-aided molecular design 28.7 711-720.
 .. [9] **Hersey, A.** (2015) `ChEMBL Deposited Data Set - AZ dataset <https://doi.org/10.6019/chembl3301361>`_
 .. [10] **Huuskonen, J.** (2000) `Estimation of aqueous solubility for a diverse set of organic compounds based on molecular topology.` Journal of Chemical Information and Computer Sciences, 40(3), 773-777.
