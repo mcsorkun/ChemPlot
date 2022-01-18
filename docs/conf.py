@@ -22,11 +22,8 @@ project = 'ChemPlot'
 copyright = '2021, Dajt Mullaj, Murat Cihan Sorkun'
 author = 'Dajt Mullaj, Murat Cihan Sorkun'
 
-import re
-# The full version, including alpha/beta/rc tags.
-release = re.sub('^v', '', os.popen('git describe').read().strip())
-# The short X.Y version.
-version = release
+# The full version, including alpha/beta/rc
+release = '1.2.0'
 
 
 # -- General configuration ---------------------------------------------------
