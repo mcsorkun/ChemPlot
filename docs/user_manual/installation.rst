@@ -12,7 +12,7 @@ Option 1: Use conda
 You can install ChemPlot using conda. 
 To install ChemPlot, at the command line, run::
 
-    ~$ conda install -c conda-forge -c chemplot chemplot
+    ~$ conda install -c conda-forge chemplot
     
 Option 2: Use pip
 ^^^^^^^^^^^^^^^^^
