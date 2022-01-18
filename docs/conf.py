@@ -23,7 +23,7 @@ copyright = '2021, Dajt Mullaj, Murat Cihan Sorkun'
 author = 'Dajt Mullaj, Murat Cihan Sorkun'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = '1.2.0'
 
 
 # -- General configuration ---------------------------------------------------
