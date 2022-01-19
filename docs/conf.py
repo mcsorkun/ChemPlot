@@ -22,8 +22,10 @@ project = 'ChemPlot'
 copyright = '2021, Dajt Mullaj, Murat Cihan Sorkun'
 author = 'Dajt Mullaj, Murat Cihan Sorkun'
 
-# The full version, including alpha/beta/rc
-release = '1.2.0'
+import chemplot  
+version = str(chemplot.__version__)
+# The full version, including alpha/beta/rc tags.
+release = version
 
 
 # -- General configuration ---------------------------------------------------
@@ -61,7 +63,12 @@ pygments_style = "sphinx"
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
 
-
+from datetime import date
+today = date.today()
+today.strftime("%b %d, %Y")
+rst_prolog = """
+.. |today| replace:: {today}
+"""
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
