@@ -5,7 +5,7 @@
 
 [![PyPI version](https://badge.fury.io/py/chemplot.svg)](https://badge.fury.io/py/chemplot)  [![Downloads](https://pepy.tech/badge/chemplot/month)](https://pepy.tech/project/chemplot)
 
-[![Conda](https://img.shields.io/conda/v/chemplot/chemplot)](https://anaconda.org/chemplot/chemplot) [![Conda](https://img.shields.io/conda/dn/chemplot/chemplot?color=green)](https://anaconda.org/chemplot/chemplot)
+[![Anaconda-Server Badge](https://anaconda.org/conda-forge/chemplot/badges/version.svg)](https://anaconda.org/conda-forge/chemplot) [![Conda](https://img.shields.io/conda/dn/chemplot/chemplot?color=green)](https://anaconda.org/chemplot/chemplot)
 
 [![PyPI - License](https://img.shields.io/pypi/l/chemplot?color=yellow)](https://github.com/mcsorkun/ChemPlot/blob/main/LICENSE) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest) 
 
