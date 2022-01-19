@@ -22,8 +22,9 @@ project = 'ChemPlot'
 copyright = '2021, Dajt Mullaj, Murat Cihan Sorkun'
 author = 'Dajt Mullaj, Murat Cihan Sorkun'
 
-import chemplot  
-version = str(chemplot.__version__)
+import subprocess
+commit_id = subprocess.check_output(['git', 'describe', '--tags', '--abbrev=0']).strip().decode('ascii')
+version = commit_id
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -65,8 +66,8 @@ todo_include_todos = False
 
 from datetime import date
 today = date.today()
-today.strftime("%b %d, %Y")
-rst_prolog = """
+today = today.strftime("%b %d, %Y")
+rst_prolog = f"""
 .. |today| replace:: {today}
 """
 # -- Options for HTML output -------------------------------------------------
