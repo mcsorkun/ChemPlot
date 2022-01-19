@@ -17,10 +17,10 @@ formats:
   - epub
   - pdf
 
-conda:
-  environment: requirements_conda.yml
-
 # Explicitly set the version of Python and its requirements
 python:
   install:
-    - requirements: docs/requirements.txt
+    - requirements: docs/requirements.txt 
+    
+conda:
+  environment: requirements_conda.yml
