@@ -38,7 +38,7 @@ There are two different options to install ChemPlot.
 
 To install ChemPlot using conda, run the following from the command line:
 
-    conda install -c conda-forge -c chemplot chemplot
+    conda install -c conda-forge chemplot
 
 ### Option 2: Use pip
 
