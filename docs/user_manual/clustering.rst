@@ -49,9 +49,9 @@ and highlight those clusters as selected.
 
 .. code:: python3
 
-    cp.visualize_plot(clusters=0)
+    cp.visualize_plot(clusters=2)
 
-.. image:: images/clusters_0.png
+.. image:: images/clusters_2.png
    :width: 600
 
 .. code:: python3
