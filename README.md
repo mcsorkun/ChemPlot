@@ -28,7 +28,7 @@ ChemPlot is also available as a web application. You can use it at the following
 
 ### Paper
 
-You can find the details for the background on ChemPlot in our paper. You can download our paper at: [Paper](https://chemrxiv.org/engage/chemrxiv/article-details/61fab8780aec1ae0ab0fafbc).
+You can find the details for the background on ChemPlot in our paper. You can download our paper at: [Paper](https://chemistry-europe.onlinelibrary.wiley.com/doi/full/10.1002/cmtd.202200005).
 
 ## Installation
 
