@@ -11,7 +11,7 @@ jobs:
     strategy: 
       max-parallel: 4
       matrix:
-        python-version: ['3.6','3.7','3.8','3.9']
+        python-version: ['3.7','3.8','3.9']
     steps:
         - uses: actions/checkout@v2
         - name: Set up Python ${{ matrix.python-version }}
@@ -34,11 +34,6 @@ jobs:
           run: |
             pip install coveralls
             pip install .
-        - if: python-version == 3.6
-          name: Install dataclasses
-          shell: bash -l {0}
-          run: |
-            pip install dataclasses 
         - name: Run Tests
           shell: bash -l {0}
           run: |
@@ -56,7 +51,7 @@ jobs:
     strategy: 
       max-parallel: 4
       matrix:
-        python-version: ['3.6','3.7','3.8','3.9']
+        python-version: ['3.7','3.8','3.9']
     steps:
         - uses: actions/checkout@v2
         - name: Set up Python ${{ matrix.python-version }}
@@ -96,7 +91,7 @@ jobs:
     strategy: 
       max-parallel: 4
       matrix:
-        python-version: ['3.6','3.7','3.8','3.9']
+        python-version: ['3.7','3.8','3.9']
     steps:
         - uses: actions/checkout@v2
         - name: Set up Python ${{ matrix.python-version }}
