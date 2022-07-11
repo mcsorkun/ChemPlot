@@ -33,8 +33,9 @@ jobs:
           shell: bash -l {0}
           run: |
             pip install coveralls
-            pip install pytest
             pip install .
+        - if: python-version == 3.6
+          run: pip install dataclasses 
         - name: Run Tests
           shell: bash -l {0}
           run: |
