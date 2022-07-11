@@ -32,7 +32,7 @@ You can find the details for the background on ChemPlot in our paper. You can do
 
 ## Installation
 
-There are two different options to install ChemPlot.
+There are two different options to install ChemPlot:
 
 ### Option 1: Use conda
 
