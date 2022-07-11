@@ -33,6 +33,7 @@ jobs:
           shell: bash -l {0}
           run: |
             pip install coveralls
+            pip install pytest
             pip install .
         - name: Run Tests
           shell: bash -l {0}
