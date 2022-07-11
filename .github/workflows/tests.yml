@@ -35,7 +35,10 @@ jobs:
             pip install coveralls
             pip install .
         - if: python-version == 3.6
-          run: pip install dataclasses 
+          name: Install dataclasses
+          shell: bash -l {0}
+          run: |
+            pip install dataclasses 
         - name: Run Tests
           shell: bash -l {0}
           run: |
