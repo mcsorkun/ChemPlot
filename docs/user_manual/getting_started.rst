@@ -11,17 +11,15 @@ Getting started
 To demonstrate how to use the functions the library offers we will use a `BBBP <https://github.com/mcsorkun/ChemPlot/blob/main/tests/test_data/C_2039_BBBP_2.csv>`__ 
 (blood-brain barrier penetration) [1]_ molecular dataset. This is a set of 
 molecules encoded as SMILES, which have been assigned a binary label according 
-to their permeability properties. This dataset can be retrieved 
-from the library as a `pandas <https://pandas.pydata.org/pandas-docs/stable/index.html>`_`
+to their permeability properties. This dataset can be loaded as a `pandas <https://pandas.pydata.org/pandas-docs/stable/index.html>`_`
 DataFrame object.
   
 .. code:: python3
 
-    from chemplot import load_data
+    from pandas import read_csv
 
-    data_BBBP = load_data("BBBP")
+    data_BBBP = read_csv("BBBP.csv")
 
-    
 To visualize the molecules in 2D according to their similarity it is first 
 needed to construct a ``Plotter`` object. This is the class containing 
 all the functions ChemPlot uses to produce the desired visualizations. A 
