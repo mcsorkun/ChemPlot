@@ -42,6 +42,7 @@ This guide provides the user with the explanantion of ChemPlot concepts and func
    user_manual/add_features
    user_manual/sample_datasets
    user_manual/development
+   citation
    
 .. toctree::
    :caption: API Reference:
