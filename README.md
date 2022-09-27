@@ -3,14 +3,9 @@
 </p>
 <br />
 
-[![PyPI version](https://badge.fury.io/py/chemplot.svg)](https://badge.fury.io/py/chemplot)  [![Downloads](https://pepy.tech/badge/chemplot/month)](https://pepy.tech/project/chemplot)
+[![PyPI version](https://badge.fury.io/py/chemplot.svg)](https://badge.fury.io/py/chemplot)  [![Downloads](https://pepy.tech/badge/chemplot/month)](https://pepy.tech/project/chemplot)  [![Anaconda-Server Badge](https://anaconda.org/conda-forge/chemplot/badges/version.svg)](https://anaconda.org/conda-forge/chemplot)  [![Anaconda-Server Badge](https://anaconda.org/conda-forge/chemplot/badges/downloads.svg)](https://anaconda.org/conda-forge/chemplot)
 
-[![Anaconda-Server Badge](https://anaconda.org/conda-forge/chemplot/badges/version.svg)](https://anaconda.org/conda-forge/chemplot) [![Anaconda-Server Badge](https://anaconda.org/conda-forge/chemplot/badges/downloads.svg)](https://anaconda.org/conda-forge/chemplot)
-
-[![PyPI - License](https://img.shields.io/pypi/l/chemplot?color=yellow)](https://github.com/mcsorkun/ChemPlot/blob/main/LICENSE) [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest) 
-
-[![Tests](https://github.com/mcsorkun/ChemPlot/actions/workflows/tests.yml/badge.svg)](https://github.com/mcsorkun/ChemPlot/actions/workflows/tests.yml)
-[![Coverage Status](https://coveralls.io/repos/github/mcsorkun/ChemPlot/badge.svg)](https://coveralls.io/github/mcsorkun/ChemPlot)
+[![PyPI - License](https://img.shields.io/pypi/l/chemplot?color=yellow)](https://github.com/mcsorkun/ChemPlot/blob/main/LICENSE)  [![Documentation Status](https://readthedocs.org/projects/chemplot/badge/?version=latest)](https://chemplot.readthedocs.io/en/latest/?badge=latest)  [![Tests](https://github.com/mcsorkun/ChemPlot/actions/workflows/tests.yml/badge.svg)](https://github.com/mcsorkun/ChemPlot/actions/workflows/tests.yml)  [![Coverage Status](https://coveralls.io/repos/github/mcsorkun/ChemPlot/badge.svg)](https://coveralls.io/github/mcsorkun/ChemPlot)
 
 # ChemPlot
 
