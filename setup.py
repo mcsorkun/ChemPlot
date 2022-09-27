@@ -33,16 +33,16 @@ setup(
     ],
     keywords="chemoinformatics, dimension reduction",
     install_requires=[
-	"pandas==1.1.3",
-	"numpy==1.19.2",
+	"pandas>=1.1.3",
+	"numpy>=1.19.2",
 	"matplotlib==3.3.2",
 	"seaborn==0.11.1",
-	"umap-learn==0.5.1",
-	"scikit-learn==0.23.2",
+	"umap-learn>=0.5.1",
+	"scikit-learn==0.24.2",
 	"bokeh>=2.2.3",
-	"scipy==1.5.2",
-	"mordred==1.2.0",
-    	"networkx==2.5"
+	"scipy>=1.5.2",
+	"mordred>=1.2.0",
+    	"networkx>=2.5"
     ],
     test_suite="pytest",
     tests_require=[
