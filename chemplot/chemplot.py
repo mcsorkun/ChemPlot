@@ -75,7 +75,7 @@ class Plotter(object):
     
     _target_types = {'R', 'C'}
 
-    def __init__(self, encoding_list, target, target_type, sim_type, get_desc, get_fingerprints):
+    def __init__(self, encoding_list, target, target_type, sim_type, get_desc, get_fingerprints, radius, nBits):
            
         # Error handeling sym_type
         if sim_type not in self._sim_types:
@@ -136,7 +136,7 @@ class Plotter(object):
                 raise Exception("Descriptors could not be computed for given molecules")
             self.__df_descriptors, self.__target = desc.select_descriptors_lasso(df_descriptors,target,kind=self.__target_type)
         elif self.__sim_type == "structural":
-            self.__mols, self.__df_descriptors, self.__target = get_fingerprints(encoding_list,target,2,2048)
+            self.__mols, self.__df_descriptors, self.__target = get_fingerprints(encoding_list,target, radius, nBits)
             
         if len(self.__mols) < 2 or len(self.__df_descriptors.columns) < 2:
             raise Exception("Plotter object cannot be instantiated for given molecules")
@@ -146,14 +146,16 @@ class Plotter(object):
             
     
     @classmethod        
-    def from_smiles(cls, smiles_list, target=[], target_type=None, sim_type=None):
+    def from_smiles(cls, smiles_list, target=[], target_type=None, sim_type=None, radius=2, nBits=2048):
         """
         Class method to construct a Plotter object from a list of SMILES.
         
         :param smile_list: List of the SMILES representation of the molecules to plot.       
         :param target: target values       
         :param target_type: target type R (regression) or C (classificatino)      
-        :param sim_type: similarity type structural or tailored     
+        :param sim_type: similarity type structural or tailored 
+        :param radius: The ECPF fingerprints radius.
+        :param nBits: The number of bits of the fingerprint vector.    
         :type smile_list: list
         :type target: list
         :type target_type: string
@@ -162,11 +164,11 @@ class Plotter(object):
         :rtype: Plotter
         """
             
-        return cls(smiles_list, target, target_type, sim_type, desc.get_mordred_descriptors, desc.get_ecfp)
+        return cls(smiles_list, target, target_type, sim_type, desc.get_mordred_descriptors, desc.get_ecfp, radius, nBits)
             
 
     @classmethod
-    def from_inchi(cls, inchi_list, target=[], target_type=None, sim_type=None):
+    def from_inchi(cls, inchi_list, target=[], target_type=None, sim_type=None, radius=2, nBits=2048):
         """
         Class method to construct a Plotter object from a list of InChi.
         
@@ -178,11 +180,15 @@ class Plotter(object):
         :type target_type: string
         :param sim_type: similarity type structural or tailored 
         :type sim_type: string
+        :param radius: The ECPF fingerprints radius.
+        :type radius: int
+        :param nBits: The number of bits of the fingerprint vector. 
+        :type nBits: int
         :returns: A Plotter object for the molecules given as input.
         :rtype: Plotter
         """
                 
-        return cls(inchi_list, target, target_type, sim_type, desc.get_mordred_descriptors_from_inchi, desc.get_ecfp_from_inchi)
+        return cls(inchi_list, target, target_type, sim_type, desc.get_mordred_descriptors_from_inchi, desc.get_ecfp_from_inchi, radius, nBits)
         
     
     def pca(self, **kwargs):
