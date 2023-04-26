@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="chemplot", 
-    version="1.2.1",
+    version="1.2.2",
     author="Murat Cihan Sorkun, Dajt Mullaj",
     author_email="mcsorkun@gmail.com, dajt.mullai@gmail.com",
     description="A python library for chemical space visualization.",
@@ -35,10 +35,10 @@ setup(
     install_requires=[
 	"pandas>=1.1.3",
 	"numpy>=1.19.2",
-	"matplotlib==3.3.2",
-	"seaborn==0.11.1",
+	"matplotlib>=3.3.2",
+	"seaborn>=0.11.1",
 	"umap-learn>=0.5.1",
-	"scikit-learn==0.24.2",
+	"scikit-learn>=0.24.2",
 	"bokeh>=2.2.3",
 	"scipy>=1.5.2",
 	"mordred>=1.2.0",
