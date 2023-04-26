@@ -38,7 +38,7 @@ setup(
 	"matplotlib>=3.3.2",
 	"seaborn>=0.11.1",
 	"umap-learn>=0.5.1",
-	"scikit-learn==0.24.2",
+	"scikit-learn>=0.24.2",
 	"bokeh>=2.2.3",
 	"scipy>=1.5.2",
 	"mordred>=1.2.0",
