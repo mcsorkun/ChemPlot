@@ -572,7 +572,7 @@ class Plotter(object):
         if self.__sim_type != "structural":
             scaled_data = StandardScaler().fit_transform(self.__df_descriptors.values.tolist())
         else:
-            scaled_data = self.__df_descriptors.values.tolist()
+            scaled_data = self.__df_descriptors.values
             
         return scaled_data
     
