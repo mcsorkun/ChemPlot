@@ -92,7 +92,7 @@ class TesttSNE(unittest.TestCase):
 
         self.plotter_structural_LOGS.tsne(perplexity=30, random_state=None, pca=True)
         df_data_structural = pd.DataFrame(self.plotter_structural_LOGS._Plotter__data)
-        self.assertEqual(len(df_data_structural.columns), 10)
+        self.assertEqual(len(df_data_structural.columns), 6)
 
     def test_plot_title(self):
         """
@@ -106,7 +106,7 @@ class TesttSNE(unittest.TestCase):
         12. Test checks if the returned object is a dataframe
         """
         result = self.plotter_tailored_LOGS.tsne()
-        self.assertTrue(isinstance(result, pd.DataFrame))
+        self.assertIsInstance(result, pd.DataFrame)
         
     def test_shape_target(self):
         """

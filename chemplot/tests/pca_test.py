@@ -18,7 +18,7 @@ class TestPCA(unittest.TestCase):
         2. Test checks if the returned object is a dataframe
         """
         result = self.plotter_tailored_LOGS.pca()
-        self.assertTrue(isinstance(result, pd.DataFrame))
+        self.assertIsInstance(result, pd.DataFrame)
         
     def test_shape_target(self):
         """

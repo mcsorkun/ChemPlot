@@ -23,7 +23,7 @@ from bokeh.plotting import figure
 from bokeh.transform import transform, factor_cmap
 from bokeh.palettes import Category10, Inferno, Spectral4
 from bokeh.models.mappers import LinearColorMapper
-from bokeh.models import ColorBar, HoverTool, Panel, Tabs
+from bokeh.models import ColorBar, HoverTool, TabPanel, Tabs
 from bokeh.io import output_file, save, show
 from scipy import stats
 from io import BytesIO
@@ -236,7 +236,8 @@ class Plotter(object):
         
         # Preprocess the data with PCA
         if pca and self.__sim_type == "structural":
-            pca = PCA(n_components=10, random_state=random_state)
+            _n_components = 10 if len(self.__data[0]) >=10 else len(self.__data[0])
+            pca = PCA(n_components=_n_components, random_state=random_state)
             self.__data = pca.fit_transform(self.__data)
             self.__plot_title = "t-SNE plot from components with cumulative variance explained " + "{:.0%}".format(sum(pca.explained_variance_ratio_))
         else:
@@ -287,7 +288,8 @@ class Plotter(object):
         
         # Preprocess the data with PCA
         if pca and self.__sim_type == "structural":
-            pca = PCA(n_components=10, random_state=random_state)
+            _n_components = 10 if len(self.__data[0]) >=10 else len(self.__data[0])
+            pca = PCA(n_components=_n_components, random_state=random_state)
             self.__data = pca.fit_transform(self.__data)
             self.__plot_title = "UMAP plot from components with cumulative variance explained " + "{:.0%}".format(sum(pca.explained_variance_ratio_))
         else:
@@ -621,7 +623,7 @@ class Plotter(object):
             TOOLTIPS = parameters.TOOLTIPS_TARGET
 
         # Create plot
-        p = figure(title=title, plot_width=size, plot_height=size, tools=tools, tooltips=TOOLTIPS)
+        p = figure(title=title, width=size, height=size, tools=tools, tooltips=TOOLTIPS)
         
         if len(self.__target) == 0 or not(is_colored):
             p.circle(x=x, y=y, size=2.5, alpha=0.8, source=df_data)
@@ -643,7 +645,7 @@ class Plotter(object):
         
         tabs = None
         if clusters and 'clusters' in df_data.columns:
-            p_c = figure(title=title, plot_width=size, plot_height=size, tools=tools, tooltips=parameters.TOOLTIPS_CLUSTER)
+            p_c = figure(title=title, width=size, height=size, tools=tools, tooltips=parameters.TOOLTIPS_CLUSTER)
             # Get percentages
             self.__percentage_clusters(df_data)
             clusters = df_data.groupby(['clusters'])
@@ -666,8 +668,8 @@ class Plotter(object):
             p_c.xaxis.major_label_text_font_size = '0pt'  
             p_c.yaxis.major_label_text_font_size = '0pt' 
             
-            tab1 = Panel(child=p, title="Plot")
-            tab2 = Panel(child=p_c, title="Clusters")
+            tab1 = TabPanel(child=p, title="Plot")
+            tab2 = TabPanel(child=p_c, title="Clusters")
             tabs = Tabs(tabs=[tab1, tab2])
         
         return p, tabs
@@ -678,7 +680,7 @@ class Plotter(object):
         
         tools = "pan, wheel_zoom, save, reset"
 
-        p = figure(title=title, plot_width=size, plot_height=size, match_aspect=True,
+        p = figure(title=title, width=size, height=size, match_aspect=True,
            tools=tools)
         p.background_fill_color = '#440154'
         p.grid.visible = False
