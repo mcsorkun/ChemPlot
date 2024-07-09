@@ -53,3 +53,10 @@ include-package-data = true
 where = ["."]
 include = ["chemplot*"]
 exclude = ["docs*", "notebooks*", "performance_tests*"]
+
+[tool.black]
+line-length = 150
+required-version = "23"
+
+[tool.isort]
+profile = "black"
