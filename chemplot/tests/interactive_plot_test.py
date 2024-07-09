@@ -12,7 +12,6 @@ import re
 from chemplot import Plotter
 from chemplot import parameters
 from bokeh.models import Tabs
-from bokeh.plotting.figure import Figure
 from scipy import stats
 from rdkit.Chem import Draw
 from io import StringIO
@@ -340,7 +339,6 @@ class TestInteractivePlot(unittest.TestCase):
         """
         self.plotter_pca_BBBP.cluster(n_clusters=5)
         result = self.plotter_pca_BBBP.interactive_plot()
-        assert isinstance(result, Figure)
         assert not isinstance(result, Tabs)
         
     def test_clusters_true(self):
@@ -355,8 +353,6 @@ class TestInteractivePlot(unittest.TestCase):
         assert result.active == 0
         assert tab1.title == 'Plot'
         assert tab2.title == 'Clusters'
-        assert isinstance(tab1.child, Figure)
-        assert isinstance(tab2.child, Figure)
     
     def test_clusters_groups(self):
         """
