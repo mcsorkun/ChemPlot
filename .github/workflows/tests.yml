@@ -39,7 +39,7 @@ jobs:
         - name: Install
           run: |
             pip install coveralls dataclasses
-            pip install .
+            pip install .[test]
         - name: Tests
           run: |
             pytest --cov --pyargs chemplot
