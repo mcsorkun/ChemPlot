@@ -459,7 +459,7 @@ class Plotter(object):
                 norm = plt.Normalize(df_data["target"].min(), df_data["target"].max())
                 cm = plt.cm.ScalarMappable(cmap="inferno", norm=norm)
                 cm.set_array([])
-                plot.figure.colorbar(cm)
+                plot.figure.colorbar(cm, cax=ax)
         elif kind == "hex":
             plot = ax.hexbin(df_data[x], df_data[y], gridsize=40, cmap="Blues")
             fig.colorbar(plot, ax=ax)
