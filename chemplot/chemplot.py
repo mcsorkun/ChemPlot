@@ -592,7 +592,7 @@ class Plotter(object):
         else:
             scaled_data = self.__df_descriptors.values.tolist()
 
-        return scaled_data
+        return np.array(scaled_data)
 
     def __parse_dataframe(self):
         x = self.__df_2_components.columns[0]
