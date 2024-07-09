@@ -259,6 +259,8 @@ class Plotter(object):
             else:
                 perplexity = parameters.perplexity_tailored(len(self.__data))
         else:
+            if perplexity > len(self.__data):
+                raise ValueError(f"perplexity (got: {perplexity:.2f}) must be less than the number of samples ({len(self.__data):d}).")
             if perplexity < 5 or perplexity > 50:
                 print("Robust results are obtained for values of perplexity between 5 and 50")
 

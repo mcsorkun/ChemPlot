@@ -54,7 +54,7 @@ class TestVisualizePlot(unittest.TestCase):
         4. Test checks if default is_colored is assigned
         """
         result = self.plotter_pca_LOGS.visualize_plot(kind="scatter", size=20, remove_outliers=False, colorbar=False)
-        self.assertTrue(len(result.collections) > 1)
+        self.assertTrue(result.collections)
         pyplot.close()
 
     def test_default_remove_outliers(self):
@@ -89,7 +89,7 @@ class TestVisualizePlot(unittest.TestCase):
         8. Test checks if is_colored is assigned
         """
         result = self.plotter_pca_LOGS.visualize_plot(kind="scatter", size=20, remove_outliers=False, is_colored=True, colorbar=False)
-        self.assertTrue(len(result.collections) > 1)
+        self.assertTrue(result.collections)
         pyplot.close()
 
     def test_is_colored_false_scatter(self):

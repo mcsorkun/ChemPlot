@@ -7,6 +7,12 @@ import pytest
 
 from chemplot import parameters
 
+SKLEARN_COMPLEXITY_CHANGE = """
+Previous versions of scikit-learn would allow requesting perplexities greater than the number of
+samples in the dataset and then silently correct it for you - this now raises an error instead.
+We skip this unit test since it relies on the old behavior.
+"""
+
 
 @pytest.mark.usefixtures("logs_plotter", "logs_structural")
 class TesttSNE(unittest.TestCase):
@@ -48,6 +54,7 @@ class TesttSNE(unittest.TestCase):
         self.plotter_tailored_LOGS.tsne(perplexity=2, random_state=None, pca=False)
         assert str("Robust results are obtained for values of perplexity between 5 and 50") in mock_stdout.getvalue()
 
+    @unittest.skip(reason=SKLEARN_COMPLEXITY_CHANGE)
     @patch("sys.stdout", new_callable=StringIO)
     def test_INFO_perplexity_above_50(self, mock_stdout):
         """
@@ -60,32 +67,32 @@ class TesttSNE(unittest.TestCase):
         """
         6. Test checks if perplexity is assigned
         """
-        self.plotter_tailored_LOGS.tsne(perplexity=30, random_state=None, pca=False)
-        self.assertEqual(self.plotter_tailored_LOGS.tsne_fit.get_params(deep=True)["perplexity"], 30)
+        self.plotter_tailored_LOGS.tsne(perplexity=10, random_state=None, pca=False)
+        self.assertEqual(self.plotter_tailored_LOGS.tsne_fit.get_params(deep=True)["perplexity"], 10)
 
     def test_default_random_state(self):
         """
         7. Test checks if default random_state is assigned
         """
-        self.plotter_tailored_LOGS.tsne(perplexity=30, pca=False)
+        self.plotter_tailored_LOGS.tsne(perplexity=10, pca=False)
         self.assertIsInstance(self.plotter_tailored_LOGS.tsne_fit.get_params(deep=True)["random_state"], type(None))
 
     def test_random_state(self):
         """
         8. Test checks if random_state is assigned
         """
-        self.plotter_tailored_LOGS.tsne(perplexity=30, random_state=1, pca=False)
+        self.plotter_tailored_LOGS.tsne(perplexity=10, random_state=1, pca=False)
         self.assertEqual(self.plotter_tailored_LOGS.tsne_fit.get_params(deep=True)["random_state"], 1)
 
     def test_default_pca(self):
         """
         9. Test checks if default pca is assigned
         """
-        self.plotter_tailored_LOGS.tsne(perplexity=30, random_state=None)
+        self.plotter_tailored_LOGS.tsne(perplexity=10, random_state=None)
         df_data_tailored = pd.DataFrame(self.plotter_tailored_LOGS._Plotter__data)
         self.assertEqual(len(df_data_tailored.columns), len(self.plotter_tailored_LOGS._Plotter__df_descriptors.columns))
 
-        self.plotter_structural_LOGS.tsne(perplexity=30, random_state=None)
+        self.plotter_structural_LOGS.tsne(perplexity=10, random_state=None)
         df_data_structural = pd.DataFrame(self.plotter_structural_LOGS._Plotter__data)
         self.assertEqual(len(df_data_structural.columns), len(self.plotter_structural_LOGS._Plotter__df_descriptors.columns))
 
@@ -93,11 +100,11 @@ class TesttSNE(unittest.TestCase):
         """
         10. Test checks if pca is assigned
         """
-        self.plotter_tailored_LOGS.tsne(perplexity=30, random_state=None, pca=True)
+        self.plotter_tailored_LOGS.tsne(perplexity=10, random_state=None, pca=True)
         df_data_tailored = pd.DataFrame(self.plotter_tailored_LOGS._Plotter__data)
         self.assertEqual(len(df_data_tailored.columns), len(self.plotter_tailored_LOGS._Plotter__df_descriptors.columns))
 
-        self.plotter_structural_LOGS.tsne(perplexity=30, random_state=None, pca=True)
+        self.plotter_structural_LOGS.tsne(perplexity=10, random_state=None, pca=True)
         df_data_structural = pd.DataFrame(self.plotter_structural_LOGS._Plotter__data)
         self.assertEqual(len(df_data_structural.columns), 6)
 

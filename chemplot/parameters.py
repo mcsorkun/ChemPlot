@@ -15,6 +15,9 @@ P_COEFFICIENT_STRUCTURAL = 8.578963490544542
 def perplexity_structural(sample_length):
     prediction = predictor(P_INTERCEPT_STRUCTURAL, P_COEFFICIENT_STRUCTURAL, math.log(sample_length))
     prediction = validator(prediction)
+    # prediction <= sample_length in modern sklearn
+    if prediction > sample_length:
+        prediction = sample_length
     return prediction
 
 
@@ -25,6 +28,9 @@ P_COEFFICIENT_TAILORED = 0.9442229439797486
 def perplexity_tailored(sample_length):
     prediction = predictor(P_INTERCEPT_TAILORED, P_COEFFICIENT_TAILORED, math.log(sample_length)) ** 2
     prediction = validator(prediction)
+    # prediction <= sample_length in modern sklearn
+    if prediction > sample_length:
+        prediction = sample_length
     return prediction
 
 
@@ -35,6 +41,9 @@ P_COEFFICIENT_STRUCTURAL_PCA = 1.415629186176671
 def perplexity_structural_pca(sample_length):
     prediction = predictor(P_INTERCEPT_STRUCTURAL_PCA, P_COEFFICIENT_STRUCTURAL_PCA, math.log(sample_length)) ** 2
     prediction = validator(prediction)
+    # prediction <= sample_length in modern sklearn
+    if prediction > sample_length:
+        prediction = sample_length
     return prediction
 
 
