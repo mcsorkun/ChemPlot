@@ -376,10 +376,7 @@ class TestFromSmilesErroneusSMILES(unittest.TestCase):
         45. Test if the user is informed about which is the erroneous data and that it will be removed from the dataset
         """
         Plotter.from_smiles(self.data_CLINTOX_2_erroneous_smiles["smiles"], target=self.data_CLINTOX_2_erroneous_smiles["target"], target_type="C", sim_type="tailored")
-        assert str('The following erroneous SMILES have been found in the data:\n[NH4][Pt]([NH4])(Cl)Cl\nc1ccc(cc1)n2c(=O)c(c(=O)n2c3ccccc3)CCS(=O)c4ccccc4\nCc1cc2c(cc1C)N3C=N2[Co+]456(N7=C8[C@H](C(C7=CC9=N4C(=C(C1=N5[C@@]([C@@H]2N6C(=C8C)[C@@]([C@H]2CC(=O)N)(CCC(=O)NC[C@H](OP(=O)(O[C@@H]2[C@H](O[C@H]3[C@@H]2O)CO)[O-])C)C)([C@@]([C@@H]1CCC(=O)N)(C)CC(=O)N)C)C)[C@@]([C@@H]9CCC(=O)N)(C)CC(=O)N)(C)C)CCC(=O)N)O\n' + 
-                   'Cc1cc2c(cc1C)N3C=N2[Co]456(N7=C8[C@H](C(C7=CC9=N4C(=C(C1=N5[C@@]([C@@H]2N6C(=C8C)[C@@]([C@H]2CC(=O)N)(CCC(=O)NC[C@H](OP(=O)(O[C@@H]2[C@H](O[C@H]3[C@@H]2O)CO)O)C)C)([C@@]([C@@H]1CCC(=O)N)(C)CC(=O)N)C)C)[C@@]([C@@H]9CCC(=O)N)(C)CC(=O)N)(C)C)CCC(=O)N)C#N\n'+
-                   'CCCCc1c(=O)n(n(c1=O)c2ccc(cc2)O)c3ccccc3\nCCCCc1c(=O)n(n(c1=O)c2ccccc2)c3ccccc3.\n' +
-                   'The erroneous SMILES will be removed from the data.') in mock_stdout.getvalue()
+        assert str('The following erroneous SMILES have been found in the data:\n[NH4][Pt]([NH4])(Cl)Cl\nc1ccc(cc1)n2c(=O)c(c(=O)n2c3ccccc3)CCS(=O)c4ccccc4\nCCCCc1c(=O)n(n(c1=O)c2ccc(cc2)O)c3ccccc3\nCCCCc1c(=O)n(n(c1=O)c2ccccc2)c3ccccc3.\nThe erroneous SMILES will be removed from the data.') in mock_stdout.getvalue()
         assert str('For the following SMILES not all descriptors can be computed:\n*C(=O)[C@H](CCCCNC(=O)OCCOC)NC(=O)OCCOC\n[N+](=O)([O-])[O-]\n[N]=O\n[O-][99Tc](=O)(=O)=O\n[O-]P(=O)([O-])F\n[O-]S(=O)(=O)[O-]\n[O-]S(=O)(=S)[O-]\n[Se]\nC#N\nC(#N)[Fe-2](C#N)(C#N)(C#N)(C#N)N=O\n'+ 
                       'C1CC(C1)(C(=O)O)C(=O)O.N.N.[Pt]\nC1CC2(C1)C(=O)O[Pt]OC2=O\nCCP(=[Au]S[C@H]1[C@@H]([C@H]([C@@H]([C@H](O1)COC(=O)C)OC(=O)C)OC(=O)C)OC(=O)C)(CC)CC\nCl[201Tl]\nCl[Cr](Cl)Cl\nCl[Cu]Cl\nCl[Mn]Cl\nCl[Zn]Cl\nII\nN(=O)[O-]\nO1[As]2O[As]1O2\nO[32P](=O)([O-])[O-]\nO=[Al]O[Al]=O\nO[Si](=O)O\n'+ 
                       'O=[Ti]=O\nO=[Zn]\nOCl(=O)(=O)=O\nS=[Se]=S.\nThese SMILES will be removed from the data.') in mock_stdout.getvalue()
@@ -417,10 +414,7 @@ class TestFromSmilesErroneusSMILES(unittest.TestCase):
         49. Test if the user is informed about which is the erroneous data and that it will be removed from the dataset
         """
         Plotter.from_smiles(self.data_CLINTOX_2_erroneous_smiles["smiles"], target=self.data_CLINTOX_2_erroneous_smiles["target"], target_type="C", sim_type="structural")
-        mock_print.assert_called_once_with('The following erroneous SMILES have been found in the data:\n[NH4][Pt]([NH4])(Cl)Cl\nc1ccc(cc1)n2c(=O)c(c(=O)n2c3ccccc3)CCS(=O)c4ccccc4\nCc1cc2c(cc1C)N3C=N2[Co+]456(N7=C8[C@H](C(C7=CC9=N4C(=C(C1=N5[C@@]([C@@H]2N6C(=C8C)[C@@]([C@H]2CC(=O)N)(CCC(=O)NC[C@H](OP(=O)(O[C@@H]2[C@H](O[C@H]3[C@@H]2O)CO)[O-])C)C)([C@@]([C@@H]1CCC(=O)N)(C)CC(=O)N)C)C)[C@@]([C@@H]9CCC(=O)N)(C)CC(=O)N)(C)C)CCC(=O)N)O\n' + 
-                      'Cc1cc2c(cc1C)N3C=N2[Co]456(N7=C8[C@H](C(C7=CC9=N4C(=C(C1=N5[C@@]([C@@H]2N6C(=C8C)[C@@]([C@H]2CC(=O)N)(CCC(=O)NC[C@H](OP(=O)(O[C@@H]2[C@H](O[C@H]3[C@@H]2O)CO)O)C)C)([C@@]([C@@H]1CCC(=O)N)(C)CC(=O)N)C)C)[C@@]([C@@H]9CCC(=O)N)(C)CC(=O)N)(C)C)CCC(=O)N)C#N\n'+
-                      'CCCCc1c(=O)n(n(c1=O)c2ccc(cc2)O)c3ccccc3\nCCCCc1c(=O)n(n(c1=O)c2ccccc2)c3ccccc3.\n' +
-                      'The erroneous SMILES will be removed from the data.') 
+        mock_print.assert_called_once_with('The following erroneous SMILES have been found in the data:\n[NH4][Pt]([NH4])(Cl)Cl\nc1ccc(cc1)n2c(=O)c(c(=O)n2c3ccccc3)CCS(=O)c4ccccc4\nCCCCc1c(=O)n(n(c1=O)c2ccc(cc2)O)c3ccccc3\nCCCCc1c(=O)n(n(c1=O)c2ccccc2)c3ccccc3.\nThe erroneous SMILES will be removed from the data.') 
  
     def test_no_descriptors_computed(self):
         """

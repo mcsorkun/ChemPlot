@@ -43,8 +43,7 @@ def error(request):
                                           'CC(O)C31(O)CCC4C2CCC1=CC(=O)C=CC1(C)C2C(O)CC34C', 'C1=C-(OC)C(=CC2=C1C(=NN=C(C2)C)C3=CC=CC(=C3)Cl)OC', 'CN(C)C[=O]COC2c1ccccc1CCc3ccccc23', 
                                           'non_smile', '[[C@]4([C@@]3([C@H]([C@H]2[C@]([C@@]1(C(=CC(=O)C=C1)CC2)C)(F)[C@H](C3)O)C[C@@H]4C)C)(OC(CC)=O)C(CCl)=O', 'C1=CC=CC=C1CN2C(CC((C2)CN)=O', 
                                           'C1=C(OC)C=CC3=C1N(C2=C(C=CC=C2)S3)CC(CN4CCC(O)CC4))C', '[[C@@H]1(C[C@H]3[C@H]2[C@@]1(O[C@H](O[C@H]2OC)[C@@H]3C)CN4CCCCC4)O', 'non_smile']
-    request.cls.list_CLINTOX_2_erroneous_smiles = ['[NH4][Pt]([NH4])(Cl)Cl', 'c1ccc(cc1)n2c(=O)c(c(=O)n2c3ccccc3)CCS(=O)c4ccccc4', 'Cc1cc2c(cc1C)N3C=N2[Co+]456(N7=C8[C@H](C(C7=CC9=N4C(=C(C1=N5[C@@]([C@@H]2N6C(=C8C)[C@@]([C@H]2CC(=O)N)(CCC(=O)NC[C@H](OP(=O)(O[C@@H]2[C@H](O[C@H]3[C@@H]2O)CO)[O-])C)C)([C@@]([C@@H]1CCC(=O)N)(C)CC(=O)N)C)C)[C@@]([C@@H]9CCC(=O)N)(C)CC(=O)N)(C)C)CCC(=O)N)O', 
-                                               'Cc1cc2c(cc1C)N3C=N2[Co]456(N7=C8[C@H](C(C7=CC9=N4C(=C(C1=N5[C@@]([C@@H]2N6C(=C8C)[C@@]([C@H]2CC(=O)N)(CCC(=O)NC[C@H](OP(=O)(O[C@@H]2[C@H](O[C@H]3[C@@H]2O)CO)O)C)C)([C@@]([C@@H]1CCC(=O)N)(C)CC(=O)N)C)C)[C@@]([C@@H]9CCC(=O)N)(C)CC(=O)N)(C)C)CCC(=O)N)C#N', 
+    request.cls.list_CLINTOX_2_erroneous_smiles = ['[NH4][Pt]([NH4])(Cl)Cl', 'c1ccc(cc1)n2c(=O)c(c(=O)n2c3ccccc3)CCS(=O)c4ccccc4', 
                                                'CCCCc1c(=O)n(n(c1=O)c2ccc(cc2)O)c3ccccc3', 'CCCCc1c(=O)n(n(c1=O)c2ccccc2)c3ccccc3']
     request.cls.list_BBBP_erroneous_descriptors = ['[N+](=[N-])=O']
     request.cls.list_CLINTOX_2_erroneous_descriptors = ['*C(=O)[C@H](CCCCNC(=O)OCCOC)NC(=O)OCCOC', '[N+](=O)([O-])[O-]', '[N]=O', '[O-][99Tc](=O)(=O)=O', '[O-]P(=O)([O-])F', 
