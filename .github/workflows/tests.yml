@@ -1,141 +1,50 @@
 name: Tests
 
-on: 
-  - push
-  - pull_request
+on:
+  schedule:
+    - cron: "0 8 * * 1-5"
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: actions-id-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  Ubuntu:
-    name: Test on Ubuntu
-    runs-on: ubuntu-latest
+  build-and-test:
+    name: ${{ matrix.os }} Python ${{ matrix.python-version }} Subtest
+    runs-on: ${{ matrix.os }}
+    # run in conda env
+    defaults:
+      run:
+        shell: bash -el {0}
     strategy: 
-      max-parallel: 4
+      fail-fast: false
       matrix:
-        python-version: ['3.6', '3.7','3.8','3.9']
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-        - uses: actions/checkout@v3
-        - name: Set up Python ${{ matrix.python-version }}
-          uses: actions/setup-python@v3
+        - uses: actions/checkout@v4
+        - uses: mamba-org/setup-micromamba@main
           with:
-            python-version: ${{ matrix.python-version }}
-        - name: Setup Miniconda
-          uses: conda-incubator/setup-miniconda@v2
-          with:
-            activate-environment: test
-            environment-file: requirements_conda.yml
-            python-version: ${{ matrix.python-version }}
-            auto-activate-base: false
-        - name: Activate conda env
-          shell: bash -l {0}
+            environment-name: temp
+            condarc: |
+              channels:
+                - defaults
+                - conda-forge
+              channel_priority: flexible
+            create-args: |
+              python=${{ matrix.python-version }}
+        - name: Install
           run: |
-            conda activate test
-        - name: Install library for testing
-          shell: bash -l {0}
-          run: |
-            pip install coveralls
-            pip install dataclasses 
+            pip install coveralls dataclasses
             pip install .
-        - name: Run Tests
-          shell: bash -l {0}
+        - name: Tests
           run: |
             pytest --cov --pyargs chemplot
         - name: Upload coverage data to coveralls.io
-          shell: bash -l {0}
-          run: coveralls --service=github
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             COVERALLS_PARALLEL: true
-  Macos:
-    name: Test on MacOS
-    needs: Ubuntu
-    runs-on: macos-latest
-    strategy: 
-      max-parallel: 4
-      matrix:
-        python-version: ['3.6', '3.7','3.8','3.9']
-    steps:
-        - uses: actions/checkout@v3
-        - name: Set up Python ${{ matrix.python-version }}
-          uses: actions/setup-python@v3
-          with:
-            python-version: ${{ matrix.python-version }}
-        - name: Setup Miniconda
-          uses: conda-incubator/setup-miniconda@v2
-          with:
-            activate-environment: test
-            environment-file: requirements_conda.yml
-            python-version: ${{ matrix.python-version }}
-            auto-activate-base: false
-        - name: Activate conda env
-          shell: bash -l {0}
-          run: |
-            conda activate test
-        - name: Install library for testing
-          shell: bash -l {0}
-          run: |
-            pip install coveralls
-            pip install dataclasses 
-            pip install .
-        - name: Run Tests
-          shell: bash -l {0}
-          run: |
-            pytest --cov --pyargs chemplot
-        - name: Upload coverage data to coveralls.io
-          shell: bash -l {0}
           run: coveralls --service=github
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COVERALLS_PARALLEL: true
-  Windows:
-    name: Test on Windows
-    needs: Macos
-    runs-on: windows-latest
-    strategy: 
-      max-parallel: 4
-      matrix:
-        python-version: ['3.6', '3.7','3.8','3.9']
-    steps:
-        - uses: actions/checkout@v3
-        - name: Set up Python ${{ matrix.python-version }}
-          uses: actions/setup-python@v3
-          with:
-            python-version: ${{ matrix.python-version }}
-        - name: Setup Miniconda
-          uses: conda-incubator/setup-miniconda@v2
-          with:
-            activate-environment: test
-            environment-file: requirements_conda.yml
-            python-version: ${{ matrix.python-version }}
-            auto-activate-base: false
-        - name: Activate conda env
-          shell: bash -l {0}
-          run: |
-            conda activate test
-        - name: Install library for testing
-          shell: bash -l {0}
-          run: |
-            pip install coveralls
-            pip install dataclasses 
-            pip install .
-        - name: Run Tests
-          shell: bash -l {0}
-          run: |
-            pytest --cov --pyargs chemplot
-        - name: Upload coverage data to coveralls.io
-          shell: bash -l {0}
-          run: coveralls --service=github
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COVERALLS_PARALLEL: true
-  Coveralls:
-    name: Indicate completion to coveralls.io
-    needs: Windows
-    runs-on: ubuntu-latest
-    container: python:3-slim
-    steps:
-    - name: Finished
-      run: |
-        pip3 install --upgrade coveralls
-        coveralls --service=github --finish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
