@@ -212,7 +212,8 @@ def generate_ecfp(encoding_list, encoding_function, encoding_name, target_list, 
             mol=Chem.AddHs(mol)
             mols.append(mol)
             list_bits_fingerprint = []
-            list_bits_fingerprint[:0] = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits)
+            fpgen = AllChem.GetRDKitFPGenerator(maxPath=radius,fpSize=nBits)
+            list_bits_fingerprint[:0] = fpgen.GetFingerprint(mol)
             ecfp_fingerprints.append(list_bits_fingerprint)  
     
     # Create dataframe of fingerprints
