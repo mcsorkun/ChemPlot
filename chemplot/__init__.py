@@ -1,2 +1,2 @@
 from .chemplot import Plotter
-from .utils import load_data, info_data
+from .utils import info_data, load_data

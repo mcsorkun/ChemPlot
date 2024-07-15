@@ -1,6 +1,62 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
+requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "chemplot"
+version = "1.2.1"
+authors = [
+    { name = "Murat Cihan Sorkun", email = "mcsorkun@gmail.com" },
+    { name = "Dajt Mullaj", email = "dajt.mullai@gmail.com" },
+]
+license = { text = "BSD" }
+description = "A python library for chemical space visualization."
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Natural Language :: English",
+    "Topic :: Scientific/Engineering",
+]
+urls = { Homepage = "https://github.com/mcsorkun/ChemPlot" }
+requires-python = ">=3.8"
+dependencies = [
+	"pandas",
+	"numpy",
+	"matplotlib",
+	"seaborn",
+	"umap-learn",
+	"scikit-learn",
+	"bokeh>=3,<4",
+	"scipy",
+	"mordredcommunity",
+    "networkx",
+]
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov"]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["chemplot*"]
+exclude = ["docs*", "notebooks*", "performance_tests*"]
+
+[tool.black]
+line-length = 150
+required-version = "23"
+
+[tool.isort]
+profile = "black"
