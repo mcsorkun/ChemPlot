@@ -263,7 +263,7 @@ class Plotter(object):
         
         # Embed the data in two dimensions
         self.tsne_fit = TSNE(n_components=2, perplexity=perplexity, random_state=random_state, **kwargs)
-        ecfp_tsne_embedding = self.tsne_fit.fit_transform(self.__data)
+        ecfp_tsne_embedding = self.tsne_fit.fit_transform(np.array(self.__data))
         # Create a dataframe containinting the first 2 TSNE components of ECFP 
         self.__df_2_components = pd.DataFrame(data = ecfp_tsne_embedding
              , columns = ['t-SNE-1', 't-SNE-2'])
