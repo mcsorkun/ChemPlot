@@ -642,18 +642,18 @@ class Plotter(object):
         p = figure(title=title, width=size, height=size, tools=tools, tooltips=TOOLTIPS)
 
         if len(self.__target) == 0 or not (is_colored):
-            p.circle(x=x, y=y, size=2.5, alpha=0.8, source=df_data)
+            p.scatter(x=x, y=y, size=2.5, alpha=0.8, source=df_data)
         else:
             # Target exists
             if self.__target_type == "C":
                 index_cmap = factor_cmap("target", Category10[10], list(set(df_data["target"])))
-                p.circle(x=x, y=y, size=2.5, alpha=0.8, line_color=index_cmap, fill_color=index_cmap, legend_group="target", source=df_data)
+                p.scatter(x=x, y=y, size=2.5, alpha=0.8, line_color=index_cmap, fill_color=index_cmap, legend_group="target", source=df_data)
                 p.legend.location = "top_left"
                 p.legend.title = "Target"
             else:
                 color_mapper = LinearColorMapper(Inferno[256], low=min(df_data["target"]), high=max(df_data["target"]))
                 index_cmap = transform("target", color_mapper)
-                p.circle(x=x, y=y, size=2.5, alpha=0.8, line_color=index_cmap, fill_color=index_cmap, source=df_data)
+                p.scatter(x=x, y=y, size=2.5, alpha=0.8, line_color=index_cmap, fill_color=index_cmap, source=df_data)
                 color_bar = ColorBar(color_mapper=color_mapper, location=(0, 0))
                 p.add_layout(color_bar, "right")
 
@@ -664,7 +664,7 @@ class Plotter(object):
             self.__percentage_clusters(df_data)
             clusters = df_data.groupby(["clusters"])
             for cluster, color in zip(clusters, Category10[10]):
-                p_c.circle(
+                p_c.scatter(
                     x=x,
                     y=y,
                     size=2.5,
