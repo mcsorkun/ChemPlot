@@ -15,7 +15,7 @@ import umap
 from bokeh.io import output_file, save, show
 from bokeh.models import ColorBar, HoverTool, TabPanel, Tabs
 from bokeh.models.mappers import LinearColorMapper
-from bokeh.palettes import Category10, Inferno, Spectral4
+from bokeh.palettes import Category10, Inferno
 from bokeh.plotting import figure
 from bokeh.transform import factor_cmap, transform
 from pandas.api.types import is_numeric_dtype
@@ -422,7 +422,7 @@ class Plotter(object):
                 p_s = t_s / total.sum()
                 p_o = 1 - p_s
                 labels = {True: f"Selected - {p_s:.0%}", False: f"Other - {p_o:.0%}"}
-                df_data['clusters'] = df_data['clusters'].replace(labels)
+                df_data["clusters"] = df_data["clusters"].replace(labels)
                 hue_order = list(labels.values())
             else:
                 hue_order = self.__percentage_clusters(df_data)
@@ -623,7 +623,7 @@ class Plotter(object):
         for key, value in labels.items():
             labels[key] = f"Cluster {key} - {value:.0f}%"
         # Edit df_data and return labels
-        df_data['clusters'] = df_data['clusters'].replace(labels)
+        df_data["clusters"] = df_data["clusters"].replace(labels)
         return list(labels.values())
 
     def __interactive_scatter(self, x, y, df_data, size, is_colored, clusters, title):
