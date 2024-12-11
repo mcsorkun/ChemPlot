@@ -21,11 +21,6 @@ An alternative method is to install is using pip::
 
     ~$ pip install chemplot
 
-.. note::
-
-   ChemPlot requires RDKit, which cannot be installed using pip. The official RDKit documentation 
-   contains `installation instructions for multiple platforms`_.
-
 Verify Installation
 -------------------
 
