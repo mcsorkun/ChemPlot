@@ -36,6 +36,7 @@ dependencies = [
 	"scikit-learn",
 	"bokeh>=3,<4",
 	"scipy",
+    "rdkit",
 	"mordredcommunity",
     "networkx",
 ]
