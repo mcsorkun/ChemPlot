@@ -23,6 +23,3 @@ formats:
 python:
   install:
     - requirements: docs/requirements.txt 
-    
-conda:
-  environment: docs/docs_conda_req.yml
