@@ -173,6 +173,7 @@ For any question you can contact us through email:
 
 - [Murat Cihan Sorkun](mailto:mcsorkun@gmail.com)
 - [Dajt Mullaj](mailto:dajt.mullai@gmail.com)
+- [Jackson Warner Burns](jwburns@mit.edu)
 
 * * * * *
 
