@@ -110,7 +110,7 @@ class Plotter(object):
         if len(target) > 0:
             df_target = pd.DataFrame(data=target)
             unique_targets_ratio = 1.0 * df_target.iloc[:, 0].nunique() / df_target.iloc[:, 0].count() < 0.05
-            numeric_target = is_numeric_dtype(df_target.dtypes[0])
+            numeric_target = is_numeric_dtype(df_target.dtypes.iloc[0])
             if target_type == "R" and (unique_targets_ratio or not numeric_target):
                 print("Input received is 'R' for target values that seem not continuous.")
             if target_type not in self._target_types:
@@ -422,7 +422,7 @@ class Plotter(object):
                 p_s = t_s / total.sum()
                 p_o = 1 - p_s
                 labels = {True: f"Selected - {p_s:.0%}", False: f"Other - {p_o:.0%}"}
-                df_data.clusters.replace(labels, inplace=True)
+                df_data['clusters'] = df_data['clusters'].replace(labels)
                 hue_order = list(labels.values())
             else:
                 hue_order = self.__percentage_clusters(df_data)
@@ -466,7 +466,7 @@ class Plotter(object):
             ax.set_label("hex")
             axis = ax
         elif kind == "kde":
-            plot = sns.kdeplot(x=x, y=y, shade=True, data=df_data)
+            plot = sns.kdeplot(x=x, y=y, fill=True, data=df_data)
             plot.set_label("kde")
             axis = plot
 
@@ -623,13 +623,13 @@ class Plotter(object):
         for key, value in labels.items():
             labels[key] = f"Cluster {key} - {value:.0f}%"
         # Edit df_data and return labels
-        df_data.clusters.replace(labels, inplace=True)
+        df_data['clusters'] = df_data['clusters'].replace(labels)
         return list(labels.values())
 
     def __interactive_scatter(self, x, y, df_data, size, is_colored, clusters, title):
         # Add images column
         df_data["imgs"] = self.__mol_to_2Dimage(list(df_data["mols"]))
-        df_data.drop(columns=["mols"], inplace=True)
+        df_data = df_data.drop(columns=["mols"])
         # Set tools
         tools = "pan, lasso_select, wheel_zoom, hover, save, reset"
 
@@ -699,7 +699,7 @@ class Plotter(object):
 
     def __interactive_hex(self, x, y, df_data, size, title):
         # Hex Plot
-        df_data.drop(columns=["mols"], inplace=True)
+        df_data = df_data.drop(columns=["mols"])
 
         tools = "pan, wheel_zoom, save, reset"
 
