@@ -19,8 +19,8 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "ChemPlot"
-copyright = "2021, Dajt Mullaj, Murat Cihan Sorkun"
-author = "Dajt Mullaj, Murat Cihan Sorkun"
+copyright = "2024, Dajt Mullaj, Murat Cihan Sorkun, Jackson Warner Burns"
+author = "Dajt Mullaj, Murat Cihan Sorkun, Jackson Warner Burns"
 
 import subprocess
 

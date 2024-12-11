@@ -8,6 +8,7 @@ version = "1.2.1"
 authors = [
     { name = "Murat Cihan Sorkun", email = "mcsorkun@gmail.com" },
     { name = "Dajt Mullaj", email = "dajt.mullai@gmail.com" },
+    { name = "Jackson Warner Burns", email = "jwburns@mit.edu" },
 ]
 license = { text = "BSD" }
 description = "A python library for chemical space visualization."
