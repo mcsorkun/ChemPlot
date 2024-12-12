@@ -103,11 +103,7 @@ You are now ready to develop and test ChemPlot!
 To run the unit tests for ChemPlot use this command:
 
 .. code-block:: bash
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 7ba38b7 (Updated installation docs)
     ~$ pip install .[test]
     ~$ python -m pytest --pyargs chemplot
 
