@@ -18,35 +18,43 @@ jobs:
       - run: black --check .
       - run: isort --check .
 
-  Test:
-    runs-on: ubuntu-latest
-
+Build-and-test:
+    name: ${{ matrix.os }} Python ${{ matrix.python-version }} Subtest
+    runs-on: ${{ matrix.os }}
+    needs: lint
+    # run in conda env
+    defaults:
+      run:
+        shell: bash -el {0}
+    strategy: 
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.x'
-      - name: Setup Miniconda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          activate-environment: test
-          environment-file: requirements_conda.yml
-          python-version: 3.9
-          auto-activate-base: false
-      - name: Activate conda env
-        shell: bash -l {0}
-        run: |
-          conda activate test
-      - name: Install library for testing
-        shell: bash -l {0}
-        run: |
-          pip install coveralls
-          pip install .
-      - name: Run Tests
-        shell: bash -l {0}
-        run: |
-          pytest --pyargs chemplot
+        - uses: actions/checkout@v4
+        - uses: mamba-org/setup-micromamba@main
+          with:
+            environment-name: temp
+            condarc: |
+              channels:
+                - defaults
+                - conda-forge
+              channel_priority: flexible
+            create-args: |
+              python=${{ matrix.python-version }}
+        - name: Install
+          run: |
+            pip install coveralls dataclasses
+            pip install .[test]
+        - name: Tests
+          run: |
+            pytest --cov --pyargs chemplot
+        - name: Upload coverage data to coveralls.io
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            COVERALLS_PARALLEL: true
+          run: coveralls --service=github
         
   Build-n-Publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
