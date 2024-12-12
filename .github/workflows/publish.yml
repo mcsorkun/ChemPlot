@@ -56,7 +56,7 @@ Build-and-test:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             COVERALLS_PARALLEL: true
           run: coveralls --service=github
-        
+
   Build-n-Publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     needs: Test
