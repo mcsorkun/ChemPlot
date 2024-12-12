@@ -1,1 +1,2 @@
-include data/*.csv test_data/*.csv
+include chemplot/data/*.csv 
+include chemplot/tests/test_data/*.csv
