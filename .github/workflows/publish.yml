@@ -1,7 +1,6 @@
 name: Publish Python 🐍 distributions 📦 to PyPI 
 
 on:
-  push:
   release:
     types: [published]
 
