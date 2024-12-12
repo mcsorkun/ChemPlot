@@ -19,7 +19,7 @@ jobs:
       - run: black --check .
       - run: isort --check .
 
-Build-and-test:
+  Build-and-test:
     name: ${{ matrix.os }} Python ${{ matrix.python-version }} Subtest
     runs-on: ${{ matrix.os }}
     needs: lint
