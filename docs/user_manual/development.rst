@@ -83,7 +83,7 @@ You can then activate the enviroment
 
 .. code-block:: bash
 
-    ~/<PATH-TO-CLONE>/ChemPlot$ venv\Scripts\activate
+    ~/<PATH-TO-CLONE>/ChemPlot$ venv/Scripts/activate
 
 3. Install ChemPlot for Development
 -----------------------------------
@@ -103,7 +103,7 @@ You are now ready to develop and test ChemPlot!
 To run the unit tests for ChemPlot use this command:
 
 .. code-block:: bash
-    
+
     ~$ pip install .[test]
     ~$ python -m pytest --pyargs chemplot
 
