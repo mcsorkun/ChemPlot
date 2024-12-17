@@ -39,12 +39,7 @@ To install ChemPlot using conda, run the following from the command line:
 
 ### Option 2: Use pip
 
-ChemPlot requires RDKit, which cannot be installed using pip. The
-official RDKit installation documentation can be found
-[here](http://www.rdkit.org/docs/Install.html).
-
-After having installed RDKit, ChemPlot can be installed using pip by
-running:
+You can also install ChemPlot using pip: 
 
     pip install chemplot
     
