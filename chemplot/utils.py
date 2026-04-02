@@ -1,44 +1,23 @@
 # Authors: Murat Cihan Sorkun <mcsorkun@gmail.com>, Dajt Mullaj <dajt.mullai@gmail.com>, Jackson Warner Burns <jwburns@mit.edu>
 #
 # License: BSD 3 clause
-import importlib.resources
 import re
+import sys
+from importlib.resources import files
 
 import pandas as pd
 
 from chemplot.parameters import INFO_DATASET, SAMPLE_DATASETS
 
 
-def _resource_stream(package, resource):
-    """
-    Helper function to deal with pkg_resources v81 resource_stream deprecation
-
-    See: https://github.com/mcsorkun/ChemPlot/issues/33
-
-    :param package: Name of the package where the resource file is located
-    :type package: string
-    :param resource: Name of the resource file
-    :type resource: string
-    :returns: A file-like object for the resource
-    :rtype: file-like object
-    """
-    return importlib.resources.files(package).joinpath(resource).open("rb")
-
-
 def load_data(name):
     """
-    Returns one of the sample datasets.
-
-    :param name: Name of the sample dataset
-    :type name: string
-    :returns: The Dataframe of the sample dataset
-    :rtype: Dataframe
+    Returns one of the sample datasets using modern importlib.resources.
     """
-
     name = _select_dataset(name)
-
-    stream = _resource_stream(__name__, f"data/{name}.csv")
-    return pd.read_csv(stream)
+    source = files(__name__).joinpath(f"data/{name}.csv")
+    with source.open("rb") as stream:
+        return pd.read_csv(stream)
 
 
 def _select_dataset(name):

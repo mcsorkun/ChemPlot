@@ -4,6 +4,8 @@ Session Testing Fixtures
 To share the data accross the different tests.
 """
 import importlib.resources
+import sys
+from importlib import resources
 from pathlib import Path
 
 import pandas as pd
@@ -14,20 +16,13 @@ from chemplot import Plotter, load_data
 THIS_DIR = Path(__file__).parent
 
 
-def _resource_stream(package, resource):
+def _resource_stream(package, relative_path):
     """
-    Helper function to deal with pkg_resources v81 resource_stream deprecation
-
-    See: https://github.com/mcsorkun/ChemPlot/issues/33
-
-    :param package: Name of the package where the resource file is located
-    :type package: string
-    :param resource: Name of the resource file
-    :type resource: string
-    :returns: A file-like object for the resource
-    :rtype: file-like object
+    Versatile replacement for pkg_resources.resource_stream.
+    package: 'chemplot.tests'
+    relative_path: 'test_data/file.csv'
     """
-    return importlib.resources.files(package).joinpath(resource).open("rb")
+    return resources.files(package).joinpath(relative_path).open("rb")
 
 
 @pytest.fixture(scope="session")

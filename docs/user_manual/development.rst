@@ -11,7 +11,7 @@ Prerequisites
 Start by making sure you have the following installed on your system: 
 
 - **Git**: `Download Git <https://git-scm.com/downloads>`_
-- **Python** (version 3.8 or higher): `Download Python <https://www.python.org/downloads/>`_
+- **Python** (version 3.9 or higher): `Download Python <https://www.python.org/downloads/>`_
 - **Conda** (optional, if you choose the Conda setup): `Install Conda <https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html>`_
 
 1. Clone the ChemPlot Repository
