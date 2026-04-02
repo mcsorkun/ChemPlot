@@ -6,12 +6,26 @@ To share the data accross the different tests.
 from pathlib import Path
 
 import pandas as pd
-import pkg_resources
 import pytest
+import importlib.resources
 
 from chemplot import Plotter, load_data
 
 THIS_DIR = Path(__file__).parent
+def _resource_stream(package, resource):
+    """
+    Helper function to deal with pkg_resources v81 resource_stream deprecation
+
+    See: https://github.com/mcsorkun/ChemPlot/issues/33
+
+    :param package: Name of the package where the resource file is located
+    :type package: string
+    :param resource: Name of the resource file
+    :type resource: string
+    :returns: A file-like object for the resource
+    :rtype: file-like object
+    """
+    return importlib.resources.open_binary(package, resource)
 
 
 @pytest.fixture(scope="session")
@@ -41,9 +55,9 @@ def bbbp_data(request, bbbp):
 
 @pytest.fixture(scope="class")
 def error(request):
-    file_BBBP_erroneous_smiles = pkg_resources.resource_stream("chemplot.tests", "test_data/C_2039_BBBP_2_erroneous_smiles.csv")
+    file_BBBP_erroneous_smiles = _resource_stream("chemplot.tests", "test_data/C_2039_BBBP_2_erroneous_smiles.csv")
     request.cls.data_BBBP_erroneous_smiles = pd.read_csv(file_BBBP_erroneous_smiles)
-    file_CLINTOX_2_erroneous_smiles = pkg_resources.resource_stream("chemplot.tests", "test_data/C_1484_CLINTOX_2_erroneous_smiles.csv")
+    file_CLINTOX_2_erroneous_smiles = _resource_stream("chemplot.tests", "test_data/C_1484_CLINTOX_2_erroneous_smiles.csv")
     request.cls.data_CLINTOX_2_erroneous_smiles = pd.read_csv(file_CLINTOX_2_erroneous_smiles)
     request.cls.list_BBBP_erroneous_smiles = [
         "C12CCN(CC1)Cc1cccc(c1)OCCCNC(=O)CC12",
