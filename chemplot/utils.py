@@ -1,10 +1,10 @@
 # Authors: Murat Cihan Sorkun <mcsorkun@gmail.com>, Dajt Mullaj <dajt.mullai@gmail.com>, Jackson Warner Burns <jwburns@mit.edu>
 #
 # License: BSD 3 clause
+import importlib.resources
 import re
 
 import pandas as pd
-import importlib.resources
 
 from chemplot.parameters import INFO_DATASET, SAMPLE_DATASETS
 
@@ -12,7 +12,7 @@ from chemplot.parameters import INFO_DATASET, SAMPLE_DATASETS
 def _resource_stream(package, resource):
     """
     Helper function to deal with pkg_resources v81 resource_stream deprecation
-    
+
     See: https://github.com/mcsorkun/ChemPlot/issues/33
 
     :param package: Name of the package where the resource file is located
