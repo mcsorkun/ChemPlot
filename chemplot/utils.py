@@ -2,27 +2,22 @@
 #
 # License: BSD 3 clause
 import re
+import sys
+from importlib.resources import files
 
 import pandas as pd
-import pkg_resources
 
 from chemplot.parameters import INFO_DATASET, SAMPLE_DATASETS
 
 
 def load_data(name):
     """
-    Returns one of the sample datasets.
-
-    :param name: Name of the sample dataset
-    :type name: string
-    :returns: The Dataframe of the sample dataset
-    :rtype: Dataframe
+    Returns one of the sample datasets using modern importlib.resources.
     """
-
     name = _select_dataset(name)
-
-    stream = pkg_resources.resource_stream(__name__, f"data/{name}.csv")
-    return pd.read_csv(stream)
+    source = files("chemplot").joinpath(f"data/{name}.csv")
+    with source.open("rb") as stream:
+        return pd.read_csv(stream)
 
 
 def _select_dataset(name):
