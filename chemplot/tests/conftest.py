@@ -3,15 +3,17 @@ Session Testing Fixtures
 
 To share the data accross the different tests.
 """
+import importlib.resources
 from pathlib import Path
 
 import pandas as pd
 import pytest
-import importlib.resources
 
 from chemplot import Plotter, load_data
 
 THIS_DIR = Path(__file__).parent
+
+
 def _resource_stream(package, resource):
     """
     Helper function to deal with pkg_resources v81 resource_stream deprecation
