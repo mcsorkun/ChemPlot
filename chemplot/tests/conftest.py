@@ -27,7 +27,7 @@ def _resource_stream(package, resource):
     :returns: A file-like object for the resource
     :rtype: file-like object
     """
-    return importlib.resources.open_binary(package, resource)
+    return importlib.resources.files(package).joinpath(resource).open("rb")
 
 
 @pytest.fixture(scope="session")
