@@ -4,9 +4,25 @@
 import re
 
 import pandas as pd
-import pkg_resources
+import importlib.resources
 
 from chemplot.parameters import INFO_DATASET, SAMPLE_DATASETS
+
+
+def _resource_stream(package, resource):
+    """
+    Helper function to deal with pkg_resources v81 resource_stream deprecation
+    
+    See: https://github.com/mcsorkun/ChemPlot/issues/33
+
+    :param package: Name of the package where the resource file is located
+    :type package: string
+    :param resource: Name of the resource file
+    :type resource: string
+    :returns: A file-like object for the resource
+    :rtype: file-like object
+    """
+    return importlib.resources.open_binary(package, resource)
 
 
 def load_data(name):
@@ -21,7 +37,7 @@ def load_data(name):
 
     name = _select_dataset(name)
 
-    stream = pkg_resources.resource_stream(__name__, f"data/{name}.csv")
+    stream = _resource_stream(__name__, f"data/{name}.csv")
     return pd.read_csv(stream)
 
 
