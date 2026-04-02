@@ -15,7 +15,7 @@ def load_data(name):
     Returns one of the sample datasets using modern importlib.resources.
     """
     name = _select_dataset(name)
-    source = files(__name__).joinpath(f"data/{name}.csv")
+    source = files('chemplot').joinpath(f"data/{name}.csv")
     with source.open("rb") as stream:
         return pd.read_csv(stream)
 
