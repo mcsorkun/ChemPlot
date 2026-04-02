@@ -3,7 +3,6 @@ name: Tests
 on:
   schedule:
     - cron: "0 8 * * 1-5"
-  push:
   pull_request:
   workflow_dispatch:
 
