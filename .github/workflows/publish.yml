@@ -11,7 +11,6 @@ permissions:
 jobs:
   Build-n-Publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
-    needs: Build-and-test
     runs-on: ubuntu-latest
 
     steps:
