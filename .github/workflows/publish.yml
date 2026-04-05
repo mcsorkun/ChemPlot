@@ -1,6 +1,7 @@
 name: Publish Python 🐍 distributions 📦 to PyPI 
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
 
@@ -8,65 +9,17 @@ permissions:
   contents: read
 
 jobs:
-  Lint:
-    name: Check Formatting
-    runs-on: ubuntu-latest
-    steps:
-      # clone the repo, run black and flake8 on it
-      - uses: actions/checkout@v4
-      - run: python -m pip install black==23.* flake8 isort
-      - run: black --check .
-      - run: isort --check .
-
-  Build-and-test:
-    name: ${{ matrix.os }} Python ${{ matrix.python-version }} Subtest
-    runs-on: ${{ matrix.os }}
-    needs: lint
-    # run in conda env
-    defaults:
-      run:
-        shell: bash -el {0}
-    strategy: 
-      fail-fast: false
-      matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    steps:
-        - uses: actions/checkout@v4
-        - uses: mamba-org/setup-micromamba@main
-          with:
-            environment-name: temp
-            condarc: |
-              channels:
-                - defaults
-                - conda-forge
-              channel_priority: flexible
-            create-args: |
-              python=${{ matrix.python-version }}
-        - name: Install
-          run: |
-            pip install coveralls dataclasses
-            pip install .[test]
-        - name: Tests
-          run: |
-            pytest --cov --pyargs chemplot
-        - name: Upload coverage data to coveralls.io
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            COVERALLS_PARALLEL: true
-          run: coveralls --service=github
-
   Build-n-Publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     needs: Build-and-test
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v3
+    - uses: actions/checkout@v6
+    - name: Set up Python 3.13
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.x'
+        python-version: '3.13'
 
     - name: Install dependencies
       run: |

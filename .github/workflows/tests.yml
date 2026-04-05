@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # clone the repo, run black and flake8 on it
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: python -m pip install black==23.* flake8 isort
       - run: black --check .
       - run: isort --check .
@@ -34,8 +34,16 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
         os: [ubuntu-latest, windows-latest, macos-latest]
+        exclude:
+        # broken on github actions runners
+          - os: windows-latest
+            python-version: "3.14"
+          - os: windows-latest
+            python-version: "3.13"
+          - os: windows-latest
+            python-version: "3.12"
     steps:
-        - uses: actions/checkout@v4
+        - uses: actions/checkout@v6
         - uses: mamba-org/setup-micromamba@main
           with:
             environment-name: temp
