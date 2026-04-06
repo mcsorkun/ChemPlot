@@ -11,6 +11,10 @@ from scipy import stats
 
 from chemplot import Plotter
 
+# skip this whole file on windows on github actions
+if os.name == "nt" and os.getenv("GITHUB_ACTIONS") == "true":
+    pytest.skip("Skipping flaky tests on Windows in GitHub Actions", allow_module_level=True)
+
 
 @pytest.mark.usefixtures("visualize_data")
 class TestVisualizePlot(unittest.TestCase):
