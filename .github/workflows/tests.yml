@@ -36,12 +36,15 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
         - uses: actions/checkout@v6
-        - uses: mamba-org/setup-micromamba@main
+        # Pinned to a release tag instead of @main so the micromamba binary does
+        # not move under us. Uses conda-forge only: the 'defaults' channel let
+        # anaconda.com publish a tk 9.0.4 win-64 build (pulled in by python 3.14.7)
+        # that crashed micromamba on Windows with exit code 0xC0000005.
+        - uses: mamba-org/setup-micromamba@v3.2.1
           with:
             environment-name: temp
             condarc: |
               channels:
-                - defaults
                 - conda-forge
               channel_priority: flexible
             create-args: |
